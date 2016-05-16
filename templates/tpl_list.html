@@ -1,0 +1,18 @@
+{% extends "base_dox.html" %}
+{% block title %} бланки {% endblock %}
+{% block jsready %}
+	$("#tm_index").addClass("active");
+{% endblock %}
+{% block body_main %}
+<div class="table wide">
+{% for k, v in data.iteritems %}
+	<div class="row {% cycle 'even' 'odd' %}">
+		<div class="cell">
+			<p> <a href="{% url dox.views.doc_l k %}" {% if v.m.DATA.c %} title="{{ v.m.DATA.c }}" {% endif %}> {{ v.m.DATA.n }} </a> </p>
+		</div>
+		<div class="cell">
+			{{ v.m.DATA.c }}
+		</div>
+	</div>
+{% endfor %}
+{% endblock %}

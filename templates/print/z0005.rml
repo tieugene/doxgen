@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE document SYSTEM "rml_1_0.dtd">
+<document filename="print.pdf">
+	<docinit>
+		<registerTTFont faceName="MainFont" fileName="static/ttf/cour.ttf"/>
+	</docinit>
+
+	<stylesheet>
+		<initialize/>
+	</stylesheet>
+
+	<template pageSize="(21cm, 29.7cm)" title="telega" author="{{ data.user }}" subject="subject" showBoundary="0">
+		<pageTemplate id="main">
+			<frame id="main"	x1="10mm" y1="10mm" width="190mm" height="277mm"/>
+			<pageGraphics/>
+		</pageTemplate>
+	</template>
+
+	<story>
+		<illustration x="0mm" y="0mm" width="185mm" height="270mm">
+			<image file="static/img/z0005-1.png" x="0mm" y="0mm" width="181mm" height="268mm"/>
+			<setFont name="MainFont" size="11.3"/>
+			<drawString x="13mm" y="232.5mm"> {{ data.m_lastname|make_list|join:" " }} </drawString>
+			<drawString x="13mm" y="225.5mm"> {{ data.m_firstname|make_list|join:" " }} </drawString>
+			<drawString x="18mm" y="219.0mm"> {{ data.m_citizenship|make_list|join:" " }} </drawString>
+			<drawString x="23mm" y="206.0mm"> {{ data.m_birthcountry|make_list|join:" " }} </drawString>
+		</illustration>
+		<pageBreak/>
+		<illustration width="180mm" height="260mm">
+			<image file="static/img/z0005-2.png" x="0mm" y="0mm" width="181mm" height="268mm"/>
+		</illustration>
+	</story>
+</document>

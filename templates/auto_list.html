@@ -1,0 +1,39 @@
+{% extends "base_dox.html" %}
+{% block title %} {{ object.m.DATA.n }} {% endblock %}
+{% block meta-description %} {{ object.m.DATA.c }} {% endblock %}
+{% block body_main %}
+	<h1>
+		{{ object.m.DATA.n }}
+		<sup> <button type="button" style="margin: 0; padding: 0;" onclick="$('#legend').toggle()" title="Подробности"> ? </button> </sup>
+	{% if user.is_authenticated %}
+		<a href="{% url dox.views.doc_c object.m.DATA.u %}" rel="nofollow">
+	{% else %}
+		<a href="{% url dox.views.doc_a object.m.DATA.u %}" rel="nofollow">
+	{% endif %}
+	 {% include "button_new.html" %} </a>
+	</h1>
+	<h4> {{ object.m.DATA.c }} </h4>
+	{% if object.m.DATA.legend %}
+	<div id="legend">
+	{{ object.m.DATA.legend|safe }}
+	</div>
+	{% endif %}
+	{% if user.is_authenticated %}
+	{% if object_list %}
+	<div class="table box">
+		<div class="row center bold">
+			<div class="cell br"> Наименование </div>
+			<div class="cell br"> Создан </div>
+			<div class="cell"> Изменен </div>
+		</div>
+	{% for i in object_list %}
+		<div class="row">
+			<div class="cell bt br"> <a href="{% url dox.views.doc_r i.id %}"> {{ i.name }} </a> </div>
+			<div class="cell bt br"> {{ i.created|date:"d.m.y H:i" }} </div>
+			<div class="cell bt"> {{ i.updated|date:"d.m.y H:i" }} </div>
+		</div>
+	{% endfor %}
+	</div>
+	{% endif %}
+	{% endif %}
+{% endblock %}

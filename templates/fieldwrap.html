@@ -1,0 +1,18 @@
+{% load kwacros %}
+{% kwacro fieldwrap f %}
+	<div class="field {% if f.field.required %} required {% endif %} {% if f.errors %} wrong {% endif %}">
+		<div class="label"> {{ f.label_tag }} </div>
+		<div class="input"> {{ f }}
+		{% if f.help_text %}
+			<div class="help"> {{ f.help_text }} </div>
+		{% endif %}
+		{% if f.errors %}
+			<div class="errors">
+			{% for err in f.errors %}
+				<p> {{ err }} </p>
+			{% endfor %}
+			</div>
+		{% endif %}
+		</div>
+	</div>
+{% endkwacro %}

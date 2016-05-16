@@ -1,0 +1,31 @@
+<table border="1">
+{% for data in datalist %}
+	<tr>
+		<td> <p> {{ data.l }} </p> </td>
+		<td> <p> {{ data.v }} </p> </td>
+	</tr>
+{% endfor %}
+</table>
+{% for dataset in datasets %}
+<table border="1">
+	<caption> {{ dataset.l }}
+	<thead>
+		<tr>
+			{% for i in dataset.t %}
+			<th> {{ i }} </th>
+			{% endfor %}
+		</tr>
+	</thead>
+	{% if dataset.v %}
+	<tbody>
+		{% for data in dataset.v %}
+		<tr>
+			{% for i in data %}
+			<td> {{ i }} </td>
+			{% endfor %}
+		</tr>
+		{% endfor %}
+	</tbody>
+	{% endif %}
+</table>
+{% endfor %}

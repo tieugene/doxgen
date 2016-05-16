@@ -1,0 +1,26 @@
+{% load static %}
+{% get_static_prefix as STATIC_URL %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<link type="text/css" href="{{ STATIC_URL }}css/base.css" rel="stylesheet"/>
+	<link type="text/css" href="{{ STATIC_URL }}css/colors.css" rel="stylesheet"/>
+	<style type="text/css" >
+		dt p	{ font-weight: bold; }
+		table {
+			border-collapse: collapse;
+			border: none;
+		}
+		td {
+			border: 1px solid black;
+			padding: 3pt;
+		}
+	</style>
+</head>
+<body>
+{% block body_main %}
+{% endblock %}
+</body>
+</html>

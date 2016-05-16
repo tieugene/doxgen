@@ -1,0 +1,11 @@
+{% extends "log_list.html" %}
+{% block body_main %}
+<div class="table">
+<div class="row center bold"> <div class="cell br"> Key </div> <div class="cell"> Value </div> </div>
+<div class="row"> <div class="cell br"> ID </div> <div class="cell"> {{ object.pk }} </div> </div>
+<div class="row"> <div class="cell br"> DateTime </div> <div class="cell"> {{ object.date|date:"y-m-d H:i:s" }} </div> </div>
+{% for k, v in object.unpack.iteritems %}
+<div class="row {% cycle 'even' 'odd' %}"> <div class="cell br"> {{ k }} </div> <div class="cell"> {{ v }} </div> </div>
+{% endfor %}
+</div>
+{% endblock %}

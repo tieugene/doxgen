@@ -1,0 +1,12 @@
+DEBUG = True
+#DEBUG = False
+
+STATIC_URL = '/static_doxgen/'
+
+DATABASES = {'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': '/mnt/shares/doxgen/production.db'}}
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': 'unix:/tmp/memcached.sock',
+    }
+}

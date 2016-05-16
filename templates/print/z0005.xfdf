@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xfdf xmlns="http://ns.adobe.com/xfdf/" xml:space="preserve">
+    <fields>
+        <field name="topmostSubform[0].Page1[0].comb_1[0]">	<value> {{ data.m_lastname }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_2[0]">	<value> {{ data.m_firstname }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_3[0]">	<value> {{ data.m_citizenship }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_4[0]">	<value> {{ data.m_birthdate|date:"d" }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_5[0]">	<value> {{ data.m_birthdate|date:"m" }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_6[0]">	<value> {{ data.m_birthdate|date:"Y" }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_61[0]">	<value> {% if data.m_sex == "1" %} X {% endif %} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_62[0]">	<value> {% if data.m_sex == "2" %} X {% endif %} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_7[0]">	<value> {{ data.m_birthcountry }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_8[0]">	<value> {{ data.m_birthlocation }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_9[0]">	<value> {{ data.m_idcard_type }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_10[0]">	<value> {{ data.m_idcard_sn }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_11[0]">	<value> {{ data.m_idcard_no }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_12[0]">	<value> {{ data.m_idcard_date|date:"d" }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_13[0]">	<value> {{ data.m_idcard_date|date:"m" }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_14[0]">	<value> {{ data.m_idcard_date|date:"Y" }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_15[0]">	<value> {{ data.m_idcard_expired|date:"d" }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_16[0]">	<value> {{ data.m_idcard_expired|date:"m" }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_17[0]">	<value> {{ data.m_idcard_expired|date:"Y" }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_63[0]">	<value> {% if data.m_visa_type == "1" %} X {% endif %} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_64[0]">	<value> {% if data.m_visa_type == "2" %} X {% endif %} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_65[0]">	<value> {% if data.m_visa_type == "3" %} X {% endif %} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_18[0]">	<value> {{ data.m_visa_sn }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_19[0]">	<value> {{ data.m_visa_no }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_20[0]">	<value> {{ data.m_visa_date|date:"d" }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_21[0]">	<value> {{ data.m_visa_date|date:"m" }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_24[0]">	<value> {{ data.m_visa_date|date:"Y" }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_22[0]">	<value> {{ data.m_visa_expired|date:"d" }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_23[0]">	<value> {{ data.m_visa_expired|date:"m" }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_25[0]">	<value> {{ data.m_visa_expired|date:"Y" }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_66[0]">	<value> {% if data.aim == "1" %} X {% endif %} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_67[0]">	<value> {% if data.aim == "2" %} X {% endif %} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_68[0]">	<value> {% if data.aim == "3" %} X {% endif %} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_69[0]">	<value> {% if data.aim == "4" %} X {% endif %} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_70[0]">	<value> {% if data.aim == "5" %} X {% endif %} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_71[0]">	<value> {% if data.aim == "6" %} X {% endif %} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_72[0]">	<value> {% if data.aim == "7" %} X {% endif %} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_721[0]">	<value> {% if data.aim == "8" %} X {% endif %} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_722[0]">	<value> {% if data.aim == "9" %} X {% endif %} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_26[0]">	<value> {{ data.profession }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_27[0]">	<value> {{ data.experience }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_28[0]">	<value> {{ data.arrive|date:"d" }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_29[0]">	<value> {{ data.arrive|date:"m" }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_30[0]">	<value> {{ data.arrive|date:"Y" }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_31[0]">	<value> {{ data.expired|date:"d" }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_32[0]">	<value> {{ data.expired|date:"m" }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_33[0]">	<value> {{ data.expired|date:"Y" }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_34[0]">	<value> {{ data.mcard_sn }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_35[0]">	<value> {{ data.mcard_no }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_36[0]">	<value> {{ data.represent|slice:":19" }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_37[0]">	<value> {{ data.represent|slice:"19:38" }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].undefined_2[0]">	<value> {{ data.represent|slice:"38:57" }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].undefined_3[0]">	<value> {{ data.represent|slice:"57:76" }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].undefined_4[0]">	<value> {{ data.represent|slice:"76:" }} </value> </field>
+
+        <field name="topmostSubform[0].Page1[0].comb_41[0]">	<value> {{ data.m_lastname }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_42[0]">	<value> {{ data.m_firstname }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_43[0]">	<value> {{ data.m_citizenship }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_44[0]">	<value> {{ data.m_birthdate|date:"d" }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_45[0]">	<value> {{ data.m_birthdate|date:"m" }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_46[0]">	<value> {{ data.m_birthdate|date:"Y" }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_73[0]">	<value> {% if data.m_sex == "1" %} X {% endif %} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_74[0]">	<value> {% if data.m_sex == "2" %} X {% endif %} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_47[0]">	<value> {{ data.m_idcard_type }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_49[0]">	<value> {{ data.m_idcard_sn }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_48[0]">	<value> {{ data.m_idcard_no }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_50[0]">	<value> {{ data.seat_srf.name }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_51[0]">	<value> {{ data.seat_region }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_52[0]">	<value> {{ data.seat_city }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_53[0]">	<value> {{ data.seat_street }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_54[0]">	<value> {{ data.seat_house }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_55[0]">	<value> {{ data.seat_housing }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_56[0]">	<value> {{ data.seat_building }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_57[0]">	<value> {{ data.seat_flat }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_58[0]">	<value> {{ data.expired|date:"d" }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_59[0]">	<value> {{ data.expired|date:"m" }} </value> </field>
+        <field name="topmostSubform[0].Page1[0].comb_60[0]">	<value> {{ data.expired|date:"Y" }} </value> </field>
+
+        <field name="topmostSubform[0].Page2[0].comb_1_2[0]">	<value> {{ data.seat_srf.name }} </value> </field>
+        <field name="topmostSubform[0].Page2[0].comb_2_2[0]">	<value> {{ data.seat_region }} </value> </field>
+        <field name="topmostSubform[0].Page2[0].comb_3_2[0]">	<value> {{ data.seat_city }} </value> </field>
+        <field name="topmostSubform[0].Page2[0].comb_4_2[0]">	<value> {{ data.seat_street }} </value> </field>
+        <field name="topmostSubform[0].Page2[0].comb_5_2[0]">	<value> {{ data.seat_house }} </value> </field>
+        <field name="topmostSubform[0].Page2[0].comb_6_2[0]">	<value> {{ data.seat_housing }} </value> </field>
+        <field name="topmostSubform[0].Page2[0].comb_7_2[0]">	<value> {{ data.seat_building }} </value> </field>
+        <field name="topmostSubform[0].Page2[0].comb_8_2[0]">	<value> {{ data.seat_flat }} </value> </field>
+        <field name="topmostSubform[0].Page2[0].comb_9_2[0]">	<value> {{ data.seat_phone }} </value> </field>
+        <field name="topmostSubform[0].Page2[0].comb_41_2[0]">	<value> {% if data.host_type == "2" %} X {% endif %} </value> </field>
+        <field name="topmostSubform[0].Page2[0].comb_42_2[0]">	<value> {% if data.host_type == "1" %} X {% endif %} </value> </field>
+        <field name="topmostSubform[0].Page2[0].comb_43_2[0]">	<value> {{ data.h_lastname }} </value> </field>
+        <field name="topmostSubform[0].Page2[0].comb_44_2[0]">	<value> {{ data.h_birthdate|date:"d" }} </value> </field>
+        <field name="topmostSubform[0].Page2[0].comb_45_2[0]">	<value> {{ data.h_birthdate|date:"m" }} </value> </field>
+        <field name="topmostSubform[0].Page2[0].comb_46_2[0]">	<value> {{ data.h_birthdate|date:"Y" }} </value> </field>
+        <field name="topmostSubform[0].Page2[0].comb_11_2[0]">	<value> {{ data.h_firstname }} </value> </field>
+        <field name="topmostSubform[0].Page2[0].comb_12_2[0]">	<value> {{ data.h_idcard_type }} </value> </field>
+        <field name="topmostSubform[0].Page2[0].comb_13_2[0]">	<value> {{ data.h_idcard_sn }} </value> </field>
+        <field name="topmostSubform[0].Page2[0].comb_14_2[0]">	<value> {{ data.h_idcard_no }} </value> </field>
+        <field name="topmostSubform[0].Page2[0].comb_15_2[0]">	<value> {{ data.h_idcard_date|date:"d" }} </value> </field>
+        <field name="topmostSubform[0].Page2[0].comb_16_2[0]">	<value> {{ data.h_idcard_date|date:"m" }} </value> </field>
+        <field name="topmostSubform[0].Page2[0].comb_17_2[0]">	<value> {{ data.h_idcard_date|date:"Y" }} </value> </field>
+        <field name="topmostSubform[0].Page2[0].comb_18_2[0]">	<value> {{ data.h_idcard_expired|date:"d" }} </value> </field>
+        <field name="topmostSubform[0].Page2[0].comb_19_2[0]">	<value> {{ data.h_idcard_expired|date:"m" }} </value> </field>
+        <field name="topmostSubform[0].Page2[0].comb_20_2[0]">	<value> {{ data.h_idcard_expired|date:"Y" }} </value> </field>
+        <field name="topmostSubform[0].Page2[0].comb_21_2[0]">	<value> {{ data.h_srf.name }} </value> </field>
+        <field name="topmostSubform[0].Page2[0].comb_22_2[0]">	<value> {{ data.h_region }} </value> </field>
+        <field name="topmostSubform[0].Page2[0].comb_23_2[0]">	<value> {{ data.h_city }} </value> </field>
+        <field name="topmostSubform[0].Page2[0].comb_24_2[0]">	<value> {{ data.h_street }} </value> </field>
+        <field name="topmostSubform[0].Page2[0].comb_25_2[0]">	<value> {{ data.h_house }} </value> </field>
+        <field name="topmostSubform[0].Page2[0].comb_26_2[0]">	<value> {{ data.h_housing }} </value> </field>
+        <field name="topmostSubform[0].Page2[0].comb_27_2[0]">	<value> {{ data.h_building }} </value> </field>
+        <field name="topmostSubform[0].Page2[0].comb_28_2[0]">	<value> {{ data.h_flat }} </value> </field>
+        <field name="topmostSubform[0].Page2[0].comb_29_2[0]">	<value> {{ data.h_phone }} </value> </field>
+        <field name="topmostSubform[0].Page2[0].comb_30_2[0]">	<value> {{ data.org_name }} </value> </field>
+        <field name="topmostSubform[0].Page2[0].comb_31_2[0]">	<value> {{ data.org_addr|slice:":24" }} </value> </field>
+        <field name="topmostSubform[0].Page2[0].undefined_8[0]">	<value> {{ data.org_addr|slice:"24:" }} </value> </field>
+        <field name="topmostSubform[0].Page2[0].comb_33_2[0]">	<value> {{ data.org_inn }} </value> </field>
+
+        <!--field name="topmostSubform[0].Page2[0].comb_34_2[0]">	<value> {{ data. }} </value> </field>
+        <field name="topmostSubform[0].Page2[0].comb_35_2[0]">	<value> {{ data. }} </value> </field>
+        <field name="topmostSubform[0].Page2[0].comb_36_2[0]">	<value> {{ data. }} </value> </field-->
+        <field name="topmostSubform[0].Page2[0].comb_37_2[0]">	<value> {{ data.h_lastname }} </value> </field>
+        <field name="topmostSubform[0].Page2[0].comb_38[0]">	<value> {{ data.h_firstname }} </value> </field>
+    </fields>
+</xfdf>

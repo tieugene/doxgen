@@ -1,0 +1,87 @@
+{% extends "base_dox.html" %}
+{% block title %} {{ name }} {% endblock %}
+{% block meta-description %} {{ comments }} {% endblock %}
+{% block css %}
+table.formtable {
+	border: 1px solid black;
+	border-collapse: collapse;
+	font-family: "Times New Roman", Times, serif;
+	font-style: normal;
+	font-size: 12pt;
+}
+table.formtable tr th {
+	border-bottom: 1px solid black;
+	text-align: left;
+}
+table.formtable tr th label {
+	font-family: "Times New Roman", Times, serif;
+	font-style: normal;
+	font-size: 12pt;
+	font-weight: normal;
+}
+table.formtable tr.required th label {
+	font-weight: bold;
+}
+span.helptext {
+	font-style: italic;
+}
+{% endblock %}
+{% block body_main %}
+	<H1> <a href="{% url dox.views.doc_l uuid %}"> {{ name }} </a> </H1>
+	<p> <p> Будьте внимательны - обязательные поля выделены <b> жирным </b> шрифтом. </p>
+	<p> Если затрудняетесь с заполнением - нажмите кнопку примера. </p>
+	<p> Стереть данные можно кнопкой Очистить. </p>
+	<form id="myForm" action="." method="post">
+		{% csrf_token %}
+		<!-- formaction=""-->
+		{% if user.is_authenticated %}
+			{% include "button_save.html" %}
+		{% endif %}
+		{% if user.is_superuser %}
+			{% include "button_view.html" %}
+		{% endif %}
+		{% include "button_print.html" %}
+		{% include "button_reset.html" %}
+		<a href="{% url dox.views.doc_l uuid %}"> {% include "button_cancel.html" %} </a>
+		{% if example %}
+			Примеры:
+			{% for e in example %}
+				<button type="button" onClick="populateForm('myForm', '{{e.name}}')" title="{{e.tip}}"> {{ e.title }} </button>
+			{% endfor %}
+		{% endif %}
+		{% block body_form %}
+		<table class="formtable">
+		{{ form.as_table }}
+		</table>
+		{% endblock %}
+		{% for k, formset in formlist.iteritems %}
+			<table id="{{ k }}" border="1">
+				<caption> {{ k }} </caption>
+				<tbody>
+				{% for form in formset.forms %}
+					<tr> <td> <table border="0">
+					{{ form.as_table }}
+					</table> </td> </tr>
+				{% endfor %}
+				</tbody>
+			</table>
+			{{ formset.management_form }}
+			<script type="text/javascript">
+				$(function() {
+					$('#{{k}} > tbody > tr').formset({
+						prefix: '{{ formset.prefix }}',
+					});
+				})
+			</script>
+		{% endfor %}
+	</form>
+	{% if example %}
+		<script type="text/javascript">
+			var json = {	{% for e in example %}
+				'{{e.name}}': { {% for k, v in e.data.iteritems %}
+					'id_{{k}}': '{{v}}',	{% endfor %}
+				}, {% endfor %}
+			};
+		</script>
+	{% endif %}
+{% endblock %}

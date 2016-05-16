@@ -1,0 +1,146 @@
+{% load static %}
+{# load adminmedia #}
+{% get_static_prefix as STATIC_URL %}
+{# / #}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title> DoxGen - {% block title %} заполнение бланков {% endblock %} </title>
+	<meta name="description" content="{% block meta-description %}Заполнение бланков{% endblock %}">
+	<meta name="keywords" content="{% block meta-keywords %}бланк, заполнить, скачать, бесплатно, форма, ПД-4, 21001, 26.2-1{% endblock %}">
+	<link type="text/css" href="{{ STATIC_URL }}css/base.css" rel="stylesheet">
+	<link type="text/css" href="{{ STATIC_URL }}css/colors.css" rel="stylesheet"/>
+	<link type="text/css" href="{{ STATIC_URL }}css/fieldset.css" rel="stylesheet"/>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.min.js"></script>
+	<!-- admin -->
+	<link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css" />
+	<!--link rel="stylesheet" type="text/css" href="/static/admin/css/base.css" /-->
+	<link rel="stylesheet" type="text/css" href="/static/admin/css/widgets.css" />
+	<script type="text/javascript">window.__admin_media_prefix__ = "/static/admin/";</script>
+	<!--script type="text/javascript" src="/admin/jsi18n/"></script-->
+	<script type="text/javascript" src="{% url django.views.i18n.javascript_catalog %}"></script>
+	<script type="text/javascript" src="/static/admin/js/core.js"></script>
+	<script type="text/javascript" src="/static/admin/js/calendar.js"></script>
+	<script type="text/javascript" src="/static/admin/js/admin/DateTimeShortcuts.js"></script>
+	<!-- /admin -->
+	<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.formset.min.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.populate.js"></script>
+	{% block js %}
+	{% endblock %}
+	<script type="text/javascript">
+		$(document).ready(function () {
+			{% block jsready %}
+			{% endblock %}
+		})
+		function populateForm(form, data) {
+			$(document.forms['myForm']).populate(json[data]);
+		}
+	</script>
+	<style type="text/css" >
+		dt p	{ font-weight: bold; }
+		table {
+			border-collapse: collapse;
+			border: none;
+		}
+		td {
+			border: 1px solid black;
+			padding: 2pt;
+		}
+		#topmenu {
+			background-color: #EBEFF9;
+			display: table;
+			width: 100%;
+			text-align: center;
+			border-top: 5px solid #EBEFF9;
+		}
+		#topmenu > div {
+			display: table-cell;
+			border-bottom: 1px solid #6B90DA;
+			padding: 3px 1em;
+			white-space: nowrap;
+		}
+		#topmenu div.active {
+			border: 1px solid #6B90DA;
+			border-bottom-color: white;
+			background: white;
+			-webkit-border-top-left-radius: 5px;
+			-webkit-border-top-right-radius: 5px;
+			-moz-border-radius-topleft: 5px;
+			-moz-border-radius-topright: 5px;
+			border-top-left-radius: 5px;
+			border-top-right-radius: 5px;
+			/* gradient */
+			background: -moz-linear-gradient(top, #EBEFF9, white);		/* Firefox 3.6+ Chrome 1-9, Safari 4-5 */
+			background: -webkit-linear-gradient(top, #EBEFF9, white);	/* Chrome 10+ 4-5 */
+			background: -o-linear-gradient(top, #EBEFF9, white);		/* Opera 11.10+ */
+			background: -ms-linear-gradient(top, #EBEFF9, white);		/* IE 10 */
+			background: linear-gradient(top, #EBEFF9, white);		/* CSS3 */
+		}
+		#topmenu a:link {
+			color: blue;
+		}
+		#topmenu a:visited {
+			color: blue;
+		}
+		button.rounded {
+			-webkit-border-radius: 5px;
+			-moz-border-radius: 5px;
+			border-radius: 5px;
+		}
+		.even	{ background-color: white; }
+		.odd	{ background-color: #F0F0F0; }
+		.wide	{ width: 100%; }
+		.table	{ display: table; }
+		.row	{ display: table-row; }
+		.cell	{ display: table-cell; }
+		.center	{ text-align: center; }
+		.right	{ text-align: right; }
+		.bt	{ border-top: 1px solid black; }
+		.bb	{ border-bottom: 1px solid black; }
+		.bl	{ border-left: 1px solid black; }
+		.br	{ border-right: 1px solid black; }
+		.box	{ border: 1px solid black; }
+		.nobt	{ border-top: 0; }
+		.nobb	{ border-bottom: 0; }
+		.nobl	{ border-left: 0; }
+		.nobr	{ border-right: 0; }
+		.nobox	{ border: 0; }
+		.bold	{ font-weight: bold; }
+		div#legend {
+			margin: auto;
+			border: 1px solid lightgrey;
+			margin: 3pt;
+			padding: 3pt;
+			-webkit-border-radius: 5px;
+			-moz-border-radius: 5px;
+			border-radius: 5px;
+			background-color: whitesmoke;
+		}
+	{% block css %}
+	{% endblock %}
+	</style>
+</head>
+<body>
+<div id="topmenu">
+	<div id="tm_index" class=""> <a href="{% url dox.views.index %}"> <img src="{{ STATIC_URL }}img/icon-home.png" alt="Главная" title="Главная"/> </a> </div>
+	<div style="width: 100%"> <b> DoxGen </b> </div>
+	{% if user.is_authenticated %}
+		<div> {{ user.username }} : </div>
+		<div> <a href="{% url django.contrib.auth.views.logout %}?next={% url views.index %}"> <img src="{{ STATIC_URL }}img/icon-exit.png" alt="Выход" title="Выход"/> </a> </div>
+		{% if user.is_superuser %}
+			<div id="tm_admin"> <a href="{% url admin:index %}"> <img src="{{ STATIC_URL }}img/icon-settingsthree-gears.png" alt="Админка" title="Админка"/> </a> </div>
+			<div id="tm_log"> <a href="{% url dox.views.log_l %}"> <img src="{{ STATIC_URL }}img/icon-list.png" alt="Лог" title="Лог"/> </a> </div>
+		{% endif %}
+	{% else %}
+		<div id="tm_login"> <a href="{% url django.contrib.auth.views.login %}?next={% url views.index %}" rel="nofollow"> <img src="{{ STATIC_URL }}img/icon-enter.png" alt="Вход" title="Вход"/> </a> </div>
+	{% endif %}
+	<div id="tm_about"> <a href="{% url views.about %}"> <img src="{{ STATIC_URL }}img/icon-info-sign.png" alt="О программе" title="О программе"/> </a> </div>
+</div>
+	<div>
+	{% block body_main %}
+		<p> Заглушка </p>
+	{% endblock %}
+	</div>
+</body>
+</html>

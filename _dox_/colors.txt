@@ -1,0 +1,9 @@
+#000000	Black
+#696969	DimGray
+#808080	Gray
+#A9A9A9	DarkGray
+#C0C0C0	Silver
+#D3D3D3	LightGray
+#DCDCDC	Gainsboro
+#F5F5F5	WhiteSmoke
+#FFFFFF	White

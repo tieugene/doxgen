@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <style type="text/css" >
+	@page	{ size: 21cm 29.7cm; margin: 1cm; }
+	.pt8	{ font-size: 8pt; }
+	.sans	{ font-family: Arial, sans-serif; }
+	.serif	{ font-family: Times, serif; }
+	div.table	{
+		display: table;
+	}
+	div.row	{
+		display: table-row;
+	}
+	div.cell	{
+		display: table-cell;
+	}
+	div.wide	{
+		width: 99%;
+	}
+	div.main	{
+		height: 81mm;	/* 230pt */
+		border: 1px solid black;
+	}
+	div.left	{
+		width: 50mm;	/* 140pt */
+		border-right: 1px solid black;
+	}
+	div.right	{
+		width: 140mm;	/* 280pt */
+		padding-left: 2pt;
+	}
+	div.right > div.table {
+		margin-top: 3pt;
+	}
+	div.label	{
+		font-family: Arial, sans-serif;
+		font-size: 8pt;
+	}
+	div.data	{
+		font-family: Arial, sans-serif;
+		font-size: 8pt;
+		font-style: oblique;
+		border-bottom: 1px solid black;
+		text-align: center;
+		vertical-align: bottom;
+	}
+	div.sign	{
+		font-size: 6pt;
+		text-align: center;
+		vertical-align: super;
+	}
+
+  </style>
+  <title> Форма ПД-4сб </title>
+</head>
+
+<body>
+
+{% for i in "ab" %}
+<div class="table main">
+	<div class="cell left">
+		<p class="serif pt8" style="margin-top: 5mm;" align="center"> <b> {% if forloop.first %} Извещение {% else %} Квитанция {% endif %}  </b> </p>
+		<p class="serif pt8" style="margin-top: 50mm;" align="center"> <b> Кассир </b> </p>
+	</div>
+	<div class="cell right" style="padding-top: 0pt;">
+		<p class="serif pt8" align="right" style="margin-top: 0"> <b> <i> Форма № ПД-4сб </i> </b> </p>
+		<div class="table wide">
+			<div class="row">
+				<div class="cell data"> {{ data.recipient }} </div>
+				<div class="cell label"> КПП </div>
+				<div class="cell data"> {{ data.kpp }} </div>
+			</div>
+			<div class="row sign">
+				<div class="cell"> (наименование получателя платежа) </div>
+				<div class="cell"> </div>
+				<div class="cell"> </div>
+			</div>
+		</div>
+		<div class="table wide">
+			<div class="row">
+				<div class="cell data"> {{ data.inn }} </div>
+				<div class="cell data"> {{ data.recishort }} </div>
+				<div class="cell data"> {{ data.okato }} </div>
+			</div>
+			<div class="row sign">
+				<div class="cell"> ИНН налогового органа </div>
+				<div class="cell"> и его сокращенное наименование </div>
+				<div class="cell"> Код ОКАТО </div>
+			</div>
+		</div>
+		<div class="table wide">
+			<div class="row">
+				<div class="cell data"> {{ data.account }} </div>
+				<div class="cell label"> в </div>
+				<div class="cell data"> {{ data.bank }} </div>
+			</div>
+			<div class="row sign">
+				<div class="cell"> (номер счета получателя платежа) </div>
+				<div class="cell"> </div>
+				<div class="cell"> (наименование банка) </div>
+			</div>
+		</div>
+		<div class="table wide">
+				<div class="cell label" style="width: 10mm"> БИК: </div>
+				<div class="cell data"> {{ data.bik }} </div>
+				<div class="cell label" style="width: 10mm"> Кор./сч.: </div>
+				<div class="cell data" style="width: 80mm"> {{ data.ks }} </div>
+		</div>
+		<div class="table wide">
+			<div class="row">
+				<div class="cell data"> {{ data.details }} </div>
+				<div class="cell data"> {{ data.kbk }} </div>
+			</div>
+			<div class="row sign">
+				<div class="cell"> (наименование платежа) </div>
+				<div class="cell"> (код бюджетной классификации КБК) </div>
+			</div>
+		</div>
+		<div class="table wide">
+			<div class="cell label" style="width: 20mm"> Плательщик <br/> (Ф.И.О.): </div>
+			<div class="cell data">	{{ data.payer_fio }} </div>
+		</div>
+		<div class="table wide">
+			<div class="cell label" style="width: 20mm"> Адрес <br/> плательщика: </div>
+			<div class="cell data">	{{ data.payer_address }} </div>
+		</div>
+		<div class="table wide">
+			<div class="cell label" style="width: 20mm"> ИНН <br/> плательщика: </div>
+			<div class="cell data" style="width: 30mm"> {{ data.payer_inn }} </div>
+			<div class="cell label" style="width: 20mm"> № л.сч. <br/> плательщика: </div>
+			<div class="cell data">	{{ data.payer_ls }} </div>
+		</div>
+		<div class="table wide">
+			<div class="cell label" style="width: 10mm"> Сумма: </div>
+			<div class="cell data">	{{ data.total }} руб. </div>
+		</div>
+		<div class="table wide">
+			<div class="cell label" style="width: 35mm"> Плательщик (подпись): </div>
+			<div class="cell data" style="width: 30mm"> </div>
+			<div class="cell label" style="width: 10mm"> Дата: </div>
+			<div class="cell data">	{{ data.date }} </div>
+		</div>
+	</div>
+</div>
+{% endfor %}
+
+</body>
+</html>
