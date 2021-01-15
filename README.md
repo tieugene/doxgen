@@ -87,8 +87,8 @@ Document generator
 - Google Page Speed
 
 ## TODO
-- python3
-- django 3.x:
++ python3
++ django 3.x:
   - i18n/l10n
   - syslog
 - refucktor:
