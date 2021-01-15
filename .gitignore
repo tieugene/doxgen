@@ -2,5 +2,7 @@ __pycache__
 .idea
 *.sqlite3
 # working data
+static/ttf/*.ttf
+dox/sql/*.sql
 dox/tpl/*.py
 templates/form/*.html

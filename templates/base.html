@@ -124,13 +124,13 @@
 	<div style="width: 100%"> <b> DoxGen </b> </div>
 	{% if user.is_authenticated %}
 		<div> {{ user.username }} : </div>
-		<div> <a href="{% url 'django.contrib.auth.views.logout' %}?next={% url 'views.index' %}"> <img src="{% static 'img/icon-exit.png' %}" alt="Выход" title="Выход"/> </a> </div>
+		<div> <a href="{% url 'logout' %}"> <img src="{% static 'img/icon-exit.png' %}" alt="Выход" title="Выход"/> </a> </div>
 		{% if user.is_superuser %}
-			<div id="tm_admin"> <a href="{% url 'admin' %}"> <img src="{% static 'img/icon-settingsthree-gears.png' %}" alt="Админка" title="Админка"/> </a> </div>
-			<div id="tm_log"> <a href="{% url 'dox.views.log_l' %}"> <img src="{% static 'img/icon-list.png' %}" alt="Лог" title="Лог"/> </a> </div>
+			<div id="tm_admin"> <a href="{% url 'admin:index' %}"> <img src="{% static 'img/icon-settingsthree-gears.png' %}" alt="Админка" title="Админка"/> </a> </div>
+			<div id="tm_log"> <a href="{% url 'log_list' %}"> <img src="{% static 'img/icon-list.png' %}" alt="Лог" title="Лог"/> </a> </div>
 		{% endif %}
 	{% else %}
-		<!-- div id="tm_login"> <a href="{# url 'django.contrib.auth.views.login' #}?next={# url 'views.index' #}" rel="nofollow"> <img src="{# static 'img/icon-enter.png' #}" alt="Вход" title="Вход"/> </a> </div -->
+		<div id="tm_login"> <a href="{% url 'login' %}" rel="nofollow"> <img src="{% static 'img/icon-enter.png' %}" alt="Вход" title="Вход"/> </a> </div>
 	{% endif %}
 	<div id="tm_about"> <a href="{% url 'about' %}"> <img src="{% static 'img/icon-info-sign.png' %}" alt="О программе" title="О программе"/> </a> </div>
 </div>

@@ -105,5 +105,9 @@ Document generator
 - move to flask (like uvedomlenie) or webpy (solo)
 - pymorphy2
 
-# MoinMoin
-
+# FIXME:
+- uuid urls type
+- login/logout
+- /index forward to dox/
+- tpl list is empty
+- tpl/z*.py: bad import (Okved, SSRF)

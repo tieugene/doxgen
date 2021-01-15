@@ -14,6 +14,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.template import RequestContext
 from django.views.generic import DetailView, ListView
+from django.views.generic.base import TemplateView
 # from django.views.generic.list_detail import object_list
 
 # 4. my
@@ -126,52 +127,26 @@ def try_tpl(fn):
     def _wrapped(*args, **kwargs):
         __try_tpl()
         return fn(*args, **kwargs)
-
     return _wrapped
 
-
-@try_tpl
-def index(request):
-    """
-    List of templates
-    """
-    __log_request(request)
-    return render(request, 'tpl_list.html', context={'data': moduledict, })
+# ====
 
 
-'''
-def log_l(request):
-    """
-    Log list
-    """
-    return object_list(
-        request,
-        queryset=models.Log.objects.order_by('-pk'),
-        paginate_by=PAGE_SIZE,
-        page=int(request.GET.get('page', '1')),
-        template_name='log_list.html',
-    )
-'''
+class TplList(TemplateView):
+    template_name = "tpl_list.html"
+
+    @try_tpl
+    def get_context_data(self, **kwargs):
+        # __log_request(request)
+        context = super().get_context_data(**kwargs)
+        context['data'] = moduledict
+        return context
 
 
 class LogList(ListView):
     model = models.Log
     paginate_by = PAGE_SIZE
     template_name = 'log_list.html'  # default 'dox/log_list.html'
-
-
-'''
-def log_d(request, pk):
-    """
-    Log detail
-    """
-    return object_detail(
-        request,
-        queryset=models.Log.objects.all(),
-        object_id=pk,
-        template_name='log_detail.html',
-    )
-'''
 
 
 class LogDetail(DetailView):
@@ -186,7 +161,7 @@ def doc_l(request, uuid):
     """
     __log_request(request)
     tpl = moduledict[uuid]
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         queryset = models.Doc.objects.filter(user=request.user, type=uuid).order_by('name')
     else:
         queryset = models.Doc.objects.none()

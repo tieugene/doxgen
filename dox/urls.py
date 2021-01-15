@@ -8,18 +8,18 @@ from django.urls import path, re_path
 from . import views
 
 urlpatterns = [
-	path('',								views.index),
-	path('log/',							views.LogList.as_view()),
-	re_path(r'^log/(?P<pk>\d+)/$',			views.LogDetail.as_view()),
-	re_path(r'^(?P<uuid>[0-9A-Z]{32})/$',	views.doc_l),		# list (GET)
+	path('',				views.TplList.as_view(), name='tpl_list'),
+	path('l/',				views.LogList.as_view(), name='log_list'),
+	path('l/<int:pk>/',		views.LogDetail.as_view(), name='log_view'),
+	path('d/<str:uuid>/',	views.doc_l, name='doc_list'),		# list (GET)
 	# acu
-	re_path(r'^(?P<uuid>[0-9A-Z]{32})/a/$',	views.doc_a),		# anon (GET/POST=>print))	TODO: POST>view
-	re_path(r'^(?P<uuid>[0-9A-Z]{32})/c/$',	views.doc_c),		# create (GET/POST=>save)	TODO: POST=>print/view
-	re_path(r'^(?P<pk>\d+)/u/$',			views.doc_u),		# update (GET/POST=>save)	TODO: POST=>print/view
+	path('d/<str:uuid>/a/',	views.doc_a, name='doc_anon'),		# anon (GET/POST=>print))	TODO: POST>view
+	path('d/<str:uuid>/c/',	views.doc_c, name='doc_add'),		# create (GET/POST=>save)	TODO: POST=>print/view
+	path('d/<int:pk>/u/',	views.doc_u, name='doc_upd'),		# update (GET/POST=>save)	TODO: POST=>print/view
 	# rvp
-	re_path(r'^(?P<pk>\d+)/r/$',			views.doc_r),		# read (GET)
-	re_path(r'^(?P<pk>\d+)/v/$',			views.doc_v),		# [pre]view (GET)
-	re_path(r'^(?P<pk>\d+)/p/$',			views.doc_p),		# print (GET)
+	path('d/<int:pk>/r/',	views.doc_r, name='doc_read'),		# read (GET)
+	path('d/<int:pk>/v/',	views.doc_v, name='doc_view'),		# [pre]view (GET)
+	path('d/<int:pk>/p/',	views.doc_p, name='doc_prn'),		# print (GET)
 	#
-	re_path(r'^(?P<pk>\d+)/d/$',			views.doc_d),		# delete (GET)
+	path('d/<int:pk>/d/',	views.doc_d, name='doc_del'),		# delete (GET)
 ]

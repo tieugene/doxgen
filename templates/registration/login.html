@@ -1,11 +1,10 @@
 {%extends "base.html"%}
+{% block title %} Login {% endblock %}
 {% block body_main %}
-<form method="post" action="{% url django.contrib.auth.views.login %}">
-	{% csrf_token %}
-	<table>
-		{{ form.as_table }}
-	</table>
-	<input type="submit" value="Войти"/>
-	<input type="hidden" name="next" value="{{ next }}" />
-</form>
+    <h1> Login </h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit"> Login </button>
+    </form>
 {% endblock %}
