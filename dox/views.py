@@ -2,8 +2,10 @@
 
 # 2. system
 import importlib
+import importlib.util
 import json
 import os
+import sys
 from collections import OrderedDict
 
 # 1. django
@@ -57,7 +59,7 @@ def __load_modules(path):
     """
     Load all Python modules from a directory into a dict.
 
-    :param path: the path to the living place of the modules to load.
+    :param path: the full path to the living place of the modules to load.
     :type path: :class:`str`
     :returns: map between loaded modules name and their content.
     :rtype: :class:`dict`
@@ -67,9 +69,10 @@ def __load_modules(path):
     for fname in dir_list:
         name, ext = os.path.splitext(fname)
         if ext == '.py' and not name == '__init__':
-            # f, filename, descr = imp.find_module(name, [path])
-            # mods[name] = imp.load_module(name, f, filename, descr)
-            mods[name] = importlib.import_module(name)
+            try:
+                mods[name] = importlib.import_module('dox.tpl.'+name)  # hack
+            except Exception as ex:
+                print("Unable load module '{}': {}".format(name, ex))
     return mods
 
 
@@ -89,7 +92,7 @@ def __try_tpl():
             moduledict[uuid] = {K_V_MODULE: module, }
             # 3. add dates fields
             datefields = list()
-            for i, j in data[K_T_FIELD].iteritems():  # each field definition:
+            for i, j in data[K_T_FIELD].items():  # each field definition:
                 if j[K_T_FIELD_T] == K_DATE_FIELD:
                     datefields.append(i)
             if datefields:
@@ -237,7 +240,7 @@ def __doc_acu(request, pk, mode):
             del form.fields[K_T_F_NAME]
         formlist = OrderedDict()
         isvalid = form.is_valid()
-        for k, formset in formsetsclass.iteritems():
+        for k, formset in formsetsclass.items():
             formlist[k] = formset(request.POST, prefix=k)
             isvalid = isvalid and formlist[k].is_valid()
         if isvalid:
@@ -289,7 +292,7 @@ def __doc_acu(request, pk, mode):
             if mode == 0:  # ANON
                 del form.fields[K_T_F_NAME]
             formlist = OrderedDict()
-            for k, formset in formsetsclass.iteritems():
+            for k, formset in formsetsclass.items():
                 formlist[k] = formset(prefix=k)
         else:  # UPDATE
             data = json.loads(item.data)
@@ -305,10 +308,10 @@ def __doc_acu(request, pk, mode):
             # split form and formsets
             # 1. eject formsets
             formlist = OrderedDict()
-            for pfx, formset in formsetsclass.iteritems():  # formsetsclass == OrderedDict {name: FormSetClass}
+            for pfx, formset in formsetsclass.items():  # formsetsclass == OrderedDict {name: FormSetClass}
                 formset_data = dict()
                 for i, l in enumerate(data.get(pfx, list())):  # l:str - formset name; l:
-                    for k, v in l.iteritems():
+                    for k, v in l.items():
                         formset_data[pfx + '-' + str(i) + '-' + k] = v
                 formset_data.update({
                     pfx + '-TOTAL_FORMS': len(data[pfx]) if pfx in data else 1,
@@ -368,7 +371,7 @@ def __doc_rvp(request, pk, mode):
         # transform data:
         # 1. single values: { key: value, } => [{ k: key, v: value, l: label, h: help }, ]
         datalist = list()
-        for k, v in tpl[K_V_MODULE].DATA[K_T_FIELD].iteritems():
+        for k, v in tpl[K_V_MODULE].DATA[K_T_FIELD].items():
             datalist.append({
                 'k': k,
                 'v': data[k],
@@ -378,9 +381,9 @@ def __doc_rvp(request, pk, mode):
         # 2. multivalues: { key: [{k: value,},],} => [{l: label, h: help, t: header, v: [[{value,],],]
         datasets = list()
         if K_T_S in tpl[K_V_MODULE].DATA:
-            for k, v in tpl[K_V_MODULE].DATA[K_T_S].iteritems():
+            for k, v in tpl[K_V_MODULE].DATA[K_T_S].items():
                 header = list()
-                for i, j in v[K_T_FIELD_T].iteritems():
+                for i, j in v[K_T_FIELD_T].items():
                     header.append(j[K_T_FIELD_A]['label'])
                 dataset = list()  # all lines
                 if k in data:  # skip empty multivalues

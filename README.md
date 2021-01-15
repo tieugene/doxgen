@@ -1,4 +1,5 @@
-# doxgen
+# DoxGen
+
 Document generator
 
 ## Requirements
@@ -12,10 +13,10 @@ Document generator
 - [xfdftool](http://dik123.blogspot.com/2010/06/pdf.html), pdftk (no rpm, [RTFM](http://www.myown1.com/linux/pdf_formfill.shtml))
 - fonts:
   - [Liberation](https://github.com/liberationfonts/liberation-fonts) &copy; RH or [liberastica](https://code.google.com/archive/p/liberastika/) (cyr)
-  - [vera](https://download.gnome.org/sources/ttf-bitstream-vera/1.10/) &copy; Gnome
-  - [google](https://github.com/google/fonts)
-  - PT &copy; ParaType
-  - [microsoft core fonts](https://sourceforge.net/projects/corefonts/) &copy; Monotype (deb: ttf-mscorefonts-installer)
+  - [Vera](https://download.gnome.org/sources/ttf-bitstream-vera/1.10/) &copy; Gnome
+  - [Google's](https://github.com/google/fonts)
+  - PT_ &copy; ParaType
+  - [Microsoft core fonts](https://sourceforge.net/projects/corefonts/) &copy; Monotype (deb: ttf-mscorefonts-installer)
 
 ## Formats:
 
@@ -24,13 +25,13 @@ Document generator
   - html:
     - &check;[*xhtml2pdf*](https://github.com/xhtml2pdf/xhtml2pdf) (py, reportlab+PyPDF2+html5lib)
     - &check;[*weasyprint*](https://www.courtbouillon.org/weasyprint) (py, [pydyf](https://github.com/CourtBouillon/pydyf))
-    - *wkhtml2pdf* (CLI, w/ pages) | pdfkit
-    - [htmldoc](https://github.com/michaelrsweet/htmldoc/) (CLI)
+    - [*wkhtml2pdf*](https://github.com/wkhtmltopdf/wkhtmltopdf) (CLI, w/ [page braek](https://github.com/wkhtmltopdf/wkhtmltopdf/issues/2982)) | pdfkit
+    - [~~htmldoc~~](https://github.com/michaelrsweet/htmldoc/) (CLI)
   - rml:
     - &check;[*trml2pdf*](https://github.com/tieugene/trml2pdf) (py, reportlab)
-    - [z3c.rml](https://github.com/tieugene/z3c.rml) (py, reportlab)
+    - [z3c.rml](https://github.com/tieugene/z3c.rml) (py, reportlab, zope.*)
   - pdf form:
-    - &check;[*PyFPDF*](https://github.com/reingart/pyfpdf) (py)
+    - &check;[*PyFPDF*](https://github.com/reingart/pyfpdf) (py, pure)
     - [PyPDF2](https://github.com/mstamy2/PyPDF2) (py, pure) - manip pdf
     - ~~pdftk~~ (Java, can be server)
     - [~~pdfformfill~~](https://github.com/frainfreeze/pdformfill) (py, pdftk)
@@ -49,7 +50,7 @@ Document generator
   - doc[x]/odt:
     - unoconv/loffice service
 
-## oauth provider:
+## OAuth providers
 
 - google
 - apple
@@ -68,18 +69,22 @@ Document generator
 - smtp: chk domain and [user](https://github.com/un33k/python-emailahoy) exists:
   `socket.gethostbyname(domain:str)`
 
-## try
+## Try
 
-- PyPDF
-- python3-django-post_office
-- python3-django-registration
-- python3-django-rules
-- python3-mozilla-django-oidc : (OpenID)
-- python3-flask-oauth : Adds OAuth support to Flask
-- python3-flask-oidc : An openID Connect support for Flask
-- python3-flask-openid : OpenID support for Flask
-- https://github.com/jazzband/django-oauth-toolkit
-- https://github.com/lepture/flask-oauthlib
+- Google 'single application django project'
+- PyPDF[2]
+- python3-django-:
+  - post_office
+  - registration
+  - rules
+  - python3-mozilla-django-oidc : (OpenID)
+  - [oauth-toolkit)(https://github.com/jazzband/django-oauth-toolkit)
+- python3-flask-:
+  - oauth : Adds OAuth support to Flask
+  - oidc : An openID Connect support for Flask
+  - openid : OpenID support for Flask
+  - [authlib](https://github.com/lepture/flask-oauthlib)
+- Google Page Speed
 
 ## TODO
 - python3
@@ -89,7 +94,16 @@ Document generator
 - refucktor:
   - src &rArr; src/
   - mv manage.py doxgen_mgr
-  - framework independent &rArr; subdir/: modules, import &rarr; tpl &rarr; export
+  - framework independent &rArr; subdir/ (modules, import &rarr; tpl &rarr; export):
+    - consts.py
+    - converter.py
+    - dox_test_cs.py
+    - dox/ref/
+    - dox/tpl/ ?
   - std: setup.py, *.spec, tox.ini, doc/
+- incapsulate plugins into a separate dir each
 - move to flask (like uvedomlenie) or webpy (solo)
 - pymorphy2
+
+# MoinMoin
+

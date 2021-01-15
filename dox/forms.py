@@ -124,7 +124,7 @@ def GenForm(fieldlist, named=True):  # FIXME: form name (for formset class name)
         # fields[K_T_F_NAME] = t(label='Наименование', help_text='уникальное для данного типа документов')
         # fields[K_T_F_NAME] = forms.CharField(label='Наименование', help_text='уникальное для данного типа документов')
         fields[K_T_F_NAME] = forms.CharField(label='Наименование')
-    for k, v in fieldlist.iteritems():
+    for k, v in fieldlist.items():
         # class t(field_dict[v[K_T_FIELD_T]], WrappedFormField):
         #   pass
         # fields[k] = t(**v[K_T_FIELD_A])
@@ -147,7 +147,7 @@ def GenFormSets(formlist):
     :return OrderedDict { k: formset class }
     """
     retvalue = OrderedDict()
-    for k, v in formlist.iteritems():  # i:str - formset key, j:{ K_T_FIELD_A: {}, K_T_FIELD_T: OrderedDict() } - of fields definitions
+    for k, v in formlist.items():  # i:str - formset key, j:{ K_T_FIELD_A: {}, K_T_FIELD_T: OrderedDict() } - of fields definitions
         retvalue[k] = formset_factory(GenForm(v[K_T_FIELD_T], named=False))
     return retvalue
 

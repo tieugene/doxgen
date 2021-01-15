@@ -74,7 +74,7 @@ def html2pdf(request, context_dict, template):
     return response
 
 
-def rml2pdf(request, context_dict, template):
+def rml2pdf(_, context_dict, template):
     """
     Create pdf from rml-template and return file to user
     """
@@ -89,9 +89,9 @@ def rml2pdf(request, context_dict, template):
     return response
 
 
-def xfdf2pdf(request, context_dict, template):
+def xfdf2pdf(_, context_dict, template):
     """
-    @param request: not used
+    @param _: not used
     @param template: xfdf-file
     @param context_dict: [pdf form]
     1. render xfdf to stdout
