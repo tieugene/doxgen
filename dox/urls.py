@@ -1,23 +1,25 @@
 # -*- coding: utf-8 -*-
-'''
-lansite.apps.core.urls
-'''
+"""
+dox.urls
+"""
 
-from django.conf.urls.defaults import *
+from django.urls import path, re_path
 
-urlpatterns = patterns('dox.views',
-	url(r'^$',				'index'),
-	url(r'^log/$',				'log_l'),
-	url(r'^log/(?P<id>\d+)/$',		'log_d'),
-	url(r'^(?P<uuid>[0-9A-Z]{32})/$',	'doc_l'),	# list (GET)
+from . import views
+
+urlpatterns = [
+	path('',								views.index),
+	path('log/',							views.LogList.as_view()),
+	re_path(r'^log/(?P<pk>\d+)/$',			views.LogDetail.as_view()),
+	re_path(r'^(?P<uuid>[0-9A-Z]{32})/$',	views.doc_l),		# list (GET)
 	# acu
-	url(r'^(?P<uuid>[0-9A-Z]{32})/a/$',	'doc_a'),	# anon (GET/POST=>print))	TODO: POST>view
-	url(r'^(?P<uuid>[0-9A-Z]{32})/c/$',	'doc_c'),	# create (GET/POST=>save)	TODO: POST=>print/view
-	url(r'^(?P<id>\d+)/u/$',		'doc_u'),	# update (GET/POST=>save)	TODO: POST=>print/view
+	re_path(r'^(?P<uuid>[0-9A-Z]{32})/a/$',	views.doc_a),		# anon (GET/POST=>print))	TODO: POST>view
+	re_path(r'^(?P<uuid>[0-9A-Z]{32})/c/$',	views.doc_c),		# create (GET/POST=>save)	TODO: POST=>print/view
+	re_path(r'^(?P<pk>\d+)/u/$',			views.doc_u),		# update (GET/POST=>save)	TODO: POST=>print/view
 	# rvp
-	url(r'^(?P<id>\d+)/r/$',		'doc_r'),	# read (GET)
-	url(r'^(?P<id>\d+)/v/$',		'doc_v'),	# [pre]view (GET)
-	url(r'^(?P<id>\d+)/p/$',		'doc_p'),	# print (GET)
+	re_path(r'^(?P<pk>\d+)/r/$',			views.doc_r),		# read (GET)
+	re_path(r'^(?P<pk>\d+)/v/$',			views.doc_v),		# [pre]view (GET)
+	re_path(r'^(?P<pk>\d+)/p/$',			views.doc_p),		# print (GET)
 	#
-	url(r'^(?P<id>\d+)/d/$',		'doc_d'),	# delete (GET)
-)
+	re_path(r'^(?P<pk>\d+)/d/$',			views.doc_d),		# delete (GET)
+]

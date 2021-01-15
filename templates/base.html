@@ -9,23 +9,22 @@
 	<title> DoxGen - {% block title %} заполнение бланков {% endblock %} </title>
 	<meta name="description" content="{% block meta-description %}Заполнение бланков{% endblock %}">
 	<meta name="keywords" content="{% block meta-keywords %}бланк, заполнить, скачать, бесплатно, форма, ПД-4, 21001, 26.2-1{% endblock %}">
-	<link type="text/css" href="{{ STATIC_URL }}css/base.css" rel="stylesheet">
-	<link type="text/css" href="{{ STATIC_URL }}css/colors.css" rel="stylesheet"/>
-	<link type="text/css" href="{{ STATIC_URL }}css/fieldset.css" rel="stylesheet"/>
-	<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.min.js"></script>
+	<link type="text/css" rel="stylesheet" href="{% static 'css/base.css' %}">
+	<link type="text/css" rel="stylesheet" href="{% static 'css/colors.css' %}"/>
+	<link type="text/css" rel="stylesheet" href="{% static 'css/fieldset.css' %}"/>
+	<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
 	<!-- admin -->
 	<link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css" />
 	<!--link rel="stylesheet" type="text/css" href="/static/admin/css/base.css" /-->
 	<link rel="stylesheet" type="text/css" href="/static/admin/css/widgets.css" />
 	<script type="text/javascript">window.__admin_media_prefix__ = "/static/admin/";</script>
 	<!--script type="text/javascript" src="/admin/jsi18n/"></script-->
-	<script type="text/javascript" src="{% url django.views.i18n.javascript_catalog %}"></script>
 	<script type="text/javascript" src="/static/admin/js/core.js"></script>
 	<script type="text/javascript" src="/static/admin/js/calendar.js"></script>
 	<script type="text/javascript" src="/static/admin/js/admin/DateTimeShortcuts.js"></script>
 	<!-- /admin -->
-	<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.formset.min.js"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.populate.js"></script>
+	<script type="text/javascript" src="{% static 'js/jquery.formset.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/jquery.populate.js' %}"></script>
 	{% block js %}
 	{% endblock %}
 	<script type="text/javascript">
@@ -123,19 +122,19 @@
 </head>
 <body>
 <div id="topmenu">
-	<div id="tm_index" class=""> <a href="{% url dox.views.index %}"> <img src="{{ STATIC_URL }}img/icon-home.png" alt="Главная" title="Главная"/> </a> </div>
+	<div id="tm_index" class=""> <a href="{% url 'index' %}"> <img src="{% static 'img/icon-home.png' %}" alt="Главная" title="Главная"/> </a> </div>
 	<div style="width: 100%"> <b> DoxGen </b> </div>
 	{% if user.is_authenticated %}
 		<div> {{ user.username }} : </div>
-		<div> <a href="{% url django.contrib.auth.views.logout %}?next={% url views.index %}"> <img src="{{ STATIC_URL }}img/icon-exit.png" alt="Выход" title="Выход"/> </a> </div>
+		<div> <a href="{% url 'django.contrib.auth.views.logout' %}?next={% url 'views.index' %}"> <img src="{% static 'img/icon-exit.png' %}" alt="Выход" title="Выход"/> </a> </div>
 		{% if user.is_superuser %}
-			<div id="tm_admin"> <a href="{% url admin:index %}"> <img src="{{ STATIC_URL }}img/icon-settingsthree-gears.png" alt="Админка" title="Админка"/> </a> </div>
-			<div id="tm_log"> <a href="{% url dox.views.log_l %}"> <img src="{{ STATIC_URL }}img/icon-list.png" alt="Лог" title="Лог"/> </a> </div>
+			<div id="tm_admin"> <a href="{% url 'admin' %}"> <img src="{% static 'img/icon-settingsthree-gears.png' %}" alt="Админка" title="Админка"/> </a> </div>
+			<div id="tm_log"> <a href="{% url 'dox.views.log_l' %}"> <img src="{% static 'img/icon-list.png' %}" alt="Лог" title="Лог"/> </a> </div>
 		{% endif %}
 	{% else %}
-		<div id="tm_login"> <a href="{% url django.contrib.auth.views.login %}?next={% url views.index %}" rel="nofollow"> <img src="{{ STATIC_URL }}img/icon-enter.png" alt="Вход" title="Вход"/> </a> </div>
+		<!-- div id="tm_login"> <a href="{# url 'django.contrib.auth.views.login' #}?next={# url 'views.index' #}" rel="nofollow"> <img src="{# static 'img/icon-enter.png' #}" alt="Вход" title="Вход"/> </a> </div -->
 	{% endif %}
-	<div id="tm_about"> <a href="{% url views.about %}"> <img src="{{ STATIC_URL }}img/icon-info-sign.png" alt="О программе" title="О программе"/> </a> </div>
+	<div id="tm_about"> <a href="{% url 'about' %}"> <img src="{% static 'img/icon-info-sign.png' %}" alt="О программе" title="О программе"/> </a> </div>
 </div>
 	<div>
 	{% block body_main %}

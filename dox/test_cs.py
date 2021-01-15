@@ -1,8 +1,8 @@
 #!/bin/env python
 # -*- coding: utf-8 -*-
-'''
+"""
 Test checksumms of INN and OGRN
-'''
+"""
 
 import sys
 

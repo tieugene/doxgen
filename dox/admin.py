@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
-from models import *
+from . import models
 
 class	DocAdmin(admin.ModelAdmin):
 	ordering	= ('id',)
@@ -10,8 +10,8 @@ class	LogAdmin(admin.ModelAdmin):
 	ordering	= ('id',)
 	list_display	= ('id', 'date', 'method', 'ip', 'path', 'agent')
 
-admin.site.register(Doc,	DocAdmin)
-admin.site.register(Log,	LogAdmin)
+admin.site.register(models.Doc,	DocAdmin)
+admin.site.register(models.Log,	LogAdmin)
 
 try:
         from local_admin import *
