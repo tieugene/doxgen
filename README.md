@@ -104,10 +104,11 @@ Document generator
 - incapsulate plugins into a separate dir each
 - move to flask (like uvedomlenie) or webpy (solo)
 - pymorphy2
+- tpl/z*.py: bad import (Okved, SSRF)
 
 # FIXME:
-- uuid urls type
-- login/logout
-- /index forward to dox/
-- tpl list is empty
-- tpl/z*.py: bad import (Okved, SSRF)
++ tpl list is empty
++ uuid urls type
++ login/logout, admin
++ ~~/index forward to dox/~~ tpl_list url
++ object_list

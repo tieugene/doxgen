@@ -1,22 +1,20 @@
 # -*- coding: utf-8 -*-
 
-# 2. system
+# 1. system
 import importlib
 import importlib.util
 import json
 import os
 import sys
 from collections import OrderedDict
-
-# 1. django
+# 2. django
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.template import RequestContext
 from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateView
-# from django.views.generic.list_detail import object_list
-
+# 3. 3rd party
 # 4. my
 import converter
 import utils
@@ -24,12 +22,13 @@ from consts import *
 from . import forms
 from . import models
 
-# 3. 3rd party
-
 moduledict = dict()
 
 PAGE_SIZE = 20
 
+
+def eprint(s: str):
+    print(s, file=sys.stderr)
 
 def __log_request(request):
     """
@@ -113,6 +112,7 @@ def __try_tpl():
                 else:
                     formsets = OrderedDict()
             moduledict[uuid][K_T_FORMSETS] = formsets
+        # eprint(moduledict)
 
 
 def __try_to_call(t, f, v):
@@ -154,28 +154,55 @@ class LogDetail(DetailView):
     template_name = 'log_detail.html'  # default dox/log_detail.html'
 
 
-@try_tpl
-def doc_l(request, uuid):
+class DocList(ListView):
     """
-    List of documents
+    Doc list of user&tpl with tpl details.
+    ver 1: ListView + extra object + tpl selection.
+    ver 2: MOMI + DetailView
+    ver 3: SOMI + ListView
+    WorkFlow: get > get_queryset > get_context_data > get_template_name
     """
-    __log_request(request)
-    tpl = moduledict[uuid]
-    if request.user.is_authenticated:
-        queryset = models.Doc.objects.filter(user=request.user, type=uuid).order_by('name')
-    else:
-        queryset = models.Doc.objects.none()
-    return object_list(
-        request,
-        queryset=queryset,
-        paginate_by=PAGE_SIZE,
-        page=int(request.GET.get('page', '1')),
-        template_name=tpl[K_V_MODULE].DATA[K_T_T][K_T_T_LIST] if ((K_T_T in tpl[K_V_MODULE].DATA) and (
-                K_T_T_LIST in tpl[K_V_MODULE].DATA[K_T_T])) else 'auto_list.html',
-        extra_context={
-            'object': tpl,
-        }
-    )
+    model = models.Doc
+    paginate_by = PAGE_SIZE
+    uuid = None
+    tpl = None
+
+    @try_tpl
+    def get(self, request, *args, **kwargs):
+        # eprint("Get()")
+        # eprint(kwargs)
+        # __log_request(request)
+        self.uuid = kwargs['uuid']
+        # eprint(self.uuid)
+        # eprint(moduledict)
+        self.tpl = moduledict[self.uuid]
+        # self.object = self.get_object(queryset=Publisher.objects.all())
+        return super().get(request, *args, **kwargs)
+
+    def get_queryset(self):     # 1. listview
+        # eprint("Get_QuerySet()")
+        if self.request.user.is_authenticated:
+            queryset = self.model.objects.filter(user=self.request.user, type=self.uuid).order_by('name')
+        else:
+            queryset = self.model.objects.none()
+        # f = self.request.session.get('doc_list')
+        return queryset
+
+    def get_context_data(self, **kwargs):   # 2. listview
+        # eprint("Get_ContextData()")
+        context = super().get_context_data(**kwargs)
+        context['object'] = self.tpl
+        # eprint(context.items())
+        return context
+
+    def get_template_names(self):
+        # eprint("Get_Template_Name()")
+        # eprint(self.request.session.items())
+        t = self.tpl[K_V_MODULE].DATA[K_T_T][K_T_T_LIST]\
+            if ((K_T_T in self.tpl[K_V_MODULE].DATA) and (K_T_T_LIST in self.tpl[K_V_MODULE].DATA[K_T_T]))\
+            else 'auto_list.html'
+        eprint(t)
+        return t
 
 
 def __doc_print(request, context_dict, template):
@@ -450,6 +477,6 @@ def doc_d(request, pk):
     uuid = item.type
     item.delete()
     if uuid in moduledict:
-        return redirect('dox.views.doc_l', uuid)
+        return redirect('doc_list', uuid)
     else:
-        return redirect('dox.views.index')
+        return redirect('tpl_list')

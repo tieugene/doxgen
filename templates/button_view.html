@@ -1,1 +1,2 @@
-<button type="submit" title="Просмотр" name="_action" value="view"> <img src="{{ STATIC_URL }}img/text-html.png" alt="preview"> </button>
+{% load static %}
+<button type="submit" title="Просмотр" name="_action" value="view"> <img src="{% static 'img/text-html.png' %}" alt="preview"> </button>

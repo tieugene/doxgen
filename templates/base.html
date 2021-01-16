@@ -121,6 +121,7 @@
 <body>
 <div id="topmenu">
 	<div id="tm_index" class=""> <a href="{% url 'index' %}"> <img src="{% static 'img/icon-home.png' %}" alt="Главная" title="Главная"/> </a> </div>
+	<div id="tm_tpl" class=""> <a href="{% url 'tpl_list' %}"> <img src="{% static 'img/icon-spreadsheet.png' %}" alt="Шаблоны" title="Шаблоны"/> </a> </div>
 	<div style="width: 100%"> <b> DoxGen </b> </div>
 	{% if user.is_authenticated %}
 		<div> {{ user.username }} : </div>
