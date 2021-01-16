@@ -18,6 +18,12 @@ Document generator
   - PT_ &copy; ParaType
   - [Microsoft core fonts](https://sourceforge.net/projects/corefonts/) &copy; Monotype (deb: ttf-mscorefonts-installer)
 
+Uses:
+- JS:
+  - [jquery](https://jquery.com/download/) slim
+  - [jquery.populate](https://github.com/dtuite/jquery.populate) to fill forms w/ sample
+  - jquery.formset - for dynamic form rows add
+
 ## Formats:
 
 - output: pdf, html, svg
@@ -37,8 +43,8 @@ Document generator
     - [~~pdfformfill~~](https://github.com/frainfreeze/pdformfill) (py, pdftk)
     - [~~pdfjinja~~](https://github.com/rammie/pdfjinja) (py, pdftk)
     - ~~xfdftool~~|java (CLI)
-  - md:
-    - pandoc
+  - md: (?pagesize)
+    - [pandoc](https://github.com/boisgera/pandoc) (via CLI)
     - py-md2pdf
     - py-markdown2pdf
     - ~~htmldoc~~?
@@ -50,8 +56,22 @@ Document generator
   - doc[x]/odt:
     - unoconv/loffice service
 
-## OAuth providers
+## Samples
+- 0: html (Пример)
+- 1: html (Заявление)
+- ~~2~~: xhtml (Форма 21001) - use SSRF (84)
+- 3: html (Форма ПД-4сб)
+- 4: html (Доверенность форма м2)
+- ~~5~~ rml/xpdf (Уведомление мигранта) - use SSRF (84)
+- ~~6~~: xhtml (Реквизиты фирмы) - use Okved (1845)
+- 7: xpdf (Форма 26.2-1)
 
+Required:
+- html (|pdfkit(+wkhtmltopdf)/xhtml2pdf/weasy)
+- rml (trml2pdf)
+- xfdf (PyFPDF)
+
+## OAuth providers
 - google
 - apple
 - microsoft
@@ -64,13 +84,13 @@ Document generator
 - [mail.ru](https://help.mail.ru/developers/oauth)
 
 ## Ideas
-
+- use OrderedDict as model (or inmemory sqlite)
 - html2rml
 - smtp: chk domain and [user](https://github.com/un33k/python-emailahoy) exists:
   `socket.gethostbyname(domain:str)`
+- rml2svg
 
 ## Try
-
 - Google 'single application django project'
 - PyPDF[2]
 - python3-django-:
@@ -107,9 +127,24 @@ Document generator
 - tpl/z*.py: bad import (Okved, SSRF)
 
 # FIXME:
+- fill example (json sample empty)
+- pdf inplace
+- z0000: add a field
+- process:
+  + html2html
+  - html2pdf
+  - xfdf
+  - rml2pdf
+- / @ [admin](https://docs.djangoproject.com/en/3.1/ref/contrib/admin/#overriding-admin-templates):
+  ```bash
+  cp django/contrib/admin/templates/base_site.html ./templates/admin/base_site.html
+  vi ./templates/admin/base_site.html
+  ```
+
+# Fixed
 + tpl list is empty
 + uuid urls type
 + login/logout, admin
 + ~~/index forward to dox/~~ tpl_list url
 + object_list
-- fill example
++ doc_add

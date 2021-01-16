@@ -16,23 +16,25 @@ Try:
     * scribus (pyqt) - don't know
     * html5 (webkit)
     * pdf forms (pdftk)
+
+TODO: unlink from django (e.g. mk pure http reponse)
+TODO: split on submodules
 """
 
 # 2. system
 import os
 import subprocess
 import tempfile
-
-# rml
-import trml2pdf
 # 3. 3rd party
 # html
 import pdfkit
+# rml
+import trml2pdf
 # 1. django
 from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.template import RequestContext, Context, loader
+from django.template import loader
 
 
 # odf - cli (unoconv)
@@ -40,7 +42,7 @@ from django.template import RequestContext, Context, loader
 
 
 def html2html(request, context_dict, template):
-    return render(request, template, context=RequestContext(request, context_dict))
+    return render(request, template, context=context_dict)
 
 
 def html2pdf(request, context_dict, template):
@@ -52,7 +54,7 @@ def html2pdf(request, context_dict, template):
     """
     # 1. prepare
     tmp = tempfile.NamedTemporaryFile(suffix='.xhtml', delete=True)  # delete=False to debug
-    tmp.write(render(request, template, context=Context(context_dict), content_type='text/xml').content)
+    tmp.write(render(request, template, context=context_dict, content_type='text/xml').content)
     tmp.flush()
     outfile = tempfile.NamedTemporaryFile(suffix='.pdf', delete=True)  # delete=False to debug
     # 2. render - new style
@@ -65,7 +67,7 @@ def html2pdf(request, context_dict, template):
     # TODO: dpi=300
     pdfkit.from_file(tmp.name, outfile.name)
     # 3. response
-    response = HttpResponse(content=outfile.read(), mimetype='application/pdf', content_type='application/pdf')
+    response = HttpResponse(content=outfile.read(), content_type='application/pdf')
     response['Content-Transfer-Encoding'] = 'binary'
     response['Content-Disposition'] = 'attachment; filename=\"print.pdf\";'
     # 4. cleanup
@@ -84,8 +86,8 @@ def rml2pdf(_, context_dict, template):
     tpl = loader.get_template(template)
     tc = {'STATIC_ROOT': settings.STATIC_ROOT}
     tc.update(context_dict)
-    response.write(trml2pdf.parseString(tpl.render(Context(tc)).encode('utf-8')))
-    # response.write(tpl.render(Context(tc)).encode('utf-8'))
+    response.write(trml2pdf.parseString(tpl.render(tc).encode('utf-8')))
+    # response.write(tpl.render(tc).encode('utf-8'))
     return response
 
 
@@ -100,7 +102,7 @@ def xfdf2pdf(_, context_dict, template):
     pdftpl = os.path.join(settings.BASE_DIR, 'templates', template.rsplit('.', 1)[0] + '.pdf')
     out, err = subprocess.Popen(['xfdftool', '-f', pdftpl], shell=False, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE).communicate(
-        str(loader.get_template(template).render(Context(context_dict))))
+        str(loader.get_template(template).render(context_dict)))
     if err:
         # response = HttpResponse('We had some errors:<pre>%s</pre>' % escape(err) + pdftpl)
         response = HttpResponse('We had some errors:<pre>%s</pre>' % err + pdftpl)
@@ -123,7 +125,7 @@ def odf2pdf(request, context_dict, template):
     """
     # 1. prepare
     tmp = tempfile.NamedTemporaryFile(suffix='.fodt', delete=True)  # delete=False to debug
-    tmp.write(render(request, template, context=Context(context_dict), content_type='text/xml').content)
+    tmp.write(render(request, template, context=context_dict, content_type='text/xml').content)
     tmp.flush()
     # 2. render
     tmp_dir = os.path.dirname(tmp.name)

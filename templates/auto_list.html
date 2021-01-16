@@ -6,7 +6,7 @@
 		{{ object.m.DATA.n }}
 		<sup> <button type="button" style="margin: 0; padding: 0;" onclick="$('#legend').toggle()" title="Подробности"> ? </button> </sup>
 	{% if user.is_authenticated %}
-		<a href="{% url 'doc_ad' object.m.DATA.u %}" rel="nofollow">
+		<a href="{% url 'doc_add' object.m.DATA.u %}" rel="nofollow">
 	{% else %}
 		<a href="{% url 'doc_anon' object.m.DATA.u %}" rel="nofollow">
 	{% endif %}
