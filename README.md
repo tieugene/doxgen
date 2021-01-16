@@ -112,3 +112,4 @@ Document generator
 + login/logout, admin
 + ~~/index forward to dox/~~ tpl_list url
 + object_list
+- fill example

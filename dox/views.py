@@ -11,7 +11,6 @@ from collections import OrderedDict
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from django.template import RequestContext
 from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateView
 # 3. 3rd party
@@ -29,6 +28,7 @@ PAGE_SIZE = 20
 
 def eprint(s: str):
     print(s, file=sys.stderr)
+
 
 def __log_request(request):
     """
@@ -169,39 +169,28 @@ class DocList(ListView):
 
     @try_tpl
     def get(self, request, *args, **kwargs):
-        # eprint("Get()")
-        # eprint(kwargs)
         # __log_request(request)
         self.uuid = kwargs['uuid']
-        # eprint(self.uuid)
-        # eprint(moduledict)
         self.tpl = moduledict[self.uuid]
-        # self.object = self.get_object(queryset=Publisher.objects.all())
         return super().get(request, *args, **kwargs)
 
     def get_queryset(self):     # 1. listview
-        # eprint("Get_QuerySet()")
         if self.request.user.is_authenticated:
             queryset = self.model.objects.filter(user=self.request.user, type=self.uuid).order_by('name')
         else:
             queryset = self.model.objects.none()
-        # f = self.request.session.get('doc_list')
         return queryset
 
     def get_context_data(self, **kwargs):   # 2. listview
-        # eprint("Get_ContextData()")
         context = super().get_context_data(**kwargs)
         context['object'] = self.tpl
-        # eprint(context.items())
         return context
 
     def get_template_names(self):
-        # eprint("Get_Template_Name()")
-        # eprint(self.request.session.items())
         t = self.tpl[K_V_MODULE].DATA[K_T_T][K_T_T_LIST]\
             if ((K_T_T in self.tpl[K_V_MODULE].DATA) and (K_T_T_LIST in self.tpl[K_V_MODULE].DATA[K_T_T]))\
             else 'auto_list.html'
-        eprint(t)
+        # eprint(t)
         return t
 
 
@@ -215,6 +204,7 @@ def __doc_acu(request, pk, mode):
     Anon/Create/Update
     :param pk:int - uuid (anon/create) or doc id (update)
     :param mode:int (0: anon (print), 1: create, 2: update)
+    :return request, html_tpl_name, context:dict
     """
     __log_request(request)
     if mode == 2:
@@ -328,15 +318,15 @@ def __doc_acu(request, pk, mode):
     return render(request,
                   tpl[K_V_MODULE].DATA[K_T_T][K_T_T_FORM] if ((K_T_T in tpl[K_V_MODULE].DATA) and (
                           K_T_T_FORM in tpl[K_V_MODULE].DATA[K_T_T])) else 'auto_form.html',
-                  context=RequestContext(request, {
+                  context={
                       'name': tpl[K_V_MODULE].DATA[K_T_NAME],
-                      'comments': tpl[K_V_MODULE].DATA[K_T_COMMENTS],
+                      'comments': tpl[K_V_MODULE].DATA.get(K_T_COMMENTS, ''),
                       'legend': tpl[K_V_MODULE].DATA.get(K_T_LEGEND, ''),
                       'uuid': tpl[K_V_MODULE].DATA[K_T_UUID],
                       'form': form,
                       'formlist': formlist,
                       'example': tpl[K_V_MODULE].DATA.get('example', None),
-                  }))
+                  })
 
 
 def __doc_rvp(request, pk, mode):
@@ -407,7 +397,6 @@ def __doc_rvp(request, pk, mode):
     # split 2: call render
     if mode < 2:  # READ, VIEW
         __try_to_call(tpl, (K_T_F_PRE_READ, K_T_F_PRE_VIEW)[mode], data)
-        # return render_to_response(template, context_instance=RequestContext(request, context_dict))
         return converter.html2html(request, context_dict, template)
     else:  # PRINT
         __try_to_call(tpl, K_T_F_PRE_PRINT, data)
