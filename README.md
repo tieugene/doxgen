@@ -127,18 +127,12 @@ Required:
 - tpl/z*.py: bad import (Okved, SSRF)
 
 # FIXME:
-- pdf inplace
-- z0000: add a field
 - process:
   + html2html
-  - html2pdf
+  + html2pdf (pdftk)
   - xfdf
   - rml2pdf
-- / @ [admin](https://docs.djangoproject.com/en/3.1/ref/contrib/admin/#overriding-admin-templates):
-  ```bash
-  cp django/contrib/admin/templates/base_site.html ./templates/admin/base_site.html
-  vi ./templates/admin/base_site.html
-  ```
+- z0000: add a field or rm 'name'
 
 # Fixed
 + tpl list is empty
@@ -148,3 +142,6 @@ Required:
 + object_list
 + doc_add
 + fill example (json sample empty)
++ pdf inplace (rm 'Content-disposition' from http response)
+- / @ [admin](https://docs.djangoproject.com/en/3.1/ref/contrib/admin/#overriding-admin-templates):
+  `cp django/contrib/admin/templates/base_site.html ./templates/admin/base_site.html | nano`

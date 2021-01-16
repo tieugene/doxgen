@@ -69,7 +69,7 @@ def html2pdf(request, context_dict, template):
     # 3. response
     response = HttpResponse(content=outfile.read(), content_type='application/pdf')
     response['Content-Transfer-Encoding'] = 'binary'
-    response['Content-Disposition'] = 'attachment; filename=\"print.pdf\";'
+    # response['Content-Disposition'] = 'filename=\"print.pdf\";'     # download: + ';attachment'
     # 4. cleanup
     # if (os.path.exists(outfile.name)):
     #    os.remove(outfile.name)	# hack
