@@ -4,13 +4,12 @@ Document generator
 
 ## Requirements
 
-- python3
-- python3-django 3.x (rpm)
-- python3-trml2pdf
-- python3-pdfkit~~wkhtmltopdf~~ (rpm)
+- python3:
+  - django 3.x (rpm)
+  - trml2pdf
+  - pdfkit (rpm)
+  - ~~pymorphy2~~
 - wkhtmltopdf (rpm)
-- ~~django-pymorphy2~~
-- [xfdftool](http://dik123.blogspot.com/2010/06/pdf.html), pdftk (no rpm, [RTFM](http://www.myown1.com/linux/pdf_formfill.shtml))
 - fonts:
   - [Liberation](https://github.com/liberationfonts/liberation-fonts) &copy; RH or [liberastica](https://code.google.com/archive/p/liberastika/) (cyr)
   - [Vera](https://download.gnome.org/sources/ttf-bitstream-vera/1.10/) &copy; Gnome
@@ -26,23 +25,16 @@ Uses:
 
 ## Formats:
 
-- output: pdf, html, svg
+- output: pdf, html, ~~svg~~
 - input:
   - html:
     - &check;[*xhtml2pdf*](https://github.com/xhtml2pdf/xhtml2pdf) (py, reportlab+PyPDF2+html5lib)
     - &check;[*weasyprint*](https://www.courtbouillon.org/weasyprint) (py, [pydyf](https://github.com/CourtBouillon/pydyf))
-    - [*wkhtml2pdf*](https://github.com/wkhtmltopdf/wkhtmltopdf) (CLI, w/ [page braek](https://github.com/wkhtmltopdf/wkhtmltopdf/issues/2982)) | pdfkit
-    - [~~htmldoc~~](https://github.com/michaelrsweet/htmldoc/) (CLI)
+    - [pdfkit](https://github.com/JazzCore/python-pdfkit) | [*wkhtml2pdf*](https://github.com/wkhtmltopdf/wkhtmltopdf) (CLI, w/ [page break](https://github.com/wkhtmltopdf/wkhtmltopdf/issues/2982))
   - rml:
     - &check;[*trml2pdf*](https://github.com/tieugene/trml2pdf) (py, reportlab)
-    - [z3c.rml](https://github.com/tieugene/z3c.rml) (py, reportlab, zope.*)
   - pdf form:
-    - &check;[*PyFPDF*](https://github.com/reingart/pyfpdf) (py, pure)
-    - [PyPDF2](https://github.com/mstamy2/PyPDF2) (py, pure) - manip pdf
-    - ~~pdftk~~ (Java, can be server)
-    - [~~pdfformfill~~](https://github.com/frainfreeze/pdformfill) (py, pdftk)
-    - [~~pdfjinja~~](https://github.com/rammie/pdfjinja) (py, pdftk)
-    - ~~xfdftool~~|java (CLI)
+    - [PyPDF2](https://github.com/mstamy2/PyPDF2) (py, pure, rpm) ([issue](https://github.com/mstamy2/PyPDF2/issues/355))
   - md: (?pagesize)
     - [pandoc](https://github.com/boisgera/pandoc) (via CLI)
     - py-md2pdf
@@ -70,18 +62,6 @@ Required:
 - html (|pdfkit(+wkhtmltopdf)/xhtml2pdf/weasy)
 - rml (trml2pdf)
 - xfdf (PyFPDF)
-
-## OAuth providers
-- google
-- apple
-- microsoft
-- vk
-- yandex
-- twitter
-- facebook
-- github
-- instagram
-- [mail.ru](https://help.mail.ru/developers/oauth)
 
 ## Ideas
 - use OrderedDict as model (or inmemory sqlite)
@@ -122,19 +102,22 @@ Required:
     - dox/tpl/ ?
   - std: setup.py, *.spec, tox.ini, doc/
 - incapsulate plugins into a separate dir each
-- move to flask (like uvedomlenie) or webpy (solo)
+- move to flask (like uvedomlenie) or webpy (solo), web2py
 - pymorphy2
-- tpl/z*.py: bad import (Okved, SSRF)
+- tpl/z*.py: bad import (Okved, SSRF; z0005_old)
 
-# FIXME:
+## FIXME:
 - process:
   + html2html
-  + html2pdf (pdftk)
+  + html2pdf (pdftk, slow)
+  + rml2pdf
   - xfdf
-  - rml2pdf
+- converter: ret header+content instead of response
 - z0000: add a field or rm 'name'
 
-# Fixed
+# Trash
+
+## Fixed:
 + tpl list is empty
 + uuid urls type
 + login/logout, admin
@@ -145,3 +128,32 @@ Required:
 + pdf inplace (rm 'Content-disposition' from http response)
 - / @ [admin](https://docs.djangoproject.com/en/3.1/ref/contrib/admin/#overriding-admin-templates):
   `cp django/contrib/admin/templates/base_site.html ./templates/admin/base_site.html | nano`
+
+## Backends:
+- HTML:
+    - [~~htmldoc~~](https://github.com/michaelrsweet/htmldoc/) (CLI)
+- RML:
+    - [~~z3c.rml~~](https://github.com/tieugene/z3c.rml) (py, reportlab, zope.*) - devels unavailable
+- XFDF:
+  - [xfdftool](http://dik123.blogspot.com/2010/06/pdf.html)
+  - ~~pdftk~~ (Java, can be server) - [RTFM](http://www.myown1.com/linux/pdf_formfill.shtml)
+  - [~~pdfformfill~~](https://github.com/frainfreeze/pdformfill) (py, pdftk)
+  - [~~pdfjinja~~](https://github.com/rammie/pdfjinja) (py, pdftk)
+  - ~~xfdftool~~|java (CLI)
+- XPS?
+- misc:
+  - [PyFPDF](https://github.com/reingart/pyfpdf) (py, pure) - create pdf (reportlab light)
+  - [pdfminer.six](https://github.com/pdfminer/pdfminer.six) - extract fields
+
+
+## OAuth providers
+- google
+- apple
+- microsoft
+- vk
+- yandex
+- twitter
+- facebook
+- github
+- instagram
+- [mail.ru](https://help.mail.ru/developers/oauth)

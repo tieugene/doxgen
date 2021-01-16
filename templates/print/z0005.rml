@@ -18,7 +18,7 @@
 
 	<story>
 		<illustration x="0mm" y="0mm" width="185mm" height="270mm">
-			<image file="static/img/z0005-1.png" x="0mm" y="0mm" width="181mm" height="268mm"/>
+			<!-- image file="static/img/z0005-1.png" x="0mm" y="0mm" width="181mm" height="268mm"/ -->
 			<setFont name="MainFont" size="11.3"/>
 			<drawString x="13mm" y="232.5mm"> {{ data.m_lastname|make_list|join:" " }} </drawString>
 			<drawString x="13mm" y="225.5mm"> {{ data.m_firstname|make_list|join:" " }} </drawString>
@@ -26,8 +26,8 @@
 			<drawString x="23mm" y="206.0mm"> {{ data.m_birthcountry|make_list|join:" " }} </drawString>
 		</illustration>
 		<pageBreak/>
-		<illustration width="180mm" height="260mm">
+		<!-- illustration width="180mm" height="260mm">
 			<image file="static/img/z0005-2.png" x="0mm" y="0mm" width="181mm" height="268mm"/>
-		</illustration>
+		</illustration -->
 	</story>
 </document>

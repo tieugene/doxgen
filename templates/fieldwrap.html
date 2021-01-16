@@ -1,5 +1,5 @@
-{% load kwacros %}
-{% kwacro fieldwrap f %}
+{% load macros %}
+{% macro fieldwrap f %}
 	<div class="field {% if f.field.required %} required {% endif %} {% if f.errors %} wrong {% endif %}">
 		<div class="label"> {{ f.label_tag }} </div>
 		<div class="input"> {{ f }}
@@ -15,4 +15,4 @@
 		{% endif %}
 		</div>
 	</div>
-{% endkwacro %}
+{% endmacro %}

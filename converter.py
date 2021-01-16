@@ -80,9 +80,9 @@ def rml2pdf(_, context_dict, template):
     """
     Create pdf from rml-template and return file to user
     """
-    response = HttpResponse(mimetype='application/pdf', content_type='application/pdf')
+    response = HttpResponse(content_type='application/pdf')
     response['Content-Transfer-Encoding'] = 'binary'
-    response['Content-Disposition'] = 'attachment; filename=\"print.pdf\";'
+    # response['Content-Disposition'] = 'attachment; filename=\"print.pdf\";'
     tpl = loader.get_template(template)
     tc = {'STATIC_ROOT': settings.STATIC_ROOT}
     tc.update(context_dict)
@@ -92,6 +92,23 @@ def rml2pdf(_, context_dict, template):
 
 
 def xfdf2pdf(_, context_dict, template):
+    pdftpl = os.path.join(settings.BASE_DIR, 'templates', template.rsplit('.', 1)[0] + '.pdf')
+    pass
+    out, err = subprocess.Popen(['xfdftool', '-f', pdftpl], shell=False, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                                stderr=subprocess.PIPE).communicate(
+        str(loader.get_template(template).render(context_dict)))
+    if err:
+        # response = HttpResponse('We had some errors:<pre>%s</pre>' % escape(err) + pdftpl)
+        response = HttpResponse('We had some errors:<pre>%s</pre>' % err + pdftpl)
+    else:
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Transfer-Encoding'] = 'binary'
+        # response['Content-Disposition'] = 'attachment; filename=\"print.pdf\";'
+        response.write(out)
+    return response
+
+
+def xfdf2pdf_cli(_, context_dict, template):
     """
     @param _: not used
     @param template: xfdf-file
