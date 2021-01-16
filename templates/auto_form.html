@@ -54,7 +54,7 @@ span.helptext {
 		{{ form.as_table }}
 		</table>
 		{% endblock %}
-		{% for k, formset in formlist.iteritems %}
+		{% for k, formset in formlist.items %}
 			<table id="{{ k }}" border="1">
 				<caption> {{ k }} </caption>
 				<tbody>
@@ -78,7 +78,7 @@ span.helptext {
 	{% if example %}
 		<script type="text/javascript">
 			var json = {	{% for e in example %}
-				'{{e.name}}': { {% for k, v in e.data.iteritems %}
+				'{{e.name}}': { {% for k, v in e.data.items %}
 					'id_{{k}}': '{{v}}',	{% endfor %}
 				}, {% endfor %}
 			};

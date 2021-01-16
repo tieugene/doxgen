@@ -127,7 +127,6 @@ Required:
 - tpl/z*.py: bad import (Okved, SSRF)
 
 # FIXME:
-- fill example (json sample empty)
 - pdf inplace
 - z0000: add a field
 - process:
@@ -148,3 +147,4 @@ Required:
 + ~~/index forward to dox/~~ tpl_list url
 + object_list
 + doc_add
++ fill example (json sample empty)
