@@ -1,0 +1,4 @@
+#!/bin/sh
+pushd src > /dev/null
+python3 manage.py $@
+popd > /dev/null

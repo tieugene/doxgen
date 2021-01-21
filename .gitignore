@@ -3,9 +3,9 @@ __pycache__
 *.sqlite3
 _*
 # working data
-static/ttf/*.ttf
-dox/sql/*.sql
+src/static/ttf/*.ttf
+sql/*.sql
 # exclude primers
-dox/tpl/z*.py
-templates/form/z*.html
-templates/print/z*.*
+src/dox/tpl/z*.py
+src/templates/form/z*.html
+src/templates/print/z*.*

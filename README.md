@@ -4,59 +4,48 @@ Document generator
 
 TODO: trml2pdf.textBox - use reportlab.platypus.Frame() + Paragraph()
 
-## Requirements
+## 1. Requirements
 
 - python3:
-  - django 3.x (rpm):
-    - [templates-macros](https://github.com/twidi/django-templates-macros)
+  - django 3.x (rpm, pip3):
+    - templates-macros
   - trml2pdf
-  - pdfkit (rpm)
-  - jpype (rpm)
-  - ~~pymorphy2~~
+  - pdfkit (rpm, pip3)
+  - jpype (rpm, pip3)
 - wkhtmltopdf (CLI, rpm)
-- iText-5.x.[itextpdf](https://github.com/itext/itextpdf/tree/develop/itext) (java)
-  - jre
-- fonts:
-  - [Liberation](https://github.com/liberationfonts/liberation-fonts) &copy; RH or [liberastica](https://code.google.com/archive/p/liberastika/) (cyr)
-  - [Vera](https://download.gnome.org/sources/ttf-bitstream-vera/1.10/) &copy; Gnome
-  - [Google's](https://github.com/google/fonts)
-  - PT_ &copy; ParaType
-  - [Microsoft core fonts](https://sourceforge.net/projects/corefonts/) &copy; Monotype (deb: ttf-mscorefonts-installer)
+- itextpdf (java)
+  - jre (rpm)
+- fonts: Liberation, Vera, Google's, ParaType, Microsoft core fonts 
 
 Uses:
 - JS:
-  - [jquery](https://jquery.com/download/) slim
-  - [jquery.populate](https://github.com/dtuite/jquery.populate) to fill forms w/ sample
-  - [jquery.formset](https://github.com/nortigo/jquery-formset) - for dynamic form rows add
+  - jquery (slim)
+  - jquery.populate - to fill forms w/ sample
+  - jquery.formset - for dynamic form rows add
 
-## Formats:
+### Formats:
 
-- output: pdf, html, ~~svg~~, png (reportlab.graphics.RenderPM)
-- input:
+Output: pdf, html, ~~svg~~, png (reportlab.graphics.RenderPM)
+Input:
   - html:
-    - &check;[pdfkit](https://github.com/JazzCore/python-pdfkit) | [*wkhtml2pdf*](https://github.com/wkhtmltopdf/wkhtmltopdf) (CLI, w/ [page break](https://github.com/wkhtmltopdf/wkhtmltopdf/issues/2982))
-    - [*xhtml2pdf*](https://github.com/xhtml2pdf/xhtml2pdf) (py, reportlab+PyPDF2+html5lib)
-    - [*weasyprint*](https://www.courtbouillon.org/weasyprint) (py, [pydyf](https://github.com/CourtBouillon/pydyf))
-    - [*iText.PdfWriter*](https://ru.stackoverflow.com/questions/812556/itext-pdf-запись-html-в-pdf-в-кодировке-utf-8) via [XMLWorker](https://github.com/itext/itextpdf/blob/develop/xmlworker/src/main/java/com/itextpdf/tool/xml/XMLWorker.java)
+    - &check; pdfkit (rpm, pip3)
+      - wkhtml2pdf (CLI, w/ page break, rpm)
+    - *weasyprint* (py, rpm, pip3)
+    - *xhtml2pdf* (py, ~~rpm~~, pip3)
+      - reportlab (rpm, pip3)
+      - *PyPDF2* (rpm, pip3)
+      - *html5lib* (rpm, pip3)
+    - *iText.PdfWriter* via *.XMLWorker* (java)
   - rml:
-    - &check;[trml2pdf](https://github.com/tieugene/trml2pdf) (py, reportlab)
+    - &check; trml2pdf (py, reportlab)
   - pdf form:
-    - &check;[iText](https://github.com/itext/itextpdf/tree/develop/itext/src/main/java/com/itextpdf/text/pdf) (java)
-    - [*PyPDF2*](https://github.com/mstamy2/PyPDF2) (py, pure, rpm) ([issue](https://github.com/mstamy2/PyPDF2/issues/355))
-  - doc[x]/odt:
-    - unoconv/loffice service
+    - &check; jpype (py, rpm, pip3)
+      - &check; iText (java)
+    - *PyPDF2* (py, pure, rpm, w/ [issue](https://github.com/mstamy2/PyPDF2/issues/355))
+  - *doc[x]/odt*:
+    - *unoconv/loffice service*
 
-## Samples
-- 0: html (Пример)
-- 1: html (Заявление)
-- 2: xhtml (Форма 21001) - use SSRF (84)
-- 3: html (Форма ПД-4сб)
-- 4: html (Доверенность форма м2)
-- 5: rml/xpdf (Уведомление мигранта) - use SSRF (84)
-- 6: xhtml (Реквизиты фирмы) - use Okved (1845)
-- 7: xpdf (Форма 26.2-1)
-
-## Features:
+### Features:
 - Anon:
   - *watermarks*
   - html preview
@@ -66,42 +55,28 @@ Uses:
   - pdf download
 - X:
   - multiprint
-  - save/edit/del/copy
+  - save/edit/del/copy records
   - import/export data
+  - email pdfs
+
+### Samples
+- 0: html (Пример)
+- 1: html (Заявление)
+- ~~2~~: xhtml (Форма 21001) - use SSRF (84)
+- 3: html (Форма ПД-4сб)
+- 4: html (Доверенность форма м2)
+- 5: rml/xpdf (Уведомление мигранта) - use SSRF (84)
+- ~~6~~: xhtml (Реквизиты фирмы) - use Okved (1845)
+- 7: xpdf (Форма 26.2-1)
 
 ----
-## Ideas
-- use OrderedDict as model (or inmemory sqlite)
-- html2rml
-- smtp: chk domain and [user](https://github.com/un33k/python-emailahoy) exists:
-  `socket.gethostbyname(domain:str)`
-- rml2svg
+## 2. TODO
+### FIXME:
+- converter: ret header+content instead of response
+- z0000: add a field or rm 'name'
 
-## Try
-- Google 'single application django project'
-- PyPDF[2]
-- [iText7](https://github.com/itext/itext7) - Java (PDF Forms, HTML2PDF), ~~rpm~~
-- Py &rArr; Java calls:
-  - [JPype](https://github.com/jpype-project/jpype)  - Py&rArr;J call (rpm, pip3)
-  - [Py4J](https://www.py4j.org) - Py&hArr;J call via 'server' (rpm, pypy)
-  - [JCC](https://pypi.org/project/JCC/) - C++ Py&hArr;J glue code generator (~~rpm~~)
-  - [jpy](https://github.com/bcdev/jpy) - Py&hArr;Java bridge (~~rpm~~)
-- python3-django-:
-  - post_office
-  - registration
-  - rules
-  - python3-mozilla-django-oidc : (OpenID)
-  - [oauth-toolkit)(https://github.com/jazzband/django-oauth-toolkit)
-- python3-flask-:
-  - oauth : Adds OAuth support to Flask
-  - oidc : An openID Connect support for Flask
-  - openid : OpenID support for Flask
-  - [authlib](https://github.com/lepture/flask-oauthlib)
-- Google Page Speed
-
-## TODO
-+ python3
-+ django 3.x:
+### ToDo:
++ django:
   - i18n/l10n
   - syslog
 - refucktor:
@@ -118,18 +93,43 @@ Uses:
 - move to flask (like uvedomlenie) or webpy (solo), web2py
 - pymorphy2
 - tpl/z*.py: bad import (Okved, SSRF; z0005_old)
-- process:
-  - html2pdf (py)
-  - xfdf (py)
+- html2pdf (py)
+- xfdf (py)
 
-## FIXME:
-- converter: ret header+content instead of response
-- z0000: add a field or rm 'name'
+### Ideas:
+- use OrderedDict as model (or inmemory sqlite)
+- smtp: chk domain and user (python-emailahoy) exists:
+  `socket.gethostbyname(domain:str)`
+- rml2svg
+- html2rml
+
+### Try:
+- Google 'single application django project'
+- PyPDF2
+- iText7- Java (PDF Forms, HTML2PDF), ~~rpm~~
+- Py &rArr; Java calls:
+  - Py4J - Py&hArr;J call via 'server' (rpm, pypy)
+  - JCC - C++ Py&hArr;J glue code generator (~~rpm~~)
+  - jpy - Py&hArr;Java bridge (~~rpm~~)
+- python3-django-:
+  - post_office
+  - registration
+  - rules
+  - python3-mozilla-django-oidc : (OpenID)
+  - oauth-toolkit
+- python3-flask-:
+  - oauth : Adds OAuth support to Flask
+  - oidc : An openID Connect support for Flask
+  - openid : OpenID support for Flask
+  - authlib
+- Google Page Speed
 
 ----
-# Trash
+## 3. Trash
 
-## Fixed:
+### Done:
++ python3
++ Django 3.x
 + tpl list is empty
 + uuid urls type
 + login/logout, admin
@@ -146,32 +146,31 @@ Uses:
   + rml2pdf
   + xfdf (java)
 
-## Backends:
+### Backends:
 - HTML:
-  - [~~htmldoc~~](https://github.com/michaelrsweet/htmldoc/) (CLI)
+  - ~~htmldoc~~ (CLI)
 - RML:
-  - [~~z3c.rml~~](https://github.com/tieugene/z3c.rml) (py, reportlab, zope.*) - devels unavailable
+  - ~~z3c.rml~~ (py, reportlab, zope.*) - devels unavailable
 - XFDF:
-  - [~~pdftk~~](https://gitlab.com/pdftk-java/pdftk) (CLI, Java, ~~UTF8~~) - [RTFM](http://www.myown1.com/linux/pdf_formfill.shtml)
-  - [~~pdfformfill~~](https://github.com/frainfreeze/pdformfill) (py, pdftk)
-  - [~~pdfjinja~~](https://github.com/rammie/pdfjinja) (py, pdftk)
+  - ~~pdftk~~ - (CLI, Java, ~~UTF8~~)
+  - ~~pdfformfill~~ (py, pdftk)
+  - ~~pdfjinja~~ (py, pdftk)
 - md: (no sense; ?pagesize)
-  - [pandoc](https://github.com/boisgera/pandoc) (via CLI)
-  - py-md2pdf
-  - py-markdown2pdf
-  - ~~htmldoc~~?
+  - pandoc (via CLI)
+  - *py-md2pdf*
+  - *py-markdown2pdf*
+  - ~~*htmldoc*~~?
 - rst: (no sense)
-  - [~~rst2pdf~~](https://github.com/ralsina/rst2pdf) (py|LaTeX)
-- XPS?
+- XPS?:
 - rtf:
-  - [*ted*](https://nllgg.nl/Ted/) (CLI, ~~rpm~~)
+  - *ted* (CLI, ~~rpm~~)
   - *unrtf* (>latex|rtf) (CLI)
 - misc:
-  - [PyFPDF](https://github.com/reingart/pyfpdf) (py, pure) - create pdf (reportlab light)
-  - [pdfminer.six](https://github.com/pdfminer/pdfminer.six) - extract fields
+  - PyFPDF (py, pure) - create pdf (reportlab light)
+  - pdfminer.six - extract fields
 
 
-## OAuth providers
+### OAuth providers
 - google
 - apple
 - microsoft
@@ -182,3 +181,50 @@ Uses:
 - github
 - instagram
 - [mail.ru](https://help.mail.ru/developers/oauth)
+
+====
+## 4. Resources
+
+### py:
+- Django [templates-macros](https://github.com/twidi/django-templates-macros)
+  - [oauth-toolkit)(https://github.com/jazzband/django-oauth-toolkit)
+- [trml2pdf](https://github.com/tieugene/trml2pdf)
+- [pdfkit](https://github.com/JazzCore/python-pdfkit)
+- [JPype](https://github.com/jpype-project/jpype) 
+- [*xhtml2pdf*](https://github.com/xhtml2pdf/xhtml2pdf)
+- [*weasyprint*](https://www.courtbouillon.org/weasyprint)
+- [*pydyf*](https://github.com/CourtBouillon/pydyf)
+- [*PyPDF2*](https://github.com/mstamy2/PyPDF2)
+  - [issue](https://github.com/mstamy2/PyPDF2/issues/355)
+- [PyFPDF](https://github.com/reingart/pyfpdf)
+- [pdfminer.six](https://github.com/pdfminer/pdfminer.six)
+- [z3c.rml](https://github.com/tieugene/z3c.rml)
+- [Py4J](https://www.py4j.org)
+- [JCC](https://pypi.org/project/JCC/)
+- [jpy](https://github.com/bcdev/jpy)
+- [pdfformfill](https://github.com/frainfreeze/pdformfill)
+- [pdfjinja](https://github.com/rammie/pdfjinja)
+- [python-emailahoy](https://github.com/un33k/python-emailahoy)
+### JS:
+- [jquery](https://jquery.com/download/)
+- [jquery.populate](https://github.com/dtuite/jquery.populate)
+- [jquery.formset](https://github.com/nortigo/jquery-formset)
+### Java
+- iText.[itextpdf](https://github.com/itext/itextpdf/tree/develop/itext/src/main/java/com/itextpdf/text/pdf)
+  - [*iText.PdfWriter*](https://ru.stackoverflow.com/questions/812556/itext-pdf-запись-html-в-pdf-в-кодировке-utf-8)
+  - [XMLWorker](https://github.com/itext/itextpdf/blob/develop/xmlworker/src/main/java/com/itextpdf/tool/xml/XMLWorker.java)
+- [iText7](https://github.com/itext/itext7) 
+- [pdftk](https://gitlab.com/pdftk-java/pdftk)
+  - [RTFM](http://www.myown1.com/linux/pdf_formfill.shtml)
+### bin:
+- [wkhtml2pdf](https://github.com/wkhtmltopdf/wkhtmltopdf)
+  - [page break](https://github.com/wkhtmltopdf/wkhtmltopdf/issues/2982)
+- [Ted](https://nllgg.nl/Ted/) (CLI, ~~rpm~~)
+- [htmldoc](https://github.com/michaelrsweet/htmldoc/)
+- [pandoc](https://github.com/boisgera/pandoc)
+### fonts:
+- [Liberation](https://github.com/liberationfonts/liberation-fonts) &copy; RH or [liberastica](https://code.google.com/archive/p/liberastika/) (cyr)
+- [Vera](https://download.gnome.org/sources/ttf-bitstream-vera/1.10/) &copy; Gnome
+- [Google's](https://github.com/google/fonts)
+- PT_ &copy; ParaType
+- [Microsoft core fonts](https://sourceforge.net/projects/corefonts/) &copy; (deb: ttf-mscorefonts-installer)
