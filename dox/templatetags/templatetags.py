@@ -15,18 +15,18 @@ def strdate(date):
 
 
 @register.filter
-def getorgtype(type):
-    return ('Российская', 'Иностранная', 'Иностранная через ОП', 'ИП', 'Нотариус')[int(type) - 1]
+def getorgtype(orgtype):
+    return ('Российская', 'Иностранная', 'Иностранная через ОП', 'ИП', 'Нотариус')[int(orgtype) - 1]
 
 
 @register.filter
-def letterbox(s, l=None):
+def letterbox(s, boxlen=None):
     """
-    Splits s by l chars
+    Splits s by boxlen chars
     """
     retvalue = ''
-    if (l):
-        s = s.ljust(int(l))
+    if boxlen:
+        s = s.ljust(int(boxlen))
     for c in s:
         retvalue += '<div>' + c + '</div>'
     return retvalue
@@ -41,27 +41,27 @@ def sljust(s, lc):
     """
     # return s
     l, c = lc.split(',')
-    if isinstance(s, (int, long)):
-        s = unicode(s)
+    if isinstance(s, int):
+        s = str(s)
     return s.ljust(int(l), c)
 
 
 @register.filter
-def left(s, l):
+def left(s, strlen):
     """
     left part of string
     @param s:string
-    @param l:int - chars to return
+    @param strlen:int - chars to return
     """
-    return s[:int(l)]
+    return s[:int(strlen)]
 
 
 @register.filter
-def right(s, l):
+def right(s, strlen):
     """
     right part of string
     """
-    return s[:-int(l)]
+    return s[:-int(strlen)]
 
 
 @register.filter

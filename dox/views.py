@@ -315,7 +315,6 @@ def __doc_acu(request, pk, mode):
                     del data[pfx]
             # 2. else
             form = formclass(data)
-    eprint("Example: {}".format(tpl[K_V_MODULE].DATA.get('example', None)))
     return render(request,
                   tpl[K_V_MODULE].DATA[K_T_T][K_T_T_FORM] if ((K_T_T in tpl[K_V_MODULE].DATA) and (
                           K_T_T_FORM in tpl[K_V_MODULE].DATA[K_T_T])) else 'auto_form.html',
