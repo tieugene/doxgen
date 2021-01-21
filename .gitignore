@@ -1,8 +1,11 @@
 __pycache__
 .idea
 *.sqlite3
+_*
 # working data
 static/ttf/*.ttf
 dox/sql/*.sql
-dox/tpl/*.py
-templates/form/*.html
+# exclude primers
+dox/tpl/z*.py
+templates/form/z*.html
+templates/print/z*.*
