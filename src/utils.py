@@ -3,10 +3,10 @@
 Utility module
 """
 
-# 1. django
-# 2. system
+# 1. system
 import datetime
-# 3. 3rd party
+# 2. 3rd party
+# 3. django
 
 
 def date2str(data, name):

@@ -36,26 +36,15 @@ from django.shortcuts import render
 from django.template import loader
 
 
-def __html2pdf_pdftk(request, context: dict, template) -> bytes:
+def __html2pdf_pdfkit(request, context: dict, template) -> bytes:
     """
     Render [x]html to pdf
     :param context - dictionary of data
     :param template - path of tpl
-    """
-    # 1. prepare
-    tmp = tempfile.NamedTemporaryFile(suffix='.xhtml', delete=True)  # delete=False to debug
-    tmp.write(render(request, template, context=context, content_type='text/xml').content)
-    tmp.flush()
-    outfile = tempfile.NamedTemporaryFile(suffix='.pdf', delete=True)  # delete=False to debug
-    # 2. render - new style
-    # pdf = wkhtmltox.Pdf()
-    # pdf.set_global_setting('out', outfile.name)
-    # pdf.add_page({'page': 'file://%s' % os.path.abspath(tmp.name)})
-    # pdf.convert()
-    # 2. render - old style
-    # TODO: replace w/ from_string
     # TODO: dpi=300
-    pdfkit.from_file(tmp.name, outfile.name)
+    """
+    outfile = tempfile.NamedTemporaryFile(suffix='.pdf', delete=True)  # delete=False to debug
+    pdfkit.from_string(loader.get_template(template).render(context), outfile.name, options={'quiet': ''})
     return outfile.read()
 
 
@@ -112,7 +101,7 @@ def html2html(request, context: dict, template: str):
 
 
 def html2pdf(request, context: dict, template: str):
-    data = __html2pdf_pdftk(request, context, template)
+    data = __html2pdf_pdfkit(request, context, template)
     response = HttpResponse(content=data, content_type='application/pdf')
     response['Content-Transfer-Encoding'] = 'binary'
     # response['Content-Disposition'] = 'filename=\"print.pdf\";'     # download: + ';attachment'
@@ -126,10 +115,11 @@ def rml2pdf(_, context: dict, template: str):
     """
     Create pdf from rml-template and return file to user
     """
+    data = __rml2pdf(context, template)
     response = HttpResponse(content_type='application/pdf')
     response['Content-Transfer-Encoding'] = 'binary'
     # response['Content-Disposition'] = 'attachment; filename="print.pdf";'
-    response.write(__rml2pdf(context, template))
+    response.write(data)
     # response.write(tpl.render(tc).encode('utf-8'))
     return response
 

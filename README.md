@@ -4,6 +4,10 @@ Document generator
 
 TODO: trml2pdf.textBox - use reportlab.platypus.Frame() + Paragraph()
 
+> Every copy of Acrobat Reader comes with 14 standard fonts built in:<br/>
+> Fixed: Courier[-Bold|-Oblique|-BoldOblique]<br/>
+> Proportional: Helvetica[-Bold|-Oblique|-BoldOblique], Times-{Roman,Bold,Italic,BoldItalic}, Symbol, ZapfDingbats
+
 ## 1. Requirements
 
 - python3:
@@ -72,29 +76,32 @@ Input:
 ----
 ## 2. TODO
 ### FIXME:
+- buttons
+- html2html in separate windows (standalone)
+- html download
 - converter: ret header+content instead of response
 - z0000: add a field or rm 'name'
+- tpl 'name': anon's invisible
+- tpl 'name': not required
 
 ### ToDo:
 + django:
   - i18n/l10n
   - syslog
 - refucktor:
-  - src &rArr; src/
-  - mv manage.py doxgen_mgr
-  - framework independent &rArr; subdir/ (modules, import &rarr; tpl &rarr; export):
-    - consts.py
-    - converter.py
-    - dox_test_cs.py
-    - dox/ref/
-    - dox/tpl/ ?
+  + src &rArr; src/
+  + mv manage.py ~~doxgen_mgr~~ manage
+  - dox/ => core/ (or up)
+  - framework independent &rArr; subdir/ ({consts,converter,dox_test_cs}.py,dox/ref/,dox/tpl/)
   - std: setup.py, *.spec, tox.ini, doc/
-- incapsulate plugins into a separate dir each
+- plugins => plugin/z###/* (dox/tpl/*.py, templates/{form/list/print/read/view}
 - move to flask (like uvedomlenie) or webpy (solo), web2py
-- pymorphy2
 - tpl/z*.py: bad import (Okved, SSRF; z0005_old)
 - html2pdf (py)
 - xfdf (py)
+- rml_1_0.dtd
+- tests
+- pymorphy2
 
 ### Ideas:
 - use OrderedDict as model (or inmemory sqlite)
