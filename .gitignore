@@ -6,6 +6,6 @@ _*
 src/static/ttf/*.ttf
 sql/*.sql
 # exclude primers
-src/dox/tpl/z*.py
+src/tpl/z*.py
 src/templates/form/z*.html
 src/templates/print/z*.*

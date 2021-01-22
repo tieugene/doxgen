@@ -64,6 +64,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries': {
+                'macros': 'templatetags.macros',
+            },
         },
     },
 ]
@@ -88,7 +91,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # 'pymorphy',
-    'dox.apps.DoxConfig',
 )
 
 # URL prefix for admin static files -- CSS, JavaScript and images.

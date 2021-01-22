@@ -32,8 +32,6 @@ def letterbox(s, boxlen=None):
     return retvalue
 
 
-# return ('Российская', 'Иностранная', 'Иностранная через ОП', 'ИП', 'Нотариус')[int(type) - 1]
-
 @register.filter
 def sljust(s, lc):
     """

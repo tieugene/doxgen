@@ -27,7 +27,7 @@ span.helptext {
 }
 {% endblock %}
 {% block body_main %}
-	<H1> <a href="{% url 'doc_list' uuid %}"> {{ name }} </a> </H1>
+	<H1> <a href="{% url 'doc_anon' uuid %}"> {{ name }} </a> </H1>
 	<p> <p> Будьте внимательны - обязательные поля выделены <b> жирным </b> шрифтом. </p>
 	<p> Если затрудняетесь с заполнением - нажмите кнопку примера. </p>
 	<p> Стереть данные можно кнопкой Очистить. </p>
@@ -42,7 +42,7 @@ span.helptext {
 		{% endif %}
 		{% include "button_print.html" %}
 		{% include "button_reset.html" %}
-		<a href="{% url 'doc_list' uuid %}"> {% include "button_cancel.html" %} </a>
+		<a href="{% url 'doc_anon' uuid %}"> {% include "button_cancel.html" %} </a>
 		{% if example %}
 			Примеры:
 			{% for e in example %}
