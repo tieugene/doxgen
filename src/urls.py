@@ -3,9 +3,10 @@ from django.contrib import admin
 from django.urls import include, path, register_converter
 from django.views.generic.base import TemplateView
 
-import converters, views
+import misc.utils
+import views
 
-register_converter(converters.ShortUUIDConverter, 'tuid')
+register_converter(misc.utils.ShortUUIDConverter, 'tuid')
 
 urlpatterns = [
 	path('user/',			include('django.contrib.auth.urls')),

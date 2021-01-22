@@ -8,7 +8,7 @@ from collections import OrderedDict
 from django import forms
 from django.forms.formsets import formset_factory
 
-from consts import *
+from core.consts import *
 
 
 def chk_inn(s):
@@ -41,9 +41,9 @@ def chk_inn(s):
 
     if not s.isdigit():
         return 1
-    if (len(s) == 10):
+    if len(s) == 10:
         return 0 if chk_cs(s, k10) else 3
-    elif (len(s) == 12):
+    elif len(s) == 12:
         return 0 if (chk_cs(s, k11) and chk_cs(s, k12)) else 3
     return 2
 
@@ -60,7 +60,7 @@ def chk_ogrn(s):
     """
     if not s.isdigit():
         return 1
-    if (len(s) != 13):
+    if len(s) != 13:
         return 2
     if (int(s[:12]) % 11) % 10 != int(s[12]):
         return 3
@@ -69,13 +69,13 @@ def chk_ogrn(s):
 
 class INNField(forms.CharField):
     def clean(self, value):
-        if (self.required):
+        if self.required:
             result = chk_inn(value)
-            if (result == 1):
+            if result == 1:
                 raise forms.ValidationError(u'содержит не-цифры')
-            elif (result == 2):
+            elif result == 2:
                 raise forms.ValidationError(u'неверная длинна (должно быть 10 или 12)')
-            elif (result == 3):
+            elif result == 3:
                 raise forms.ValidationError(u'контрольное число не совпадает с вычисленным')
         return super(INNField, self).clean(value)
 
@@ -110,6 +110,7 @@ def GenForm(fieldlist, named=True):  # FIXME: form name (for formset class name)
     """
     Generates Form class
     :param fieldlist:OrderedDict - fields definitions
+    :param named:
     Return form class
     """
     # class	WrappedFormField():
@@ -118,7 +119,7 @@ def GenForm(fieldlist, named=True):  # FIXME: form name (for formset class name)
     #		#return mark_safe(u'<div> <p> %s </p> <p> %s </p> <div>' % (self.label, self.widget.render('name', self.initial, self.widget_attrs(self.widget))))
     #		return mark_safe(u'<div> <p> %s </p> <p> %s </p> <div>' % (self.label, self))
     fields = OrderedDict()
-    if (named):
+    if named:
         # class t(forms.CharField, WrappedFormField):
         #	pass
         # fields[K_T_F_NAME] = t(label='Наименование', help_text='уникальное для данного типа документов')
@@ -143,6 +144,7 @@ def GenForm(fieldlist, named=True):  # FIXME: form name (for formset class name)
 def GenFormSets(formlist):
     """
     Generates OrderedDict of Form sets classes
+    :param formlist:
     :param fieldlist:OrderedDict - fields sets definitions
     :return OrderedDict { k: formset class }
     """

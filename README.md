@@ -73,43 +73,34 @@ Input:
 - 7: xpdf (Форма 26.2-1)
 
 ### Content
-- doc
-- src/ - code itself
-  - templates/
+- doc/ - documentation
+- src/ - project itself
+  - templates/ - common html templates
   - static/
-  - code/
-  - plugins/
+  - core/
+  - plugin/z*/ - plugin (code, forms, templates)
 
 ----
 ## 2. Tasks
 ### FIXME:
-- tpl_detail
-- name:
-  - z0000: add a field or rm
-  - anon's invisible
-  - not required
+- html preview for anon
 - converter: ret header+content instead of response
 - html2html in separate windows (standalone), download
 - buttons (13): home[/list]/login/logout/admin/info/create/cancel/clean/html-view|dl/pdf-view|dl
 - tpl/z000{2,6}.py: bad import (SSRF, Okved (2-lvl treeview)) -> list
 
 ### ToDo:
-- db-less (mv drc/dox/ src.db/) - mean for auth only:
-  - ~~dox/{admin,models,migrations,apps}~~
-- refucktor:
-  - dox/ => core/ (or up)
+- letsencrypt
+- watermark
+- refucktoring:
   - framework independent &rArr; subdir/ ({consts,converter,dox_test_cs}.py,dox/ref/,dox/tpl/)
+  - plugins => plugin/z###/* (dox/tpl/*.py, templates/{form/list/print/read/view}
   - std: requirements.txt, setup.py, *.spec, tox.ini, doc/
-  - code => subdir
-- xfdf (py)
-- plugins => plugin/z###/* (dox/tpl/*.py, templates/{form/list/print/read/view}
-- plugin scheme: json/xml+td
 - move to flask (like uvedomlenie) or webpy (solo), web2py
-- [split settings](https://github.com/sobolevn/django-split-settings)
-- django: i18n/l10n
-- rml_1_0.dtd
+- plugin scheme: json/xml+td
+- xfdf (py)
+- i18n/l10n
 - tests
-- pymorphy2
 
 ### Ideas:
 - convert tpl[][][] into tpl.attr.attr...
@@ -117,10 +108,12 @@ Input:
   - rendering [inmem, rrdb, ]
   - email
 - use OrderedDict as model (or inmemory sqlite)
-- smtp: chk domain and user (python-emailahoy) exists:
-  `socket.gethostbyname(domain:str)`
+- disable cookie-based sessions
+- smtp: chk domain and user (python-emailahoy) exists: `socket.gethostbyname(domain:str)`
 - rml2svg
 - html2rml
+- [split settings](https://github.com/sobolevn/django-split-settings)
+- pymorphy2
 
 ### Try:
 - [RTFM](https://www.toptal.com/django/django-top-10-mistakes) Django good practice
@@ -133,11 +126,11 @@ Input:
   - JCC - C++ Py&hArr;J glue code generator (~~rpm~~)
   - jpy - Py&hArr;Java bridge (~~rpm~~)
 - python3-django-:
-  - post_office
+  - python3-mozilla-django-oidc - OpenID ...
   - registration
-  - rules ()
-  - python3-mozilla-django-oidc : (OpenID)
-  - oauth-toolkit
+  - post_office - async email
+  - ~~rules~~ - per-object permissions
+  - ~~oauth-toolkit~~ - OAuth provider
 - python3-flask-:
   - oauth : Adds OAuth support to Flask
   - oidc : An openID Connect support for Flask
@@ -171,6 +164,7 @@ Input:
   + mv manage.py ~~doxgen_mgr~~ manage (sh)
 + html2pdf (py)
 + Log to Logging (+IP/agent[/POST_data])
++ app-less (mv drc/dox/ src.db/)
 
 ### Oops
 - log to [RRDB](https://github.com/commx/python-rrdtool) - digits only
@@ -215,8 +209,13 @@ Input:
 ## 4. Resources
 
 ### py:
-- Django [templates-macros](https://github.com/twidi/django-templates-macros)
-  - [oauth-toolkit)(https://github.com/jazzband/django-oauth-toolkit)
+- Django:
+  - -[templates-macros](https://github.com/twidi/django-templates-macros)
+  - -[oauth-toolkit](https://github.com/jazzband/django-oauth-toolkit)
+  - [python3-mozilla-django-oidc](https://github.com/mozilla/mozilla-django-oidc)
+  - -[post_office](https://github.com/ui/django-post_office)
+  - -[registration](https://github.com/ubernostrum/django-registration/)
+  - -[rules](https://pypi.org/project/django-rules/)
 - [trml2pdf](https://github.com/tieugene/trml2pdf)
 - [pdfkit](https://github.com/JazzCore/python-pdfkit)
 - [JPype](https://github.com/jpype-project/jpype) 

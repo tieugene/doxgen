@@ -15,9 +15,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.views.generic.base import TemplateView
 # 4. my
-import converter
-import utils
-from consts import *
+import core.converter
+from core.consts import *
 import forms
 
 
@@ -143,7 +142,7 @@ class TplList(TemplateView):
 
 def __doc_print(request, context_dict, template):
     ext = template.rsplit('.', 1)[1]
-    return converter.x2pdf[ext](request, context_dict, template)
+    return core.converter.x2pdf[ext](request, context_dict, template)
 
 
 @try_tpl
@@ -192,7 +191,7 @@ def doc_a(request, uuid, mode=0):
                 template = tpl[K_V_MODULE].DATA[K_T_T][K_T_T_PRINT]
                 if request.POST.get('_action', None) == u'view':
                     __try_to_call(tpl, K_T_F_PRE_VIEW, data)  # Create/Update -> View
-                    return converter.html2html(request, context_dict, template)
+                    return core.converter.html2html(request, context_dict, template)
                 else:  # Anon/Create/Update -> PRINT
                     __try_to_call(tpl, K_T_F_PRE_PRINT, data)
                     return __doc_print(request, context_dict, template)

@@ -9,7 +9,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 ALLOWED_HOSTS = []
-# ADMINS = (('TI_Eugene', 'im@eap.su'),)
+# ADMINS = (('TI_Eugene', 'info@doxgen.ru'),)
 # MANAGERS = ADMINS
 TIME_ZONE = 'Europe/Moscow'
 USE_TZ = True
@@ -40,7 +40,6 @@ DATABASES = {
 }
 
 # URL prefix for static files.
-# Example: "http://media.lawrence.com/static/"
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
@@ -65,7 +64,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
             ],
             'libraries': {
-                'macros': 'templatetags.macros',
+                'macros': 'misc.macros',
             },
         },
     },
@@ -157,9 +156,7 @@ LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale'),
 )
 
-PYMORPHY_DICTS = {
-    'ru': {'dir': '/usr/share/pymorphy/dict/ru'},
-}
+# PYMORPHY_DICTS = {'ru': {'dir': '/usr/share/pymorphy/dict/ru'}}
 
 try:
     from local_settings import *
