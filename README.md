@@ -52,15 +52,15 @@ Input:
 ### Features:
 - Anon:
   - *watermarks*
+  - *submit delay*
   - html preview
   - pdf download from trash
 - Registered:
+  - html download
   - pdf preview
   - pdf download
 - X:
-  - multiprint
-  - save/edit/del/copy records
-  - import/export data
+  - impex data
   - email pdfs
 
 ### Samples
@@ -72,6 +72,14 @@ Input:
 - 5: rml/xpdf (Уведомление мигранта) - use SSRF (84)
 - ~~6~~: xhtml (Реквизиты фирмы) - use Okved (1845)
 - 7: xpdf (Форма 26.2-1)
+
+### Content
+- doc
+- src/ - code itself
+  - templates/
+  - static/
+  - code/
+  - plugins/
 
 ----
 ## 2. TODO
@@ -85,9 +93,14 @@ Input:
 - tpl 'name': not required
 
 ### ToDo:
-+ django:
-  - i18n/l10n
-  - syslog
+- html2pdf (py)
+- log to Logging(file/syslog) + logrotate
+- tpl/z*.py: bad import (Okved, SSRF; z0005_old) -> list
+- django: i18n/l10n
+- db-less (mv drc/dox/ src.db/) - mean for auth only:
+  - -dox/{admin,models}
+  - +log => ?
+  - code => subdir
 - refucktor:
   + src &rArr; src/
   + mv manage.py ~~doxgen_mgr~~ manage
@@ -96,14 +109,16 @@ Input:
   - std: setup.py, *.spec, tox.ini, doc/
 - plugins => plugin/z###/* (dox/tpl/*.py, templates/{form/list/print/read/view}
 - move to flask (like uvedomlenie) or webpy (solo), web2py
-- tpl/z*.py: bad import (Okved, SSRF; z0005_old)
-- html2pdf (py)
 - xfdf (py)
 - rml_1_0.dtd
 - tests
 - pymorphy2
 
 ### Ideas:
+- convert tpl[][][] into tpl.attr.attr...
+- queues:
+  - rendering [inmem, rrdb, ]
+  - email
 - use OrderedDict as model (or inmemory sqlite)
 - smtp: chk domain and user (python-emailahoy) exists:
   `socket.gethostbyname(domain:str)`
@@ -111,6 +126,7 @@ Input:
 - html2rml
 
 ### Try:
+- plugun form/list/etc as <embed>
 - Google 'single application django project'
 - PyPDF2
 - iText7- Java (PDF Forms, HTML2PDF), ~~rpm~~
@@ -152,6 +168,9 @@ Input:
   + html2pdf (pdftk, slow)
   + rml2pdf
   + xfdf (java)
+
+### Oops
+- log to [RRDB](https://github.com/commx/python-rrdtool) - digits only
 
 ### Backends:
 - HTML:

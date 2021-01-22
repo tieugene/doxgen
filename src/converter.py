@@ -17,9 +17,11 @@ Try:
     * html5 (webkit)
     * pdf forms (pdftk)
 
+FIXME: __...() -> (err, bytes)
 TODO: unlink from django (e.g. mk pure http reponse)
-TODO: split on submodules:
-bytes:__any2pdf(context: dict, template: str)
+TODO: split on submodules: bytes:__any2pdf(context: dict, template: str)
+TODO: dispatcher(tpl_type:str) -> func
+Note: add static: content => tc={'STATIC_ROOT': settings.STATIC_ROOT}; tc.update(content)
 """
 
 # 2. system
@@ -32,11 +34,14 @@ import trml2pdf
 # 3. django
 from django.conf import settings
 from django.http import HttpResponse
-from django.shortcuts import render
 from django.template import loader
 
 
-def __html2pdf_pdfkit(request, context: dict, template) -> bytes:
+def __html2html(context: dict, template: str) -> str:
+    return loader.get_template(template).render(context)
+
+
+def __html2pdf_pdfkit(context: dict, template: str) -> bytes:
     """
     Render [x]html to pdf
     :param context - dictionary of data
@@ -48,7 +53,7 @@ def __html2pdf_pdfkit(request, context: dict, template) -> bytes:
     return outfile.read()
 
 
-def __rml2pdf(context: dict, template: str):
+def __rml2pdf(context: dict, template: str) -> bytes:
     tpl = loader.get_template(template)
     tc = {'STATIC_ROOT': settings.STATIC_ROOT}
     tc.update(context)
@@ -72,7 +77,7 @@ def __xfdf2pdf_cli(context: dict, template: str) -> bytes:
     return None if err else out
 
 
-def __xfdf2pdf_itext(context: dict, template: str):
+def __xfdf2pdf_itext(context: dict, template: str) -> bytes:
     # 1. fill xfdf
     pdf_tpl = os.path.join(settings.BASE_DIR, 'templates', template.rsplit('.', 1)[0] + '.pdf')
     xfdf = loader.get_template(template).render(context)
@@ -84,60 +89,18 @@ def __xfdf2pdf_itext(context: dict, template: str):
         jpype.startJVM(classpath=['jars/*'])
     from com.itextpdf.text.pdf import PdfReader, PdfStamper, XfdfReader
     from java.io import ByteArrayInputStream, ByteArrayOutputStream
-    pdf_reader = PdfReader(pdf_tpl)     # (filename:str|byte[]|InputStream)
+    pdf_reader = PdfReader(pdf_tpl)  # (filename:str|byte[]|InputStream)
     o_str = ByteArrayOutputStream()
     stamper = PdfStamper(pdf_reader, o_str)
     stamper.setFormFlattening(True)
     stamper.getAcroFields().setFields(XfdfReader(ByteArrayInputStream(xfdf)))
     stamper.close()
-    b = bytes(o_str.toByteArray())   # java byte[]
+    b = bytes(o_str.toByteArray())  # java byte[]
     # jpype.shutdownJVM()
     return b
 
 
-# ====
-def html2html(request, context: dict, template: str):
-    return render(request, template, context=context)
-
-
-def html2pdf(request, context: dict, template: str):
-    data = __html2pdf_pdfkit(request, context, template)
-    response = HttpResponse(content=data, content_type='application/pdf')
-    response['Content-Transfer-Encoding'] = 'binary'
-    # response['Content-Disposition'] = 'filename=\"print.pdf\";'     # download: + ';attachment'
-    # 4. cleanup
-    # if (os.path.exists(outfile.name)):
-    #    os.remove(outfile.name)	# hack
-    return response
-
-
-def rml2pdf(_, context: dict, template: str):
-    """
-    Create pdf from rml-template and return file to user
-    """
-    data = __rml2pdf(context, template)
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Transfer-Encoding'] = 'binary'
-    # response['Content-Disposition'] = 'attachment; filename="print.pdf";'
-    response.write(data)
-    # response.write(tpl.render(tc).encode('utf-8'))
-    return response
-
-
-def xfdf2pdf(_, context: dict, template: str):
-    data = __xfdf2pdf_itext(context, template)
-    if not data:
-        # response = HttpResponse('We had some errors:<pre>%s</pre>' % escape(err) + pdftpl)
-        response = HttpResponse('We had some errors:<pre>%s</pre>' % err + pdftpl)
-    else:
-        response = HttpResponse(content_type='application/pdf')
-        response['Content-Transfer-Encoding'] = 'binary'
-        # response['Content-Disposition'] = 'attachment; filename=\"print.pdf\";'
-        response.write(data)
-    return response
-
-
-def odf2pdf(request, context: dict, template: str):
+def __odf2pdf(context: dict, template: str) -> (bool, bytes):
     """
     sudo mkdir /usr/share/httpd/.config
     sudo chmod a+rwX /usr/share/httpd/.config
@@ -148,7 +111,7 @@ def odf2pdf(request, context: dict, template: str):
     """
     # 1. prepare
     tmp = tempfile.NamedTemporaryFile(suffix='.fodt', delete=True)  # delete=False to debug
-    tmp.write(render(request, template, context=context_dict, content_type='text/xml').content)
+    tmp.write(loader.get_template(template).render(context=context, content_type='text/xml').content)
     tmp.flush()
     # 2. render
     tmp_dir = os.path.dirname(tmp.name)
@@ -157,13 +120,72 @@ def odf2pdf(request, context: dict, template: str):
                                 shell=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
     # out, err = subprocess.Popen(['unoconv', '-f', 'pdf', '--stdout', tmp.name],...
     if err:
+        data = None
+    else:
+        data = open(out_file).read()
+        os.remove(out_file)
+    return err, data
+
+
+# ====
+def html2html(request, context: dict, template: str, as_attach: bool = False):
+    response = HttpResponse(content=__html2html(context, template), content_type='text/html')     # ; charset=UTF-8
+    if as_attach:
+        response['Content-Disposition'] = 'filename="print.html";'     # download: + ';attachment'
+    return response
+
+
+def html2pdf(_, context: dict, template: str, as_attach: bool = False):
+    data = __html2pdf_pdfkit(context, template)
+    response = HttpResponse(content=data, content_type='application/pdf')
+    response['Content-Transfer-Encoding'] = 'binary'
+    if as_attach:
+        response['Content-Disposition'] = 'filename="print.pdf";'     # download: + ';attachment'
+    return response
+
+
+def rml2pdf(_, context: dict, template: str, as_attach: bool = False):
+    """
+    Create pdf from rml-template and return file to user
+    """
+    data = __rml2pdf(context, template)
+    response = HttpResponse(content=data, content_type='application/pdf')
+    response['Content-Transfer-Encoding'] = 'binary'
+    if as_attach:
+        response['Content-Disposition'] = 'attachment; filename="print.pdf";'
+    return response
+
+
+def xfdf2pdf(_, context: dict, template: str, as_attach: bool = False):
+    data = __xfdf2pdf_itext(context, template)
+    if not data:
+        # response = HttpResponse('We had some errors:<pre>%s</pre>' % escape(err) + pdftpl)
+        response = HttpResponse('We had some errors:<pre>%s</pre>' % template)
+    else:
+        response = HttpResponse(content=data, content_type='application/pdf')
+        response['Content-Transfer-Encoding'] = 'binary'
+        if as_attach:
+            response['Content-Disposition'] = 'attachment; filename="print.pdf";'
+    return response
+
+
+def odf2pdf(_, context: dict, template: str, as_attach: bool = False):
+    """
+    sudo mkdir /usr/share/httpd/.config
+    sudo chmod a+rwX /usr/share/httpd/.config
+    sudo chown -R apache:apache /usr/share/httpd/.config
+    sudo chown :apache /usr/share/httpd
+    sudo chmod g+w /usr/share/httpd
+    sudo -u apache libreoffice --headless --convert-to pdf --outdir /tmp /tmp/test.fodt
+    """
+    err, data = __odf2pdf(context, template)
+    if err:
         response = HttpResponse('We had some errors:<pre>%s</pre>' % err)
     else:
-        response = HttpResponse(content_type='application/pdf')
+        response = HttpResponse(content=data, content_type='application/pdf')
         response['Content-Transfer-Encoding'] = 'binary'
-        response['Content-Disposition'] = 'attachment; filename=\"print.pdf\";'
-        response.write(open(out_file).read())
-        os.remove(out_file)
+        if as_attach:
+            response['Content-Disposition'] = 'attachment; filename="print.pdf";'
     return response
 
 
