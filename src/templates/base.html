@@ -119,7 +119,6 @@
 		<div> <a href="{% url 'logout' %}"> <img src="{% static 'img/icon-exit.png' %}" alt="Выход" title="Выход"/> </a> </div>
 		{% if user.is_superuser %}
 			<div id="tm_admin"> <a href="{% url 'admin:index' %}"> <img src="{% static 'img/icon-settingsthree-gears.png' %}" alt="Админка" title="Админка"/> </a> </div>
-			<div id="tm_log"> <a href="{% url 'log_list' %}"> <img src="{% static 'img/icon-list.png' %}" alt="Лог" title="Лог"/> </a> </div>
 		{% endif %}
 	{% else %}
 		<div id="tm_login"> <a href="{% url 'login' %}" rel="nofollow"> <img src="{% static 'img/icon-enter.png' %}" alt="Вход" title="Вход"/> </a> </div>

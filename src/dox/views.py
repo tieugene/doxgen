@@ -4,16 +4,17 @@
 import importlib
 import importlib.util
 import json
+import logging
 import os
 import sys
 from collections import OrderedDict
-# 2. django
+# 2. 3rd party
+# 3. django
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateView
-# 3. 3rd party
 # 4. my
 import converter
 import utils
@@ -22,7 +23,7 @@ from . import forms
 from . import models
 
 moduledict = dict()
-
+logger = logging.getLogger(__name__)
 PAGE_SIZE = 20
 
 
@@ -35,24 +36,22 @@ def __log_request(request):
     .method == .META['REQUEST_METHOD']
     .encoding == None
     .path_info == .META['PATH_INFO']
+
+    Payload: data=json.dumps(meta, indent=1, ensure_ascii=False)
+    meta = request.META
+    for k in meta.keys():
+        if k.islower():
+            del (meta[k])
     """
-    # pprint.pprint(request.META)
-    if not settings.DEBUG:
-        # if True:
-        # 1. sanitize
-        meta = request.META
-        for k in meta.keys():
-            if k.islower():
-                del (meta[k])
-        # 2. save
-        # models.Log(data=json.dumps(meta, indent=1, ensure_ascii=False)).save()
-        models.Log(
-            method=(request.META['REQUEST_METHOD'] == 'GET'),
-            ip=request.META['REMOTE_ADDR'],
-            path=request.META['PATH_INFO'][:254],
-            agent=request.META.get('HTTP_USER_AGENT', 'noname')[:254],
-            data=json.dumps(meta, indent=1, ensure_ascii=False)
-        ).save()
+    # if not settings.DEBUG:
+    logger.info(
+        "Method={}, IP={}, Path={}, Agent={}".format(
+            request.META['REQUEST_METHOD'],
+            request.META['REMOTE_ADDR'],
+            request.META['PATH_INFO'][:254],
+            request.META.get('HTTP_USER_AGENT', 'noname')[:254]
+        )
+    )
 
 
 def __load_modules(path):
@@ -141,17 +140,6 @@ class TplList(TemplateView):
         context = super().get_context_data(**kwargs)
         context['data'] = moduledict
         return context
-
-
-class LogList(ListView):
-    model = models.Log
-    paginate_by = PAGE_SIZE
-    template_name = 'log_list.html'  # default 'dox/log_list.html'
-
-
-class LogDetail(DetailView):
-    model = models.Log
-    template_name = 'log_detail.html'  # default dox/log_detail.html'
 
 
 class DocList(ListView):

@@ -11,8 +11,6 @@ register_converter(converters.ShortUUIDConverter, 'tuid')
 
 urlpatterns = [
 	path('',					views.TplList.as_view(), name='tpl_list'),		# +
-	path('l/',					views.LogList.as_view(), name='log_list'),		# -
-	path('l/<int:pk>/',			views.LogDetail.as_view(), name='log_view'),	# -
 	path('d/<tuid:uuid>/',		views.DocList.as_view(), name='doc_list'),		# - list (GET)
 	# acu
 	path('d/<tuid:uuid>/a/',	views.doc_a, name='doc_anon'),					# + anon (GET/POST=>print))	TODO: POST>view

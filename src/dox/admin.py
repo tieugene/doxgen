@@ -2,18 +2,15 @@
 from django.contrib import admin
 from . import models
 
-class	DocAdmin(admin.ModelAdmin):
-	ordering	= ('id',)
-	list_display	= ('id', 'user', 'type', 'name', 'created', 'updated')
 
-class	LogAdmin(admin.ModelAdmin):
-	ordering	= ('id',)
-	list_display	= ('id', 'date', 'method', 'ip', 'path', 'agent')
+class DocAdmin(admin.ModelAdmin):
+    ordering = ('id',)
+    list_display = ('id', 'user', 'type', 'name', 'created', 'updated')
 
-admin.site.register(models.Doc,	DocAdmin)
-admin.site.register(models.Log,	LogAdmin)
+
+admin.site.register(models.Doc, DocAdmin)
 
 try:
-        from local_admin import *
+    from local_admin import *
 except ImportError:
-        pass
+    pass
