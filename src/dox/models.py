@@ -8,11 +8,6 @@ from django.urls import reverse
 
 # 3. system
 
-'''
-class	UserExt:
-    pass
-'''
-
 
 class Doc(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=u'Пользователь')
@@ -45,23 +40,6 @@ class Doc(models.Model):
         ordering = ('type', 'name',)
         verbose_name = u'Документ'
         verbose_name_plural = u'Документы'
-
-
-class Log(models.Model):
-    date = models.DateTimeField(auto_now_add=True, verbose_name=u'Дата')
-    method = models.BooleanField(verbose_name=u'Метод')
-    ip = models.GenericIPAddressField(verbose_name=u'IP')
-    path = models.CharField(max_length=255, verbose_name=u'Куда')
-    agent = models.CharField(null=True, max_length=255, verbose_name=u'Агент')
-    data = models.TextField(verbose_name=u'Данные')
-
-    def __unicode__(self):
-        return self.ip
-
-    class Meta:
-        ordering = ('date',)
-        verbose_name = u'Лог'
-        verbose_name_plural = u'Логи'
 
 
 try:

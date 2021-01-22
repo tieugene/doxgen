@@ -84,6 +84,7 @@ Input:
 ----
 ## 2. Tasks
 ### FIXME:
+- tpl/z*.py: bad import (Okved, SSRF; z0005_old) -> list
 - name:
   - z0000: add a field or rm
   - anon's invisible
@@ -93,21 +94,18 @@ Input:
 - buttons
 
 ### ToDo:
-- tpl/z*.py: bad import (Okved, SSRF; z0005_old) -> list
-- Log to Logging +IP/agent/POST_data)
 - db-less (mv drc/dox/ src.db/) - mean for auth only:
-  - -dox/{admin,models}
-  - +log => ?
+  - ~~dox/{admin,models}~~
   - code => subdir
 - refucktor:
   - dox/ => core/ (or up)
   - framework independent &rArr; subdir/ ({consts,converter,dox_test_cs}.py,dox/ref/,dox/tpl/)
   - std: requirements.txt, setup.py, *.spec, tox.ini, doc/
 - xfdf (py)
-- django: i18n/l10n
-- [split settings](https://github.com/sobolevn/django-split-settings)
 - plugins => plugin/z###/* (dox/tpl/*.py, templates/{form/list/print/read/view}
 - move to flask (like uvedomlenie) or webpy (solo), web2py
+- [split settings](https://github.com/sobolevn/django-split-settings)
+- django: i18n/l10n
 - rml_1_0.dtd
 - tests
 - pymorphy2
@@ -171,6 +169,7 @@ Input:
   + src &rArr; src/
   + mv manage.py ~~doxgen_mgr~~ manage (sh)
 + html2pdf (py)
++ Log to Logging (+IP/agent[/POST_data])
 
 ### Oops
 - log to [RRDB](https://github.com/commx/python-rrdtool) - digits only
