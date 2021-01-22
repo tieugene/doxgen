@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 
-# 1. django
+# 1. system
+# 3. django
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
-
-
-# 3. system
 
 
 class Doc(models.Model):

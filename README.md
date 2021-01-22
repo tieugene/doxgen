@@ -4,20 +4,18 @@ Document generator
 
 TODO: trml2pdf.textBox - use reportlab.platypus.Frame() + Paragraph()
 
-> Every copy of Acrobat Reader comes with 14 standard fonts built in:<br/>
-> Fixed: Courier[-Bold|-Oblique|-BoldOblique]<br/>
-> Proportional: Helvetica[-Bold|-Oblique|-BoldOblique], Times-{Roman,Bold,Italic,BoldItalic}, Symbol, ZapfDingbats
-
 ## 1. Requirements
 
 - python3:
-  - django 3.x (rpm, pip3):
+  - django 3.x (rpm, pip):
     - templates-macros
   - trml2pdf
-  - pdfkit (rpm, pip3)
-  - jpype (rpm, pip3)
+  - html2pdf (one from):
+    - pdfkit (rpm, pip)
+    - weasyprint (rpm, pip)
+  - jpype (rpm, pip)
 - wkhtmltopdf (CLI, rpm)
-- itextpdf (java)
+- itextpdf (java, ~~rpm~~)
   - jre (rpm)
 - fonts: Liberation, Vera, Google's, ParaType, Microsoft core fonts 
 
@@ -34,7 +32,7 @@ Input:
   - html:
     - &check; pdfkit (rpm, pip3)
       - wkhtml2pdf (CLI, w/ page break, rpm)
-    - *weasyprint* (py, rpm, pip3)
+    - &check; weasyprint (py, rpm, pip3)
     - *xhtml2pdf* (py, ~~rpm~~, pip3)
       - reportlab (rpm, pip3)
       - *PyPDF2* (rpm, pip3)
@@ -54,7 +52,7 @@ Input:
   - *watermarks*
   - *submit delay*
   - html preview
-  - pdf download from trash
+  - pdf download from trash (or email only)
 - Registered:
   - html download
   - pdf preview
@@ -62,6 +60,7 @@ Input:
 - X:
   - impex data
   - email pdfs
+  - store data in cookies
 
 ### Samples
 - 0: html (Пример)
@@ -84,25 +83,27 @@ Input:
 ----
 ## 2. Tasks
 ### FIXME:
-- tpl/z*.py: bad import (Okved, SSRF; z0005_old) -> list
+- tpl_detail
 - name:
   - z0000: add a field or rm
   - anon's invisible
   - not required
 - converter: ret header+content instead of response
 - html2html in separate windows (standalone), download
-- buttons
+- buttons (13): home[/list]/login/logout/admin/info/create/cancel/clean/html-view|dl/pdf-view|dl
+- tpl/z000{2,6}.py: bad import (SSRF, Okved (2-lvl treeview)) -> list
 
 ### ToDo:
 - db-less (mv drc/dox/ src.db/) - mean for auth only:
-  - ~~dox/{admin,models}~~
-  - code => subdir
+  - ~~dox/{admin,models,migrations,apps}~~
 - refucktor:
   - dox/ => core/ (or up)
   - framework independent &rArr; subdir/ ({consts,converter,dox_test_cs}.py,dox/ref/,dox/tpl/)
   - std: requirements.txt, setup.py, *.spec, tox.ini, doc/
+  - code => subdir
 - xfdf (py)
 - plugins => plugin/z###/* (dox/tpl/*.py, templates/{form/list/print/read/view}
+- plugin scheme: json/xml+td
 - move to flask (like uvedomlenie) or webpy (solo), web2py
 - [split settings](https://github.com/sobolevn/django-split-settings)
 - django: i18n/l10n
@@ -256,3 +257,8 @@ Input:
 - [Google's](https://github.com/google/fonts)
 - PT_ &copy; ParaType
 - [Microsoft core fonts](https://sourceforge.net/projects/corefonts/) &copy; (deb: ttf-mscorefonts-installer)
+
+> Every copy of Acrobat Reader comes with 14 standard fonts built in:<br/>
+> Fixed: Courier[-Bold|-Oblique|-BoldOblique]<br/>
+> Proportional: Helvetica[-Bold|-Oblique|-BoldOblique], Times-{Roman,Bold,Italic,BoldItalic}, Symbol, ZapfDingbats
+
