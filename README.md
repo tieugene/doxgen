@@ -82,34 +82,31 @@ Input:
   - plugins/
 
 ----
-## 2. TODO
+## 2. Tasks
 ### FIXME:
-- buttons
-- html2html in separate windows (standalone)
-- html download
+- name:
+  - z0000: add a field or rm
+  - anon's invisible
+  - not required
 - converter: ret header+content instead of response
-- z0000: add a field or rm 'name'
-- tpl 'name': anon's invisible
-- tpl 'name': not required
+- html2html in separate windows (standalone), download
+- buttons
 
 ### ToDo:
-- html2pdf (py)
-- log to Logging(file/syslog) + logrotate
+- Log to Logging(file/syslog) + logrotate
 - tpl/z*.py: bad import (Okved, SSRF; z0005_old) -> list
-- django: i18n/l10n
 - db-less (mv drc/dox/ src.db/) - mean for auth only:
   - -dox/{admin,models}
   - +log => ?
   - code => subdir
 - refucktor:
-  + src &rArr; src/
-  + mv manage.py ~~doxgen_mgr~~ manage
   - dox/ => core/ (or up)
   - framework independent &rArr; subdir/ ({consts,converter,dox_test_cs}.py,dox/ref/,dox/tpl/)
   - std: setup.py, *.spec, tox.ini, doc/
+- xfdf (py)
+- django: i18n/l10n
 - plugins => plugin/z###/* (dox/tpl/*.py, templates/{form/list/print/read/view}
 - move to flask (like uvedomlenie) or webpy (solo), web2py
-- xfdf (py)
 - rml_1_0.dtd
 - tests
 - pymorphy2
@@ -137,7 +134,7 @@ Input:
 - python3-django-:
   - post_office
   - registration
-  - rules
+  - rules ()
   - python3-mozilla-django-oidc : (OpenID)
   - oauth-toolkit
 - python3-flask-:
@@ -168,6 +165,10 @@ Input:
   + html2pdf (pdftk, slow)
   + rml2pdf
   + xfdf (java)
++ refuctor:
+  + src &rArr; src/
+  + mv manage.py ~~doxgen_mgr~~ manage (sh)
++ html2pdf (py)
 
 ### Oops
 - log to [RRDB](https://github.com/commx/python-rrdtool) - digits only

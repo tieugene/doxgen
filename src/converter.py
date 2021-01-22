@@ -21,6 +21,7 @@ FIXME: __...() -> (err, bytes)
 TODO: unlink from django (e.g. mk pure http reponse)
 TODO: split on submodules: bytes:__any2pdf(context: dict, template: str)
 TODO: dispatcher(tpl_type:str) -> func
+TODO: pagebreak, pagenum
 Note: add static: content => tc={'STATIC_ROOT': settings.STATIC_ROOT}; tc.update(content)
 """
 
@@ -31,6 +32,7 @@ import tempfile
 # 2. 3rd party
 import pdfkit
 import trml2pdf
+import weasyprint
 # 3. django
 from django.conf import settings
 from django.http import HttpResponse
@@ -51,6 +53,16 @@ def __html2pdf_pdfkit(context: dict, template: str) -> bytes:
     outfile = tempfile.NamedTemporaryFile(suffix='.pdf', delete=True)  # delete=False to debug
     pdfkit.from_string(loader.get_template(template).render(context), outfile.name, options={'quiet': ''})
     return outfile.read()
+
+
+def __html2pdf_weasy(context: dict, template: str) -> bytes:
+    """
+    Render [x]html to pdf
+    :param context - dictionary of data
+    :param template - path of tpl
+    # TODO: dpi=300
+    """
+    return weasyprint.HTML(string=loader.get_template(template).render(context)).write_pdf()
 
 
 def __rml2pdf(context: dict, template: str) -> bytes:
@@ -128,19 +140,19 @@ def __odf2pdf(context: dict, template: str) -> (bool, bytes):
 
 
 # ====
-def html2html(request, context: dict, template: str, as_attach: bool = False):
-    response = HttpResponse(content=__html2html(context, template), content_type='text/html')     # ; charset=UTF-8
+def html2html(_, context: dict, template: str, as_attach: bool = False):
+    response = HttpResponse(content=__html2html(context, template), content_type='text/html')  # ; charset=UTF-8
     if as_attach:
-        response['Content-Disposition'] = 'filename="print.html";'     # download: + ';attachment'
+        response['Content-Disposition'] = 'filename="print.html";'  # download: + ';attachment'
     return response
 
 
 def html2pdf(_, context: dict, template: str, as_attach: bool = False):
-    data = __html2pdf_pdfkit(context, template)
+    data = __html2pdf_weasy(context, template)
     response = HttpResponse(content=data, content_type='application/pdf')
     response['Content-Transfer-Encoding'] = 'binary'
     if as_attach:
-        response['Content-Disposition'] = 'filename="print.pdf";'     # download: + ';attachment'
+        response['Content-Disposition'] = 'filename="print.pdf";'  # download: + ';attachment'
     return response
 
 
