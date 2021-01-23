@@ -65,6 +65,7 @@ TEMPLATES = [
             ],
             'libraries': {
                 'macros': 'misc.macros',
+                'templatetags': 'misc.templatetags',
             },
         },
     },

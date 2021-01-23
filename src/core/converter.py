@@ -22,7 +22,6 @@ TODO: unlink from django (e.g. mk pure http reponse)
 TODO: split on submodules: bytes:__any2pdf(context: dict, template: str)
 TODO: dispatcher(tpl_type:str) -> func
 TODO: pagebreak, pagenum
-Note: add static: content => tc={'STATIC_ROOT': settings.STATIC_ROOT}; tc.update(content)
 """
 
 # 2. system
@@ -31,7 +30,7 @@ import subprocess
 import tempfile
 # 2. 3rd party
 import pdfkit
-import trml2pdf
+import trml2pdf.doc
 import weasyprint
 # 3. django
 from django.conf import settings
@@ -39,8 +38,39 @@ from django.http import HttpResponse
 from django.template import loader
 
 
+# ==== 1. low-level utils (django dependent)
+def __get_template(template: str, ext: str) -> str:
+    """
+    Get new template based on exists and extension
+    :param template:
+    :param ext:
+    :return:
+    """
+    return os.path.join(settings.BASE_DIR, 'templates', template.rsplit('.', 1)[0] + '.' + ext)
+
+
+def __render_template(template: str, context: dict) -> str:
+    """
+    Render template with data.
+    :param template:
+    :param context:
+    :return:
+    Note: for fodt add context_type='text/xml'
+    """
+    return loader.get_template(template).render(context=context)
+
+
+def __response_pdf(data: bytes, as_attach: bool):
+    response = HttpResponse(content=data, content_type='application/pdf')
+    response['Content-Transfer-Encoding'] = 'binary'
+    if as_attach:
+        response['Content-Disposition'] = 'filename="print.pdf";'  # download: + ';attachment'
+    return response
+
+
+# ==== 2. renderers itself (independent)
 def __html2html(context: dict, template: str) -> str:
-    return loader.get_template(template).render(context)
+    return __render_template(template, context)
 
 
 def __html2pdf_pdfkit(context: dict, template: str) -> bytes:
@@ -51,7 +81,7 @@ def __html2pdf_pdfkit(context: dict, template: str) -> bytes:
     # TODO: dpi=300
     """
     outfile = tempfile.NamedTemporaryFile(suffix='.pdf', delete=True)  # delete=False to debug
-    pdfkit.from_string(loader.get_template(template).render(context), outfile.name, options={'quiet': ''})
+    pdfkit.from_string(__render_template(template, context), outfile.name, options={'quiet': ''})
     return outfile.read()
 
 
@@ -62,14 +92,11 @@ def __html2pdf_weasy(context: dict, template: str) -> bytes:
     :param template - path of tpl
     # TODO: dpi=300
     """
-    return weasyprint.HTML(string=loader.get_template(template).render(context)).write_pdf()
+    return weasyprint.HTML(string=__render_template(template, context)).write_pdf()
 
 
 def __rml2pdf(context: dict, template: str) -> bytes:
-    tpl = loader.get_template(template)
-    tc = {'STATIC_ROOT': settings.STATIC_ROOT}
-    tc.update(context)
-    return trml2pdf.parseString(tpl.render(tc).encode('utf-8'))
+    return trml2pdf.doc.parse_string(__render_template(template, context))
 
 
 def __xfdf2pdf_cli(context: dict, template: str) -> bytes:
@@ -79,20 +106,20 @@ def __xfdf2pdf_cli(context: dict, template: str) -> bytes:
     1. render xfdf to stdout
     2. merge pdf and stdin to stdout
     """
-    pdftpl = os.path.join(settings.BASE_DIR, 'templates', template.rsplit('.', 1)[0] + '.pdf')
+    pdf_tpl = __get_template(template, 'pdf')
     out, err = subprocess.Popen(
-        ['xfdftool', '-f', pdftpl],
+        ['xfdftool', '-f', pdf_tpl],
         shell=False,
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE).communicate(str(loader.get_template(template).render(context)))
+        stderr=subprocess.PIPE).communicate(__render_template(template, context))
     return None if err else out
 
 
 def __xfdf2pdf_itext(context: dict, template: str) -> bytes:
     # 1. fill xfdf
-    pdf_tpl = os.path.join(settings.BASE_DIR, 'templates', template.rsplit('.', 1)[0] + '.pdf')
-    xfdf = loader.get_template(template).render(context)
+    pdf_tpl = __get_template(template, 'pdf')
+    xfdf = __render_template(template, context)
     # 2. gen pdf
     import jpype.imports
     if isinstance(xfdf, str):
@@ -123,7 +150,7 @@ def __odf2pdf(context: dict, template: str) -> (bool, bytes):
     """
     # 1. prepare
     tmp = tempfile.NamedTemporaryFile(suffix='.fodt', delete=True)  # delete=False to debug
-    tmp.write(loader.get_template(template).render(context=context, content_type='text/xml').content)
+    tmp.write(__render_template(template, context).content)
     tmp.flush()
     # 2. render
     tmp_dir = os.path.dirname(tmp.name)
@@ -139,49 +166,38 @@ def __odf2pdf(context: dict, template: str) -> (bool, bytes):
     return err, data
 
 
-# ====
-def html2html(_, context: dict, template: str, as_attach: bool = False):
+# ==== 3. Wrappers for external usage
+def html2html(context: dict, template: str, as_attach: bool = False):
     response = HttpResponse(content=__html2html(context, template), content_type='text/html')  # ; charset=UTF-8
     if as_attach:
         response['Content-Disposition'] = 'filename="print.html";'  # download: + ';attachment'
     return response
 
 
-def html2pdf(_, context: dict, template: str, as_attach: bool = False):
+def html2pdf(context: dict, template: str, as_attach: bool = False):
     data = __html2pdf_weasy(context, template)
-    response = HttpResponse(content=data, content_type='application/pdf')
-    response['Content-Transfer-Encoding'] = 'binary'
-    if as_attach:
-        response['Content-Disposition'] = 'filename="print.pdf";'  # download: + ';attachment'
-    return response
+    return __response_pdf(data, as_attach)
 
 
-def rml2pdf(_, context: dict, template: str, as_attach: bool = False):
+def rml2pdf(context: dict, template: str, as_attach: bool = False):
     """
     Create pdf from rml-template and return file to user
     """
     data = __rml2pdf(context, template)
-    response = HttpResponse(content=data, content_type='application/pdf')
-    response['Content-Transfer-Encoding'] = 'binary'
-    if as_attach:
-        response['Content-Disposition'] = 'attachment; filename="print.pdf";'
-    return response
+    return __response_pdf(data, as_attach)
 
 
-def xfdf2pdf(_, context: dict, template: str, as_attach: bool = False):
+def xfdf2pdf(context: dict, template: str, as_attach: bool = False):
     data = __xfdf2pdf_itext(context, template)
     if not data:
         # response = HttpResponse('We had some errors:<pre>%s</pre>' % escape(err) + pdftpl)
         response = HttpResponse('We had some errors:<pre>%s</pre>' % template)
     else:
-        response = HttpResponse(content=data, content_type='application/pdf')
-        response['Content-Transfer-Encoding'] = 'binary'
-        if as_attach:
-            response['Content-Disposition'] = 'attachment; filename="print.pdf";'
+        response = __response_pdf(data, as_attach)
     return response
 
 
-def odf2pdf(_, context: dict, template: str, as_attach: bool = False):
+def odf2pdf(context: dict, template: str, as_attach: bool = False):
     """
     sudo mkdir /usr/share/httpd/.config
     sudo chmod a+rwX /usr/share/httpd/.config
@@ -194,10 +210,7 @@ def odf2pdf(_, context: dict, template: str, as_attach: bool = False):
     if err:
         response = HttpResponse('We had some errors:<pre>%s</pre>' % err)
     else:
-        response = HttpResponse(content=data, content_type='application/pdf')
-        response['Content-Transfer-Encoding'] = 'binary'
-        if as_attach:
-            response['Content-Disposition'] = 'attachment; filename="print.pdf";'
+        response = __response_pdf(data, as_attach)
     return response
 
 

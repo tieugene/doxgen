@@ -65,7 +65,7 @@ class TplList(TemplateView):
 
 def __doc_print(request, context_dict, template):
     ext = template.rsplit('.', 1)[1]
-    return core.converter.x2pdf[ext](request, context_dict, template)
+    return core.converter.x2pdf[ext](context_dict, template)
 
 
 @try_tpl
@@ -113,7 +113,7 @@ def doc_a(request, uuid):
                 template = tpl[K_V_MODULE].DATA[K_T_T][K_T_T_PRINT]
                 if request.POST.get('_action', None) == u'view':
                     core.mgr.try_to_call(tpl, K_T_F_PRE_VIEW, data)  # Create/Update -> View
-                    return core.converter.html2html(request, context_dict, template)
+                    return core.converter.html2html(context_dict, template)
                 else:  # Anon/Create/Update -> PRINT
                     core.mgr.try_to_call(tpl, K_T_F_PRE_PRINT, data)
                     return __doc_print(request, context_dict, template)

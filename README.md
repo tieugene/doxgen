@@ -85,6 +85,9 @@ Input:
 ----
 ## 2. Tasks
 ### FIXME:
+- remove django.* from core/convert:
+  - httpresponse
+  - template loader.render
 - html preview for anon
 - converter: ret header+content instead of response
 - html2html in separate windows (standalone), download
