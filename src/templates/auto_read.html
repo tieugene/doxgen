@@ -1,4 +1,4 @@
-{% extends "base_dox.html" %}
+{% extends "base.html" %}
 {% block body_main %}
 <p> Type: <a href="{% url 'doc_list' type.m.DATA.u %}"> {{ type.m.DATA.n }} </a> </p>
 <a href="{% url 'doc_view' pk %}"> {# if user.is_superuser #} {% include "button/view.html" %} {# endif #} </a>

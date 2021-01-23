@@ -52,9 +52,8 @@ Input:
 - Anon:
   - *watermarks*
   - *submit delay*
-  - *email to print*
+  - *email dl PDF URL*
   - html preview
-  - pdf download from trash (or email only)
 - Registered:
   - html download
   - pdf preview
@@ -62,7 +61,7 @@ Input:
 - X:
   - impex data
   - email pdfs
-  - store data in cookies
+  - store data [in cookies/browser storge]
 
 ### Samples
 - 0: html (Пример)
@@ -95,7 +94,10 @@ Input:
 - tpl/z000{2,6}.py: bad import (SSRF, Okved (2-lvl treeview)) -> list
 
 ### ToDo:
-- plugins => plugin/ (form.html, print.*, [, ~~pre~~view.html] ~~list, read,  view~~)
+- plugins => plugin/ ([~~pre~~view.html] ~~list, read,  view~~):
+  - zxxx.py
+  - form.html
+  - print.*
 - std (requirements.txt, setup.py,, tox.ini, *.spec doc/)
 - modulelist as class
 - letsencrypt
