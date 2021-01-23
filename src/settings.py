@@ -157,6 +157,9 @@ LOCALE_PATHS = (
 )
 
 # PYMORPHY_DICTS = {'ru': {'dir': '/usr/share/pymorphy/dict/ru'}}
+# Project specific vars
+
+PLUGINS_DIR = os.path.join(BASE_DIR, 'tpl')
 
 try:
     from local_settings import *

@@ -28,6 +28,7 @@ Uses:
 ### Formats:
 
 Output: pdf, html, ~~svg~~, png (reportlab.graphics.RenderPM)
+
 Input:
   - html:
     - &check; pdfkit (rpm, pip3)
@@ -51,6 +52,7 @@ Input:
 - Anon:
   - *watermarks*
   - *submit delay*
+  - *email to print*
   - html preview
   - pdf download from trash (or email only)
 - Registered:
@@ -90,17 +92,16 @@ Input:
 - tpl/z000{2,6}.py: bad import (SSRF, Okved (2-lvl treeview)) -> list
 
 ### ToDo:
+- refucktoring:
+  - views.PSS => core/
+  - plugins => plugin/
+  - std (requirements.txt, setup.py,, tox.ini, *.spec doc/)
 - letsencrypt
 - watermark
-- refucktoring:
-  - framework independent &rArr; subdir/ ({consts,converter,dox_test_cs}.py,dox/ref/,dox/tpl/)
-  - plugins => plugin/z###/* (dox/tpl/*.py, templates/{form/list/print/read/view}
-  - std: requirements.txt, setup.py, *.spec, tox.ini, doc/
-- move to flask (like uvedomlenie) or webpy (solo), web2py
-- plugin scheme: json/xml+td
 - xfdf (py)
 - i18n/l10n
 - tests
+- move to flask (uvedomlenie), webpy (solo), web2py
 
 ### Ideas:
 - convert tpl[][][] into tpl.attr.attr...
