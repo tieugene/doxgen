@@ -34,15 +34,12 @@ span.helptext {
 	<form id="myForm" action="." method="post">
 		{% csrf_token %}
 		<!-- formaction=""-->
-		{% if user.is_authenticated %}
-			{% include "button_save.html" %}
-		{% endif %}
 		{% if user.is_superuser %}
-			{% include "button_view.html" %}
+			{% include "button/view.html" %}
 		{% endif %}
-		{% include "button_print.html" %}
-		{% include "button_reset.html" %}
-		<a href="{% url 'doc_anon' uuid %}"> {% include "button_cancel.html" %} </a>
+		{% include "button/print.html" %}
+		{% include "button/reset.html" %}
+		<a href="{% url 'doc_anon' uuid %}"> {% include "button/cancel.html" %} </a>
 		{% if example %}
 			Примеры:
 			{% for e in example %}

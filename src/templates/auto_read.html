@@ -1,10 +1,8 @@
 {% extends "base_dox.html" %}
 {% block body_main %}
 <p> Type: <a href="{% url 'doc_list' type.m.DATA.u %}"> {{ type.m.DATA.n }} </a> </p>
-<a href="{% url 'doc_upd' pk %}"> {% include "button_edit.html" %} </a>
-<a href="{% url 'doc_view' pk %}"> {# if user.is_superuser #} {% include "button_view.html" %} {# endif #} </a>
-<a href="{% url 'doc_prn' pk %}"> {% include "button_print.html" %} </a>
-<a href="{% url 'doc_del' pk %}"> {% include "button_delete.html" %} </a>
+<a href="{% url 'doc_view' pk %}"> {# if user.is_superuser #} {% include "button/view.html" %} {# endif #} </a>
+<a href="{% url 'doc_prn' pk %}"> {% include "button/print.html" %} </a>
 <p> Наименование: {{ name }} </p>
 {% include "auto_rvp.html" %}
 {% endblock %}

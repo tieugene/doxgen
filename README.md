@@ -80,14 +80,14 @@ Input:
   - templates/ - common html templates
   - static/
   - core/
-  - plugin/z*/ - plugin (code, forms, templates)
+  - plugins/*/ - plugins
 
 ----
 ## 2. Tasks
 ### FIXME:
 - remove django.* from core/convert:
   - httpresponse
-  - template loader.render
+  - template loader().render()
 - html preview for anon
 - converter: ret header+content instead of response
 - html2html in separate windows (standalone), download
@@ -95,10 +95,9 @@ Input:
 - tpl/z000{2,6}.py: bad import (SSRF, Okved (2-lvl treeview)) -> list
 
 ### ToDo:
-- refucktoring:
-  - views.PSS => core/
-  - plugins => plugin/
-  - std (requirements.txt, setup.py,, tox.ini, *.spec doc/)
+- plugins => plugin/ (form.html, print.*, [, ~~pre~~view.html] ~~list, read,  view~~)
+- std (requirements.txt, setup.py,, tox.ini, *.spec doc/)
+- modulelist as class
 - letsencrypt
 - watermark
 - xfdf (py)
@@ -169,6 +168,7 @@ Input:
 + html2pdf (py)
 + Log to Logging (+IP/agent[/POST_data])
 + app-less (mv drc/dox/ src.db/)
++ PSS -> core/
 
 ### Oops
 - log to [RRDB](https://github.com/commx/python-rrdtool) - digits only
