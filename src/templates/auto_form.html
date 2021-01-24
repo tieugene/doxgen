@@ -36,6 +36,10 @@ span.helptext {
 		<!-- formaction=""-->
         {% include "button/view.html" %}
 		{% include "button/print.html" %}
+        {% if user.is_authenticated %}
+		    {% include "button/import.html" %}
+		    {% include "button/export.html" %}
+        {%  endif %}
 		{% include "button/reset.html" %}
 		{% if example %}
 			Примеры:

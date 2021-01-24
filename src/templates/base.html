@@ -7,10 +7,11 @@
 	<title> DoxGen - {% block title %} заполнение бланков {% endblock %} </title>
 	<meta name="description" content="{% block meta-description %}Заполнение бланков{% endblock %}">
 	<meta name="keywords" content="{% block meta-keywords %}бланк, заполнить, скачать, бесплатно, форма, ПД-4, 21001, 26.2-1{% endblock %}">
-    <link type="image/png" rel="shortcut icon" href="{% static 'img/TI_64.png' %}"/>
+    <link type="image/png" rel="shortcut icon" href="{% static 'img/favico.png' %}"/>
 	<link type="text/css" rel="stylesheet" href="{% static 'css/base.css' %}">
 	<link type="text/css" rel="stylesheet" href="{% static 'css/colors.css' %}"/>
 	<link type="text/css" rel="stylesheet" href="{% static 'css/fieldset.css' %}"/>
+	<link type="text/css" rel="stylesheet" href="{% static 'css/std.css' %}"/>
 	<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/jquery.formset.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/jquery.populate.js' %}"></script>
@@ -26,104 +27,25 @@
 		}
 	</script>
 	<style type="text/css" >
-		dt p	{ font-weight: bold; }
-		table {
-			border-collapse: collapse;
-			border: none;
-		}
-		td {
-			border: 1px solid black;
-			padding: 2pt;
-		}
-		#topmenu {
-			background-color: #EBEFF9;
-			display: table;
-			width: 100%;
-			text-align: center;
-			border-top: 5px solid #EBEFF9;
-		}
-		#topmenu > div {
-			display: table-cell;
-			border-bottom: 1px solid #6B90DA;
-			padding: 3px 1em;
-			white-space: nowrap;
-		}
-		#topmenu div.active {
-			border: 1px solid #6B90DA;
-			border-bottom-color: white;
-			background: white;
-			-webkit-border-top-left-radius: 5px;
-			-webkit-border-top-right-radius: 5px;
-			-moz-border-radius-topleft: 5px;
-			-moz-border-radius-topright: 5px;
-			border-top-left-radius: 5px;
-			border-top-right-radius: 5px;
-			/* gradient */
-			background: -moz-linear-gradient(top, #EBEFF9, white);		/* Firefox 3.6+ Chrome 1-9, Safari 4-5 */
-			background: -webkit-linear-gradient(top, #EBEFF9, white);	/* Chrome 10+ 4-5 */
-			background: -o-linear-gradient(top, #EBEFF9, white);		/* Opera 11.10+ */
-			background: -ms-linear-gradient(top, #EBEFF9, white);		/* IE 10 */
-			background: linear-gradient(top, #EBEFF9, white);		/* CSS3 */
-		}
-		#topmenu a:link {
-			color: blue;
-		}
-		#topmenu a:visited {
-			color: blue;
-		}
-		button.rounded {
-			-webkit-border-radius: 5px;
-			-moz-border-radius: 5px;
-			border-radius: 5px;
-		}
-		.even	{ background-color: white; }
-		.odd	{ background-color: #F0F0F0; }
-		.wide	{ width: 100%; }
-		.table	{ display: table; }
-		.row	{ display: table-row; }
-		.cell	{ display: table-cell; }
-		.center	{ text-align: center; }
-		.right	{ text-align: right; }
-		.bt	{ border-top: 1px solid black; }
-		.bb	{ border-bottom: 1px solid black; }
-		.bl	{ border-left: 1px solid black; }
-		.br	{ border-right: 1px solid black; }
-		.box	{ border: 1px solid black; }
-		.nobt	{ border-top: 0; }
-		.nobb	{ border-bottom: 0; }
-		.nobl	{ border-left: 0; }
-		.nobr	{ border-right: 0; }
-		.nobox	{ border: 0; }
-		.bold	{ font-weight: bold; }
-		div#legend {
-			margin: auto;
-			border: 1px solid lightgrey;
-			margin: 3pt;
-			padding: 3pt;
-			-webkit-border-radius: 5px;
-			-moz-border-radius: 5px;
-			border-radius: 5px;
-			background-color: whitesmoke;
-		}
 	{% block css %}
 	{% endblock %}
 	</style>
 </head>
 <body>
 <div id="topmenu">
-	<div id="tm_index" class=""> <a href="{% url 'index' %}"> <img src="{% static 'img/icon-home.png' %}" alt="Главная" title="Главная"/> </a> </div>
-	<div id="tm_tpl" class=""> <a href="{% url 'tpl_list' %}"> <img src="{% static 'img/icon-spreadsheet.png' %}" alt="Шаблоны" title="Шаблоны"/> </a> </div>
+	<div id="tm_index" class=""> <a href="{% url 'index' %}"> <img src="{% static 'img/16/icon-home.png' %}" alt="Главная" title="Главная"/> </a> </div>
+	<div id="tm_tpl" class=""> <a href="{% url 'tpl_list' %}"> <img src="{% static 'img/16/icon-list.png' %}" alt="Шаблоны" title="Шаблоны"/> </a> </div>
 	<div style="width: 100%"> <b> DoxGen </b> </div>
 	{% if user.is_authenticated %}
 		<div> {{ user.username }} : </div>
-		<div> <a href="{% url 'logout' %}"> <img src="{% static 'img/icon-exit.png' %}" alt="Выход" title="Выход"/> </a> </div>
+		<div> <a href="{% url 'logout' %}"> <img src="{% static 'img/16/icon-exit.png' %}" alt="Выход" title="Выход"/> </a> </div>
 		{% if user.is_superuser %}
-			<div id="tm_admin"> <a href="{% url 'admin:index' %}"> <img src="{% static 'img/icon-settingsthree-gears.png' %}" alt="Админка" title="Админка"/> </a> </div>
+			<div id="tm_admin"> <a href="{% url 'admin:index' %}"> <img src="{% static 'img/16/icon-settingsthree-gears.png' %}" alt="Админка" title="Админка"/> </a> </div>
 		{% endif %}
 	{% else %}
-		<div id="tm_login"> <a href="{% url 'login' %}" rel="nofollow"> <img src="{% static 'img/icon-enter.png' %}" alt="Вход" title="Вход"/> </a> </div>
+		<div id="tm_login"> <a href="{% url 'login' %}" rel="nofollow"> <img src="{% static 'img/16/icon-enter.png' %}" alt="Вход" title="Вход"/> </a> </div>
 	{% endif %}
-	<div id="tm_about"> <a href="{% url 'about' %}"> <img src="{% static 'img/icon-info-sign.png' %}" alt="О программе" title="О программе"/> </a> </div>
+	<div id="tm_about"> <a href="{% url 'about' %}"> <img src="{% static 'img/16/icon-info-sign.png' %}" alt="О программе" title="О программе"/> </a> </div>
 </div>
 	<div>
 	{% block body_main %}
