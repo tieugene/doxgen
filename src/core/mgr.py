@@ -4,6 +4,7 @@ core.mgr - plugins managenebt
 """
 
 import os
+import sys
 import importlib
 from collections import OrderedDict
 from .consts import *
@@ -19,7 +20,7 @@ def try_to_call(t, f, v):
         return t[K_V_MODULE].__dict__[f](v)
 
 
-def __load_modules(path):
+def __load_modules(path: str) -> list:
     """
     Load all Python modules from a directory into a dict.
 
@@ -28,15 +29,16 @@ def __load_modules(path):
     :returns: map between loaded modules name and their content.
     :rtype: :class:`dict`
     """
-    dir_list = os.listdir(path)
-    mods = {}
-    for fname in dir_list:
-        name, ext = os.path.splitext(fname)
-        if ext == '.py' and not name == '__init__':
-            try:
-                mods[name] = importlib.import_module('tpl.'+name)  # hack
-            except Exception as ex:
-                print("Unable load module '{}': {}".format(name, ex))
+    mods = list()   # modulename: module
+    for dir_name in os.listdir(path):
+        dir_path = os.path.join(path, dir_name)
+        if os.path.isdir(dir_path):
+            file_path = os.path.join(dir_path, 'main.py')
+            if os.path.isfile(file_path):
+                try:
+                    mods.append(importlib.import_module('plugins.{}.main'.format(dir_name)))
+                except Exception as ex:
+                    print("Unable load module from plugins/'{}': {}".format(dir_name, ex), file=sys.stderr)
     return mods
 
 
@@ -50,10 +52,8 @@ def try_load_plugins(plugins_path: str, formgen, formsetgen) -> None:
     """
     if not moduledict:
         # 1. load modules into list of modulename=>module
-        tpl = __load_modules(plugins_path)  # {'z0000': <module>}
         # 2. repack
-        for k, module in tpl.items():  # k: filename, v: module object
-            # try: dict, getattr/setattr/hasattr/delattr, hash/hex/id
+        for module in __load_modules(plugins_path):  # repack module objects
             # s = set(dir(module))
             data = module.DATA
             uuid = data[K_T_UUID]

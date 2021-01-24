@@ -95,9 +95,9 @@ Input:
 
 ### ToDo:
 - plugins => plugin/ ([~~pre~~view.html] ~~list, read,  view~~):
-  - zxxx.py
-  - form.html
   - print.*
+  - form.html
+- doc_a: split into GET / POST
 - std (requirements.txt, setup.py,, tox.ini, *.spec doc/)
 - modulelist as class
 - letsencrypt
@@ -171,6 +171,8 @@ Input:
 + Log to Logging (+IP/agent[/POST_data])
 + app-less (mv drc/dox/ src.db/)
 + PSS -> core/
++ plugins => plugin/ ([~~pre~~view.html] ~~list, read,  view~~):
+  + zxxx.py
 
 ### Oops
 - log to [RRDB](https://github.com/commx/python-rrdtool) - digits only
