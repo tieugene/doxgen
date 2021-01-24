@@ -39,41 +39,30 @@ from django.template import loader
 
 
 # ==== 1. low-level utils (django dependent)
-def __get_template(template: str, ext: str) -> str:
+def __get_template_path(folder: str, template: str) -> str:
     """
-    Get new template based on exists and extension
-    :param template:
-    :param ext:
-    :return:
+    Get full template path
+    :param folder: plugin folder
+    :param template: template file name
+    :return: Full template path
     """
-    return os.path.join(settings.BASE_DIR, 'templates', template.rsplit('.', 1)[0] + '.' + ext)
+    return os.path.join(folder, template)
 
 
 def __render_template(template: str, context: dict) -> str:
     """
     Render template with data.
-    :param template:
-    :param context:
-    :return:
+    :param template: template full path
+    :param context: data
+    :return: rendered
     Note: for fodt add context_type='text/xml'
+    FIXME: loader.from_string()
     """
     return loader.get_template(template).render(context=context)
 
 
-def __response_pdf(data: bytes, as_attach: bool):
-    response = HttpResponse(content=data, content_type='application/pdf')
-    response['Content-Transfer-Encoding'] = 'binary'
-    if as_attach:
-        response['Content-Disposition'] = 'filename="print.pdf";'  # download: + ';attachment'
-    return response
-
-
 # ==== 2. renderers itself (independent)
-def __html2html(context: dict, template: str) -> str:
-    return __render_template(template, context)
-
-
-def __html2pdf_pdfkit(context: dict, template: str) -> bytes:
+def __html2pdf_pdfkit(template: str, context: dict) -> (str, bytes):
     """
     Render [x]html to pdf
     :param context - dictionary of data
@@ -82,43 +71,43 @@ def __html2pdf_pdfkit(context: dict, template: str) -> bytes:
     """
     outfile = tempfile.NamedTemporaryFile(suffix='.pdf', delete=True)  # delete=False to debug
     pdfkit.from_string(__render_template(template, context), outfile.name, options={'quiet': ''})
-    return outfile.read()
+    return '', outfile.read()
 
 
-def __html2pdf_weasy(context: dict, template: str) -> bytes:
+def __html2pdf_weasy(template: str, context: dict) -> (str, bytes):
     """
     Render [x]html to pdf
     :param context - dictionary of data
     :param template - path of tpl
     # TODO: dpi=300
     """
-    return weasyprint.HTML(string=__render_template(template, context)).write_pdf()
+    return '', weasyprint.HTML(string=__render_template(template, context)).write_pdf()
 
 
-def __rml2pdf(context: dict, template: str) -> bytes:
-    return trml2pdf.doc.parse_string(__render_template(template, context))
+def __rml2pdf(template: str, context: dict) -> (str, bytes):
+    return '', trml2pdf.doc.parse_string(__render_template(template, context))
 
 
-def __xfdf2pdf_cli(context: dict, template: str) -> bytes:
+def __xfdf2pdf_cli(template: str, context: dict) -> (str, bytes):
     """
     @param template: xfdf-file
     @param context: [pdf form]
     1. render xfdf to stdout
     2. merge pdf and stdin to stdout
     """
-    pdf_tpl = __get_template(template, 'pdf')
+    pdf_tpl = template.rsplit('.', 1)[0] + '.pdf'
     out, err = subprocess.Popen(
         ['xfdftool', '-f', pdf_tpl],
         shell=False,
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE).communicate(__render_template(template, context))
-    return None if err else out
+    return err, out
 
 
-def __xfdf2pdf_itext(context: dict, template: str) -> bytes:
+def __xfdf2pdf_itext(template: str, context: dict) -> (str, bytes):
     # 1. fill xfdf
-    pdf_tpl = __get_template(template, 'pdf')
+    pdf_tpl = os.path.join(settings.PLUGINS_DIR, template.rsplit('.', 1)[0] + '.pdf')
     xfdf = __render_template(template, context)
     # 2. gen pdf
     import jpype.imports
@@ -136,10 +125,10 @@ def __xfdf2pdf_itext(context: dict, template: str) -> bytes:
     stamper.close()
     b = bytes(o_str.toByteArray())  # java byte[]
     # jpype.shutdownJVM()
-    return b
+    return '', b
 
 
-def __odf2pdf(context: dict, template: str) -> (bool, bytes):
+def __odf2pdf(template: str, context: dict) -> (bool, bytes):
     """
     sudo mkdir /usr/share/httpd/.config
     sudo chmod a+rwX /usr/share/httpd/.config
@@ -150,7 +139,7 @@ def __odf2pdf(context: dict, template: str) -> (bool, bytes):
     """
     # 1. prepare
     tmp = tempfile.NamedTemporaryFile(suffix='.fodt', delete=True)  # delete=False to debug
-    tmp.write(__render_template(template, context).content)
+    tmp.write(__render_template(template, context))
     tmp.flush()
     # 2. render
     tmp_dir = os.path.dirname(tmp.name)
@@ -166,62 +155,54 @@ def __odf2pdf(context: dict, template: str) -> (bool, bytes):
     return err, data
 
 
-# ==== 3. Wrappers for external usage
-def html2html(context: dict, template: str, as_attach: bool = False):
-    response = HttpResponse(content=__html2html(context, template), content_type='text/html')  # ; charset=UTF-8
+__x2pdf = {
+    'htm': __html2pdf_weasy,
+    'html': __html2pdf_weasy,
+    'xhtm': __html2pdf_weasy,
+    'xhtml': __html2pdf_weasy,
+    'rml': __rml2pdf,
+    'xfdf': __xfdf2pdf_itext,
+    'fodt': __odf2pdf,
+    'fods': __odf2pdf,
+    'fodp': __odf2pdf,
+}
+
+
+# ==== 3. Endpoints for external usage
+def html2html(folder: str, template: str, context: dict, as_attach: bool = False):
+    """
+    EndPint #1: Preview HTML template
+    :param folder: plugin folder
+    :param template: template file name (relative to plugin dir)
+    :param context: data
+    :param as_attach: view or download
+    :return: HttpResponse
+    """
+    template_path = __get_template_path(folder, template)
+    # ? +=; charset=UTF-8
+    response = HttpResponse(content=__render_template(template_path, context), content_type='text/html')
     if as_attach:
         response['Content-Disposition'] = 'filename="print.html";'  # download: + ';attachment'
     return response
 
 
-def html2pdf(context: dict, template: str, as_attach: bool = False):
-    data = __html2pdf_weasy(context, template)
-    return __response_pdf(data, as_attach)
-
-
-def rml2pdf(context: dict, template: str, as_attach: bool = False):
+def any2pdf(folder: str, template: str, context: dict, as_attach: bool = False):
     """
-    Create pdf from rml-template and return file to user
+    EndPoint #2: Print
+    :param folder: plugin folder
+    :param template: template file name (relative to plugin dir)
+    :param context: data
+    :param as_attach: view or download
+    :return: HttpResponse
     """
-    data = __rml2pdf(context, template)
-    return __response_pdf(data, as_attach)
-
-
-def xfdf2pdf(context: dict, template: str, as_attach: bool = False):
-    data = __xfdf2pdf_itext(context, template)
-    if not data:
-        # response = HttpResponse('We had some errors:<pre>%s</pre>' % escape(err) + pdftpl)
-        response = HttpResponse('We had some errors:<pre>%s</pre>' % template)
-    else:
-        response = __response_pdf(data, as_attach)
-    return response
-
-
-def odf2pdf(context: dict, template: str, as_attach: bool = False):
-    """
-    sudo mkdir /usr/share/httpd/.config
-    sudo chmod a+rwX /usr/share/httpd/.config
-    sudo chown -R apache:apache /usr/share/httpd/.config
-    sudo chown :apache /usr/share/httpd
-    sudo chmod g+w /usr/share/httpd
-    sudo -u apache libreoffice --headless --convert-to pdf --outdir /tmp /tmp/test.fodt
-    """
-    err, data = __odf2pdf(context, template)
+    ext = template.rsplit('.', 1)[1]
+    template_path = __get_template_path(folder, template)
+    err, data = __x2pdf[ext](template_path, context)
     if err:
         response = HttpResponse('We had some errors:<pre>%s</pre>' % err)
     else:
-        response = __response_pdf(data, as_attach)
+        response = HttpResponse(content=data, content_type='application/pdf')
+        response['Content-Transfer-Encoding'] = 'binary'
+        if as_attach:
+            response['Content-Disposition'] = 'filename="print.pdf";'  # download: + ';attachment'
     return response
-
-
-x2pdf = {
-    'htm': html2pdf,
-    'html': html2pdf,
-    'xhtm': html2pdf,
-    'xhtml': html2pdf,
-    'rml': rml2pdf,
-    'xfdf': xfdf2pdf,
-    'fodt': odf2pdf,
-    'fods': odf2pdf,
-    'fodp': odf2pdf,
-}

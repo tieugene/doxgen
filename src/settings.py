@@ -51,11 +51,13 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
 
+PLUGINS_DIR = os.path.join(BASE_DIR, 'plugins')
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
-        'APP_DIRS': True,
+        'DIRS': [os.path.join(BASE_DIR, 'templates'), PLUGINS_DIR],
+        'APP_DIRS': False,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -153,14 +155,10 @@ LOGGING = {
     }
 }
 
-LOCALE_PATHS = (
-    os.path.join(BASE_DIR, 'locale'),
-)
+LOCALE_PATHS = (os.path.join(BASE_DIR, 'locale'),)
 
 # PYMORPHY_DICTS = {'ru': {'dir': '/usr/share/pymorphy/dict/ru'}}
 # Project specific vars
-
-PLUGINS_DIR = os.path.join(BASE_DIR, 'plugins')
 
 try:
     from local_settings import *

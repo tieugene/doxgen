@@ -63,11 +63,6 @@ class TplList(TemplateView):
         return context
 
 
-def __doc_print(request, context_dict, template):
-    ext = template.rsplit('.', 1)[1]
-    return core.converter.x2pdf[ext](context_dict, template)
-
-
 @try_tpl
 def doc_a(request, uuid):
     """
@@ -86,10 +81,8 @@ def doc_a(request, uuid):
     formclass = tpl[K_T_FORM]
     formsetsclass = tpl[K_T_FORMSETS]  # OrderedDict of dicts
     if request.method == 'POST':
-        # pprint.pprint(request.POST['_action'])
         form = formclass(request.POST)
-        # if mode == 0:  # ANON, Create/Update -> view/print
-        del form.fields[K_T_F_NAME]
+        del form.fields[K_T_F_NAME]  # if mode == 0:  # ANON, Create/Update -> view/print
         formlist = OrderedDict()
         isvalid = form.is_valid()
         for k, formset in formsetsclass.items():
@@ -111,12 +104,12 @@ def doc_a(request, uuid):
             if (K_T_T in tpl[K_V_MODULE].DATA) and (K_T_T_PRINT in tpl[K_V_MODULE].DATA[K_T_T]):
                 context_dict = {'data': data}
                 template = tpl[K_V_MODULE].DATA[K_T_T][K_T_T_PRINT]
-                if request.POST.get('_action', None) == u'view':
+                if request.POST.get('_action', None) == 'view':
                     core.mgr.try_to_call(tpl, K_T_F_PRE_VIEW, data)  # Create/Update -> View
-                    return core.converter.html2html(context_dict, template)
+                    return core.converter.html2html(tpl['dir'], template, context_dict)
                 else:  # Anon/Create/Update -> PRINT
                     core.mgr.try_to_call(tpl, K_T_F_PRE_PRINT, data)
-                    return __doc_print(request, context_dict, template)
+                    return core.converter.any2pdf(tpl['dir'], template, context_dict)
             else:  # tmp dummy
                 return redirect('tpl_list')
     else:  # GET
@@ -125,10 +118,12 @@ def doc_a(request, uuid):
         formlist = OrderedDict()
         for k, formset in formsetsclass.items():
             formlist[k] = formset(prefix=k)
+    form_template = tpl['dir'] + '/' + tpl[K_V_MODULE].DATA[K_T_T][K_T_T_FORM]\
+        if ((K_T_T in tpl[K_V_MODULE].DATA) and (K_T_T_FORM in tpl[K_V_MODULE].DATA[K_T_T]))\
+        else 'auto_form.html'
     return render(
         request,
-        tpl[K_V_MODULE].DATA[K_T_T][K_T_T_FORM] if ((K_T_T in tpl[K_V_MODULE].DATA) and (
-                K_T_T_FORM in tpl[K_V_MODULE].DATA[K_T_T])) else 'auto_form.html',
+        form_template,
         context={
             'name': tpl[K_V_MODULE].DATA[K_T_NAME],
             'comments': tpl[K_V_MODULE].DATA.get(K_T_COMMENTS, ''),

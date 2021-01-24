@@ -2,8 +2,6 @@
 
 Document generator
 
-TODO: trml2pdf.textBox - use reportlab.platypus.Frame() + Paragraph()
-
 ## 1. Requirements
 
 - python3:
@@ -84,27 +82,25 @@ Input:
 ----
 ## 2. Tasks
 ### FIXME:
-- remove django.* from core/convert:
-  - httpresponse
-  - template loader().render()
+- 'dir'
 - html preview for anon
-- converter: ret header+content instead of response
 - html2html in separate windows (standalone), download
 - buttons (13): home[/list]/login/logout/admin/info/create/cancel/clean/html-view|dl/pdf-view|dl
 - tpl/z000{2,6}.py: bad import (SSRF, Okved (2-lvl treeview)) -> list
 
 ### ToDo:
-- plugins => plugin/ ([~~pre~~view.html] ~~list, read,  view~~):
-  - print.*
-  - form.html
-- doc_a: split into GET / POST
-- std (requirements.txt, setup.py,, tox.ini, *.spec doc/)
-- modulelist as class
-- letsencrypt
 - watermark
 - xfdf (py)
 - i18n/l10n
+- doc/
+- std (requirements.txt, setup.py, tox.ini, coverage, *.spec)
+- letsencrypt
+- doc_a: split into GET / POST
+- modulelist as class
 - tests
+- remove django.* from core/convert:
+  - httpresponse
+  - template loader().render()
 - move to flask (uvedomlenie), webpy (solo), web2py
 
 ### Ideas:
@@ -121,6 +117,7 @@ Input:
 - pymorphy2
 
 ### Try:
+- trml2pdf.textBox == reportlab.platypus.Frame() + Paragraph()
 - [RTFM](https://www.toptal.com/django/django-top-10-mistakes) Django good practice
 - plugun form/list/etc as <embed>
 - Google 'single application django project'
@@ -173,6 +170,8 @@ Input:
 + PSS -> core/
 + plugins => plugin/ ([~~pre~~view.html] ~~list, read,  view~~):
   + zxxx.py
+  + print.*
+  + form.html
 
 ### Oops
 - log to [RRDB](https://github.com/commx/python-rrdtool) - digits only

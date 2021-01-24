@@ -29,14 +29,14 @@ def __load_modules(path: str) -> list:
     :returns: map between loaded modules name and their content.
     :rtype: :class:`dict`
     """
-    mods = list()   # modulename: module
+    mods = list()   # [(plugindir, module),]
     for dir_name in os.listdir(path):
         dir_path = os.path.join(path, dir_name)
         if os.path.isdir(dir_path):
             file_path = os.path.join(dir_path, 'main.py')
             if os.path.isfile(file_path):
                 try:
-                    mods.append(importlib.import_module('plugins.{}.main'.format(dir_name)))
+                    mods.append((dir_name, importlib.import_module('plugins.{}.main'.format(dir_name))))
                 except Exception as ex:
                     print("Unable load module from plugins/'{}': {}".format(dir_name, ex), file=sys.stderr)
     return mods
@@ -53,13 +53,13 @@ def try_load_plugins(plugins_path: str, formgen, formsetgen) -> None:
     if not moduledict:
         # 1. load modules into list of modulename=>module
         # 2. repack
-        for module in __load_modules(plugins_path):  # repack module objects
+        for dir_name, module in __load_modules(plugins_path):  # repack module objects
             # s = set(dir(module))
             data = module.DATA
             uuid = data[K_T_UUID]
             __tryget = module.__dict__.get
             # 2. dict
-            moduledict[uuid] = {K_V_MODULE: module, }
+            moduledict[uuid] = {K_V_MODULE: module, 'dir': dir_name}
             # 3. add dates fields
             datefields = list()
             for i, j in data[K_T_FIELD].items():  # each field definition:
