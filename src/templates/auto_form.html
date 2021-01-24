@@ -34,12 +34,9 @@ span.helptext {
 	<form id="myForm" action="." method="post">
 		{% csrf_token %}
 		<!-- formaction=""-->
-		{% if user.is_superuser %}
-			{% include "button/view.html" %}
-		{% endif %}
+        {% include "button/view.html" %}
 		{% include "button/print.html" %}
 		{% include "button/reset.html" %}
-		<a href="{% url 'doc_anon' uuid %}"> {% include "button/cancel.html" %} </a>
 		{% if example %}
 			Примеры:
 			{% for e in example %}

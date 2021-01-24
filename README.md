@@ -82,11 +82,11 @@ Input:
 ----
 ## 2. Tasks
 ### FIXME:
-- 'dir'
-- html preview for anon
 - html2html in separate windows (standalone), download
-- buttons (13): home[/list]/login/logout/admin/info/create/cancel/clean/html-view|dl/pdf-view|dl
-- tpl/z000{2,6}.py: bad import (SSRF, Okved (2-lvl treeview)) -> list
+- buttons (13): home[/list]/login/logout/admin/info/create/~~cancel~~/clean/html-view|dl/pdf-view|dl|email
+- tpl multiline err:
+  - 2 (Форма 21001)
+  - 6 (Реквизиты фирмы)
 
 ### ToDo:
 - watermark
@@ -104,7 +104,6 @@ Input:
 - move to flask (uvedomlenie), webpy (solo), web2py
 
 ### Ideas:
-- convert tpl[][][] into tpl.attr.attr...
 - queues:
   - rendering [inmem, rrdb, ]
   - email
@@ -172,6 +171,8 @@ Input:
   + zxxx.py
   + print.*
   + form.html
+- 'dir'
+- html preview for anon
 
 ### Oops
 - log to [RRDB](https://github.com/commx/python-rrdtool) - digits only
