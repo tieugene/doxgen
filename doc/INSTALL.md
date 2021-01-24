@@ -1,3 +1,5 @@
+# Install
+
 All:
 	* django python-wkhtmltopdf
 	* svn ...
@@ -13,6 +15,7 @@ Production:
 	* chmod -R ...
 	* ./manage.py syncdb
 
+```bash
 Note: ln -s /usr/share/doxgen/static/admin /usr/lib/python2.7/site-packages/django/contrib/admin/static/admin
 
 sudo mkdir /usr/share/httpd/.config
@@ -21,3 +24,4 @@ sudo chown -R apache:apache /usr/share/httpd/.config
 sudo chown :apache /usr/share/httpd
 sudo chmod g+w /usr/share/httpd
 sudo -u apache libreoffice --headless --convert-to pdf --outdir /tmp /tmp/test.fodt
+```

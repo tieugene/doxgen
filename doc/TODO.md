@@ -6,17 +6,20 @@
   - 6 (Реквизиты фирмы)
 
 ## 2. ToDo:
-- example: bill (multiline)
-- watermark
-- xfdf (py)
 - i18n/l10n
+- example: bill (multiline)
+- watermark:
+  - [html](https://codepen.io/YuvarajTana/pen/auiqx)
+  - [pdf](https://stackabuse.com/working-with-pdfs-in-python-adding-images-and-watermarks/)
+- xfdf (py)
 - doc/
 - std (requirements.txt, setup.py, coverage, *.spec)
 
 ## 3. Feature request
+- select x2pdf engines in settings
 - letsencrypt
 - actions:
-  - html2html in separate windows
+  - html2html in separate windows (target="_blank")
   - pdf-print
   - pdf-download
 - buttons/icons as tags
@@ -43,6 +46,8 @@
 - pymorphy2
 
 ## 5. Try:
+- [PyPDF4](https://github.com/claird/PyPDF4)
+- pdfminer.six - search [and *maybe* [replace](https://github.com/kanzure/pdfparanoia) PDF content
 - trml2pdf.textBox == reportlab.platypus.Frame() + Paragraph()
 - [RTFM](https://www.toptal.com/django/django-top-10-mistakes) Django good practice
 - plugun form/list/etc as <embed>
@@ -130,4 +135,3 @@ import | import | document-import |
 email-send |  | *dialog-ok*
 email-refuse |  | *dialog-cancel*
 
-- 

@@ -6,6 +6,7 @@ _*
 # working data
 src/static/ttf/*.ttf
 sql/*.sql
+doc/[a-z]*
 # exclude primers
 src/plugins/*
 src/udf/*
