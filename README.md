@@ -99,8 +99,8 @@ Input:
 - modulelist as class
 - tests
 - remove django.* from core/convert:
-  - httpresponse
-  - template loader().render()
+  - httpresponse (<= convert returns header and payload)
+  - template loader().render() => [jinga2 etc](https://wiki.python.org/moin/Templating)
 - move to flask (uvedomlenie), webpy (solo), web2py
 
 ### Ideas:

@@ -59,7 +59,7 @@ def try_load_plugins(plugins_path: str, formgen, formsetgen) -> None:
             uuid = data[K_T_UUID]
             __tryget = module.__dict__.get
             # 2. dict
-            moduledict[uuid] = {K_V_MODULE: module, 'dir': dir_name}
+            moduledict[uuid] = {K_V_MODULE: module, K_T_DIR: dir_name}
             # 3. add dates fields
             datefields = list()
             for i, j in data[K_T_FIELD].items():  # each field definition:

@@ -106,10 +106,10 @@ def doc_a(request, uuid):
                 template = tpl[K_V_MODULE].DATA[K_T_T][K_T_T_PRINT]
                 if request.POST.get('_action', None) == 'view':
                     core.mgr.try_to_call(tpl, K_T_F_PRE_VIEW, data)  # Create/Update -> View
-                    return core.converter.html2html(tpl['dir'], template, context_dict)
+                    return core.converter.html2html(tpl[K_T_DIR], template, context_dict)
                 else:  # Anon/Create/Update -> PRINT
                     core.mgr.try_to_call(tpl, K_T_F_PRE_PRINT, data)
-                    return core.converter.any2pdf(tpl['dir'], template, context_dict)
+                    return core.converter.any2pdf(tpl[K_T_DIR], template, context_dict)
             else:  # tmp dummy
                 return redirect('tpl_list')
     else:  # GET
@@ -118,7 +118,7 @@ def doc_a(request, uuid):
         formlist = OrderedDict()
         for k, formset in formsetsclass.items():
             formlist[k] = formset(prefix=k)
-    form_template = tpl['dir'] + '/' + tpl[K_V_MODULE].DATA[K_T_T][K_T_T_FORM]\
+    form_template = tpl[K_T_DIR] + '/' + tpl[K_V_MODULE].DATA[K_T_T][K_T_T_FORM]\
         if ((K_T_T in tpl[K_V_MODULE].DATA) and (K_T_T_FORM in tpl[K_V_MODULE].DATA[K_T_T]))\
         else 'auto_form.html'
     return render(

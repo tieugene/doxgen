@@ -9,6 +9,3 @@ sql/*.sql
 # exclude primers
 src/plugins/*
 src/udf/*
-src/tpl/z*.py
-src/templates/form/z*.html
-src/templates/print/z*.*

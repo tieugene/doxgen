@@ -8,6 +8,7 @@ Naming:
 
 # Template keys
 K_T_DATA = 'DATA'
+K_T_DIR = 'dir'
 K_T_UUID = 'u'  # inside K_T_DATA
 K_T_NAME = 'n'  # inside K_T_DATA
 K_T_COMMENTS = 'c'  # inside K_T_DATA
