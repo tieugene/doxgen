@@ -1,2 +1,3 @@
 {% load static %}
-<button class="none" type="reset" title="Очистить"> <img src="{% static 'img/edit-clear.png' %}" alt="reset"> </button>
+{% load i18n %}
+<button class="none" type="reset" title="{% translate 'Reset' %}"> <img src="{% static 'img/edit-clear.png' %}" alt="{% translate 'Reset' %}"> </button>

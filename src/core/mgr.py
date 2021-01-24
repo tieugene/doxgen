@@ -3,11 +3,16 @@
 core.mgr - plugins managenebt
 """
 
+# 1. system
 import os
 import sys
 import importlib
 from collections import OrderedDict
 from .consts import *
+# 2. 3rd parties
+# 3. django
+from django.utils.translation import gettext as _
+
 
 moduledict = dict()
 
@@ -38,7 +43,7 @@ def __load_modules(path: str) -> list:
                 try:
                     mods.append((dir_name, importlib.import_module('plugins.{}.main'.format(dir_name))))
                 except Exception as ex:
-                    print("Unable load module from plugins/'{}': {}".format(dir_name, ex), file=sys.stderr)
+                    print(_("Unable load module from plugins/'{}': {}").format(dir_name, ex), file=sys.stderr)
     return mods
 
 

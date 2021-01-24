@@ -3,6 +3,7 @@
 # 1. system
 import logging
 from collections import OrderedDict
+from django.utils.translation import gettext as _
 # 2. 3rd party
 # 3. django
 from django.conf import settings

@@ -1,2 +1,3 @@
 {% load static %}
-<button class="none" title="Import"> <img src="{% static 'img/document-import.png' %}" alt="import"> </button>
+{% load i18n %}
+<button class="none" title="{% translate 'Import' %}"> <img src="{% static 'img/document-import.png' %}" alt="{% translate 'Import' %}"> </button>

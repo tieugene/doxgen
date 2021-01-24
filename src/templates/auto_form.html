@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block title %} {{ name }} {% endblock %}
 {% block meta-description %} {{ comments }} {% endblock %}
 {% block css %}
@@ -27,10 +28,11 @@ span.helptext {
 }
 {% endblock %}
 {% block body_main %}
-	<H1> <a href="{% url 'doc_anon' uuid %}"> {{ name }} </a> </H1>
-	<p> <p> Будьте внимательны - обязательные поля выделены <b> жирным </b> шрифтом. </p>
-	<p> Если затрудняетесь с заполнением - нажмите кнопку примера. </p>
-	<p> Стереть данные можно кнопкой Очистить. </p>
+	<h1> {{ name }} </h1>
+    <p> {{ comments }} </p>
+	<p> {% blocktranslate %} Будьте внимательны - обязательные поля выделены <b> жирным </b> шрифтом. <br/>
+	    Если затрудняетесь с заполнением - нажмите кнопку Примера. <br/>
+	    Стереть данные можно кнопкой Очистить. {% endblocktranslate %} </p>
 	<form id="myForm" action="." method="post">
 		{% csrf_token %}
 		<!-- formaction=""-->
@@ -42,7 +44,7 @@ span.helptext {
         {%  endif %}
 		{% include "button/reset.html" %}
 		{% if example %}
-			Примеры:
+			{% translate 'Examples' %}:
 			{% for e in example %}
 				<button type="button" onClick="populateForm('myForm', '{{e.name}}')" title="{{e.tip}}"> {{ e.title }} </button>
 			{% endfor %}

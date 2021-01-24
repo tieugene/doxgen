@@ -149,7 +149,7 @@ LOGGING = {
         },
         '': {
             'level': 'INFO',
-            'handlers': ['console', 'file'],
+            'handlers': ['console'],
             'propagate': True
         },
     }

@@ -36,6 +36,7 @@ import weasyprint
 from django.conf import settings
 from django.http import HttpResponse
 from django.template import loader
+from django.utils.translation import gettext as _
 
 
 # ==== 1. low-level utils (django dependent)
@@ -199,7 +200,7 @@ def any2pdf(folder: str, template: str, context: dict, as_attach: bool = False):
     template_path = __get_template_path(folder, template)
     err, data = __x2pdf[ext](template_path, context)
     if err:
-        response = HttpResponse('We had some errors:<pre>%s</pre>' % err)
+        response = HttpResponse(_('We had some errors:<pre>{}</pre>').format(err))
     else:
         response = HttpResponse(content=data, content_type='application/pdf')
         response['Content-Transfer-Encoding'] = 'binary'

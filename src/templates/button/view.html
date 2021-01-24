@@ -1,2 +1,3 @@
 {% load static %}
-<button class="none" type="submit" title="Просмотр" name="_action" value="view"> <img src="{% static 'img/document-preview.png' %}" alt="preview"> </button>
+{% load i18n %}
+<button class="none" type="submit" title="{% translate 'View' %}" name="_action" value="view"> <img src="{% static 'img/document-preview.png' %}" alt="{% translate 'View' %}"> </button>

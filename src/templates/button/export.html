@@ -1,2 +1,3 @@
 {% load static %}
-<button class="none" title="Экспорт"> <img src="{% static 'img/document-export.png' %}" alt="export"> </button>
+{% load i18n %}
+<button class="none" title="{% translate 'Export' %}"> <img src="{% static 'img/document-export.png' %}" alt="{% translate 'Export' %}"> </button>

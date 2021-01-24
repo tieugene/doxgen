@@ -4,22 +4,6 @@ register = template.Library()
 
 
 @register.filter
-def strdate(date):
-    """
-    Представляет дату в формате '«01» января 2011 года'.
-    """
-    months = (u'января', u'февраля', u'марта', u'апреля', u'мая', u'июня',
-              u'июля', u'августа', u'сентября', u'октября', u'ноября',
-              u'декабря')
-    return u'«%s» %s %s года' % (date[0:2], months[int(date[3:5]) - 1], date[6:])
-
-
-@register.filter
-def getorgtype(orgtype):
-    return ('Российская', 'Иностранная', 'Иностранная через ОП', 'ИП', 'Нотариус')[int(orgtype) - 1]
-
-
-@register.filter
 def letterbox(s, boxlen=None):
     """
     Splits s by boxlen chars

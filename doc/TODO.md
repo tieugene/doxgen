@@ -1,6 +1,7 @@
 # TODO
 
-## 1. FIXME:
+## 1. FixMe:
+- admin oops
 - tpl multiline err:
   - 2 (Форма 21001)
   - 6 (Реквизиты фирмы)
@@ -14,22 +15,24 @@
 - xfdf (py)
 - doc/
 - std (requirements.txt, setup.py, coverage, *.spec)
+  - Pycharm: Inspect code, Code cleanup, w3c validation
+- remove django.* from core/convert:
+  - httpresponse (<= convert returns header and payload)
+  - template loader().render() => [jinga2 etc](https://wiki.python.org/moin/Templating)
 
-## 3. Feature request
+## 3. Feature requests:
 - select x2pdf engines in settings
 - letsencrypt
-- actions:
+- actions (- download filename = doxgen.ru.uuid.datetime.<ext>):
   - html2html in separate windows (target="_blank")
   - pdf-print
   - pdf-download
 - buttons/icons as tags
+- [flat icons](https://www.flaticon.com/) or tilda's
 - html2pdf_itext
 - doc_a: split into GET / POST
 - modulelist as class
 - tests (+tox.ini)
-- remove django.* from core/convert:
-  - httpresponse (<= convert returns header and payload)
-  - template loader().render() => [jinga2 etc](https://wiki.python.org/moin/Templating)
 - move to flask (uvedomlenie), webpy (solo), web2py
 
 ## 4. Ideas:
