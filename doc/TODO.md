@@ -1,18 +1,27 @@
 # TODO
 
 ## 1. FixMe:
+- std for deploy:
+  - requirements.txt
+  - setup.py
+  - *.spec
+  - settings.py
+  - local_settings.py
+- doc: Install
 
 ## 2. ToDo:
-- doc/
 - watermark:
   - [html](https://codepen.io/YuvarajTana/pen/auiqx)
   - [pdf](https://stackabuse.com/working-with-pdfs-in-python-adding-images-and-watermarks/)
 - xfdf (py)
-- std (requirements.txt, setup.py, coverage, *.spec)
-  - Pycharm: Inspect code, Code cleanup, w3c validation, test => coverage
+- weasyprint vs pdfkit
 - remove django.* from core/convert:
   - httpresponse (<= convert returns header and payload)
-  - template loader().render() => [jinga2 etc](https://wiki.python.org/moin/Templating)
+  - template loader().render() => [jinja2 etc](https://wiki.python.org/moin/Templating)
+- Code cleanup:
+  - Pycharm (Inspect code, Code cleanup, Coverage)
+  - w3c validation
+  - tests
 
 ## 3. Feature requests:
 - select x2pdf engines in settings
@@ -23,16 +32,13 @@
   - pdf-view-ext
   - pdf-download
   - pdf-print
-- buttons/icons as tags
-- [flat icons](https://www.flaticon.com/) or [Awesome](https://fontawesome.com)
 - html2pdf_itext
 - doc_a: split into GET / POST
 - modulelist as class
 - tests (+tox.ini)
-- move to flask (uvedomlenie), webpy (solo), web2py
+- move to lite frameworks (flask (uvedomlenie), webpy (solo), web2py)
 
 ## 4. Ideas:
-- donate
 - queues:
   - rendering [inmem, rrdb, ]
   - email
@@ -46,13 +52,10 @@
 
 ## 5. Try:
 - [PyPDF4](https://github.com/claird/PyPDF4)
-- pdfminer.six - search [and *maybe* [replace](https://github.com/kanzure/pdfparanoia) PDF content
+- pdfminer.six - search [and *maybe* [replace](https://github.com/kanzure/pdfparanoia)] PDF content
 - trml2pdf.textBox == reportlab.platypus.Frame() + Paragraph()
 - [RTFM](https://www.toptal.com/django/django-top-10-mistakes) Django good practice
-- plugun form/list/etc as <embed>
-- Google 'single application django project'
-- PyPDF2
-- iText7- Java (PDF Forms, HTML2PDF), ~~rpm~~
+- iText7 (Java, PDF Forms, HTML2PDF), ~~rpm~~
 - Py &rArr; Java calls:
   - Py4J - Py&hArr;J call via 'server' (rpm, pypy)
   - JCC - C++ Py&hArr;J glue code generator (~~rpm~~)
@@ -68,87 +71,4 @@
   - oidc : An openID Connect support for Flask
   - openid : OpenID support for Flask
   - authlib
-- Google Page Speed
-
-## 6. Done:
-+ python3
-+ Django 3.x
-+ tpl list is empty
-+ uuid urls type
-+ login/logout, admin
-+ ~~/index forward to dox/~~ tpl_list url
-+ object_list
-+ doc_add
-+ fill example (json sample empty)
-+ pdf inplace (rm 'Content-disposition' from http response)
-+ / @ [admin](https://docs.djangoproject.com/en/3.1/ref/contrib/admin/#overriding-admin-templates):
-  `cp django/contrib/admin/templates/base_site.html ./templates/admin/base_site.html | nano`
-+ process:
-  + html2html
-  + html2pdf (pdftk, slow)
-  + rml2pdf
-  + xfdf (java)
-+ refuctor:
-  + src &rArr; src/
-  + mv manage.py ~~doxgen_mgr~~ manage (sh)
-+ html2pdf (py)
-+ Log to Logging (+IP/agent[/POST_data])
-+ app-less (mv drc/dox/ src.db/)
-+ PSS -> core/
-+ plugins => plugin/ ([~~pre~~view.html] ~~list, read,  view~~):
-  + zxxx.py
-1.   + print.*
-1.   + form.html
-- 'dir'
-- html preview for anon
-- icons:
-  - [~~Awesome~~](https://github.com/FortAwesome/Font-Awesome)
-  - [*ByteSize*](https://github.com/danklammer/bytesize-icons) - very slick
-  - [Material design](https://github.com/google/material-design-icons) - 24px
-- i18n/l10n += form tip, about
-- example: multiline (#4)
-- tpl multiline err ('too many values to unpack (expected 2)')
-  - 6 (Реквизиты фирмы) (okved)
-  - 2 (Форма 21001) (ssrf, okved)
-- del/add row text changed to html entities (&cross;/&oplus;)
-
-### 7. Oops
-- log to [RRDB](https://github.com/commx/python-rrdtool) - digits only
-
-### 8. Icons
-
-Action | Button.html | File
--------|-------------|------
-favico | - | favico.png
-home | home | home.svg
-list | tplist | *menu.svg*
-login | login | sign-in.svg
-logout | logout | sign-out
-admin | admin | settings
-info | about | info
-clean | reset | *trash.svg*
-html-view | view | eye
-pdf-view | print | print
-export | export | export
-import | import | import
-*add row* |  | plus
-*del row* |  | minus
-*pdf-dl* |  | download
-*pdf-email* |  | send
-*ok* |  | checkmark
-*cancel* |  | close
-~~close~~ |  | 
-~~html-view-ext~~ |  | 
-~~html-dl~~ |  | 
-~~pdf-view-ext~~ |  | 
-~~pdf-print~~ |  | 
-
-ByteSize extra:
-+ ban
-+ link
-+ mail
-+ options
-+ upload
-- eraser
-- list
-
+- [Google Page Speed](https://developers.google.com/speed/pagespeed/insights/)

@@ -1,59 +1,39 @@
 # Install
 
-Input:
-  - html:
-    - &check; pdfkit (rpm, pip3)
-      - wkhtml2pdf (CLI, w/ page break, rpm)
-    - &check; weasyprint (py, rpm, pip3)
-    - *xhtml2pdf* (py, ~~rpm~~, pip3)
-      - reportlab (rpm, pip3)
-      - *PyPDF2* (rpm, pip3)
-      - *html5lib* (rpm, pip3)
-    - *iText.PdfWriter* via *.XMLWorker* (java)
-  - rml:
-    - &check; trml2pdf (py, reportlab)
-  - pdf form:
-    - &check; jpype (py, rpm, pip3)
-      - &check; iText (java)
-    - *PyPDF2* (py, pure, rpm, w/ [issue](https://github.com/mstamy2/PyPDF2/issues/355))
-  - *doc[x]/odt*:
-    - *unoconv/loffice service*
-
 ## Converters:
-  - html:
-    - &check; pdfkit (rpm, pip3)
-      - wkhtml2pdf (CLI, w/ page break, rpm)
-    - &check; weasyprint (py, rpm, pip3)
-    - *xhtml2pdf* (py, ~~rpm~~, pip3)
-      - reportlab (rpm, pip3)
-      - *PyPDF2* (rpm, pip3)
-      - *html5lib* (rpm, pip3)
-    - *iText.PdfWriter* via *.XMLWorker* (java)
-  - rml:
-    - &check; trml2pdf (py, reportlab)
-  - pdf form:
-    - &check; jpype (py, rpm, pip3)
-      - &check; iText (java)
-    - *PyPDF2* (py, pure, rpm, w/ [issue](https://github.com/mstamy2/PyPDF2/issues/355))
-  - *doc[x]/odt*:
-    - *unoconv/loffice service*
+- html:
+  - &check; pdfkit (rpm, pip3)
+    - wkhtmltopdf (CLI, w/ page break, rpm)
+  - &check; weasyprint (py, rpm, pip3)
+  - [*xhtml2pdf*](https://github.com/xhtml2pdf/xhtml2pdf) (py, ~~rpm~~, pip3)
+    - reportlab (rpm, pip3)
+    - *PyPDF2* (rpm, pip3)
+    - *html5lib* (rpm, pip3)
+  - *iText.PdfWriter* via *.XMLWorker* (java)
+- rml:
+  - &check; trml2pdf (py, reportlab)
+  - [*z3c.rml*](https://github.com/zopefoundation/z3c.rml)
+- pdf form:
+  - &check; jpype (py, rpm, pip3)
+    - &check; iText (java)
+  - *PyPDF2/4* (py, pure, rpm, w/ [issue](https://github.com/mstamy2/PyPDF2/issues/355))
+- *doc[x]/fodt*:
+  - ~~unoconv/python-webodt~~ libreoffice-headless
 
 ----
 All:
-	* git ...
-	* wkhtmltopdf-static
-	* ln
-	* mkdir -p /mnt/shares/doxgen && chmod -R a+rwX /mnt/shares/doxgen
-	* ./manage.py syncdb
+* git ...
+* wkhtmltopdf-static
+* ln
+* mkdir -p /mnt/shares/doxgen && chmod -R a+rwX /mnt/shares/doxgen
+* ./manage.py syncdb
 Production:
-	* httpd
-	* svn ...
-	* chmod -R ...
-	* ./manage.py syncdb
+* httpd
+* git ...
+* chmod -R ...
+* ./manage.py syncdb
 
 ```bash
-Note: ln -s /usr/share/doxgen/static/admin /usr/lib/python2.7/site-packages/django/contrib/admin/static/admin
-
 sudo mkdir /usr/share/httpd/.config
 sudo chmod a+rwX /usr/share/httpd/.config
 sudo chown -R apache:apache /usr/share/httpd/.config

@@ -5,15 +5,12 @@
 	$("#tm_tpl").addClass("active");
 {% endblock %}
 {% block body_main %}
-<div class="table wide">
 {% for k, v in data.items %}
-	<div class="row {% cycle 'even' 'odd' %}">
-		<div class="cell">
-			<p> <a href="{% url 'doc_anon' k %}" {% if v.m.DATA.c %} title="{{ v.m.DATA.c }}" {% endif %}> {{ v.m.DATA.n }} </a> </p>
-		</div>
-		<div class="cell">
-			{{ v.m.DATA.c }}
-		</div>
-	</div>
+    <details>
+        <summary>
+            <a href="{% url 'doc_anon' k %}" {% if v.m.DATA.c %} title="{{ v.m.DATA.c }}" {% endif %}> {{ v.m.DATA.n }} </a>
+        </summary>
+    {{ v.m.DATA.c }}
+    </details>
 {% endfor %}
 {% endblock %}
