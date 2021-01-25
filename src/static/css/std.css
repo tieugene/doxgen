@@ -84,3 +84,11 @@ div#legend {
     border-radius: 5px;
     background-color: whitesmoke;
 }
+img.px16 {
+    width: 16px;
+    height: 16px;
+}
+img.px32 {
+    width: 32px;
+    height: 32px;
+}
