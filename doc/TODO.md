@@ -1,13 +1,13 @@
 # TODO
 
 ## 1. FixMe:
+- i18n/l10n += form tip, about
 - admin oops
 - tpl multiline err:
   - 2 (Форма 21001)
   - 6 (Реквизиты фирмы)
 
 ## 2. ToDo:
-- i18n/l10n
 - example: bill (multiline)
 - watermark:
   - [html](https://codepen.io/YuvarajTana/pen/auiqx)
@@ -28,7 +28,7 @@
   - pdf-print
   - pdf-download
 - buttons/icons as tags
-- [flat icons](https://www.flaticon.com/) or tilda's
+- [flat icons](https://www.flaticon.com/) or [Awesome](https://fontawesome.com)
 - html2pdf_itext
 - doc_a: split into GET / POST
 - modulelist as class
@@ -112,29 +112,28 @@
 
 ### 8. Icons
 
-Action | Button.html | Filename.png
--------|-------------|-------------
-favico | - |  favico
-home | - | icon-home
-list | - | icon-list
-login | - | icon-enter
-logout | - | icon-exit
-admin | - | icon-settingsthree-gears
-info | - | icon-info-sign
-add row |  | *add* (16/32)
-del row |  | *cross* (16/32)
-*close* |  | *dialog-close*
-clean | reset | edit-clear
-html-view | view | document-preview
-html-view-ext |  | *text-html*
-*html-dl* |  | *download*
-pdf-view | print | AdobeReader9<br/>document-print-preview
-pdf-view-ext |  | *pdf-mime*
-pdf-dl |  | *pdf-adobe*
-*pdf-print* |  | *document-print*
-pdf-email |  | *pdf-email*
-export | export | document-export | 
-import | import | document-import | 
-email-send |  | *dialog-ok*
-email-refuse |  | *dialog-cancel*
-
+Action | Button.html | File.png | [Awesome](https://github.com/FortAwesome/Font-Awesome)
+-------|-------------|----------|---------
+favico | - |  favico | -
+home | - | icon-home | +home
+list | - | icon-list | +list
+login | - | icon-enter | +sign-in-alt
+logout | - | icon-exit | +sign-out-alt
+admin | - | icon-settingsthree-gears | +tools<br/>+cog<br/>+cogs
+info | - | icon-info-sign | +info
+add row |  | *add* (16/32) | +plus-square
+del row |  | *cross* (16/32) | +times<br/>+minus-square
+*close* |  | *dialog-close* | +windows-close
+clean | reset | edit-clear | +eraser
+html-view | view | document-preview | +eye
+*html-view-ext* |  | *text-html* | 
+*html-dl* |  | *download* | 
+pdf-view | print | AdobeReader9<br/>document-print-preview | +print
+*pdf-view-ext* |  | *pdf-mime* | +file-pdf
+pdf-dl |  | *pdf-adobe* | +download<br/>file-download<br/>file-download
+*pdf-print* |  | *document-print* | 
+pdf-email |  | *pdf-email* | +envelop
+export | export | document-export | +file-export
+import | import | document-import | +file-import
+email-send |  | *dialog-ok* | +check-square
+email-refuse |  | *dialog-cancel* | +times<br/>times-square<br/>+windows-close

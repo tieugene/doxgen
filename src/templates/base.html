@@ -33,19 +33,19 @@
 </head>
 <body>
 <div id="topmenu">
-	<div id="tm_index" class=""> <a href="{% url 'index' %}"> <img src="{% static 'img/16/icon-home.png' %}" alt="{% translate 'Main' %}" title="{% translate 'Main' %}"/> </a> </div>
-	<div id="tm_tpl" class=""> <a href="{% url 'tpl_list' %}"> <img src="{% static 'img/16/icon-list.png' %}" alt="{% translate 'Templates' %}" title="{% translate 'Templates' %}"/> </a> </div>
+	<div id="tm_index" class=""> {% include 'button/home.html' %} </div>
+	<div id="tm_tpl" class=""> {% include 'button/tplist.html' %} </div>
 	<div style="width: 100%"> <b> DoxGen </b> </div>
 	{% if user.is_authenticated %}
 		<div> {{ user.username }} : </div>
-		<div> <a href="{% url 'logout' %}"> <img src="{% static 'img/16/icon-exit.png' %}" alt="{% translate 'Logout' %}" title="{% translate 'Logout' %}"/> </a> </div>
+		<div> {% include 'button/logout.html' %} </div>
 		{% if user.is_superuser %}
-			<div id="tm_admin"> <a href="{% url 'admin:index' %}"> <img src="{% static 'img/16/icon-settingsthree-gears.png' %}" alt="{% translate 'Administration' %}" title="{% translate 'Administration' %}"/> </a> </div>
+			<div id="tm_admin"> {% include 'button/admin.html' %} </div>
 		{% endif %}
 	{% else %}
-		<div id="tm_login"> <a href="{% url 'login' %}" rel="nofollow"> <img src="{% static 'img/16/icon-enter.png' %}" alt="{% translate 'Login' %}" title="{% translate 'Login' %}"/> </a> </div>
+		<div id="tm_login"> {% include 'button/login.html' %} </div>
 	{% endif %}
-	<div id="tm_about"> <a href="{% url 'about' %}"> <img src="{% static 'img/16/icon-info-sign.png' %}" alt="{% translate 'About' %}" title="{% translate 'About' %}"/> </a> </div>
+	<div id="tm_about"> {% include 'button/about.html' %} </div>
 </div>
 	<div>
 	{% block body_main %}
