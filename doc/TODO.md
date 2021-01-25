@@ -1,7 +1,6 @@
 # TODO
 
 ## 1. FixMe:
-- add/del button in multiline
 
 ## 2. ToDo:
 - doc/
@@ -111,6 +110,7 @@
 - tpl multiline err ('too many values to unpack (expected 2)')
   - 6 (Реквизиты фирмы) (okved)
   - 2 (Форма 21001) (ssrf, okved)
+- del/add row text changed to html entities (&cross;/&oplus;)
 
 ### 7. Oops
 - log to [RRDB](https://github.com/commx/python-rrdtool) - digits only
