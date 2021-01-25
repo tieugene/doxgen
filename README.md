@@ -46,3 +46,10 @@ Document generator
 - 5: rml/xpdf (Уведомление мигранта) - use SSRF (84)
 - ~~6~~: xhtml (Реквизиты фирмы) - use Okved (1845)
 - 7: xpdf (Форма 26.2-1)
+
+## Contrib:
+- [django-templates-macros](https://github.com/twidi/django-templates-macros)
+- [jquery](https://jquery.com/)
+- [jquery.populate](https://github.com/dtuite/jquery.populate) - to fill forms w/ sample
+- jquery.formset - for dynamic form rows add ([src1](https://github.com/nortigo/jquery-formset) or [src2](https://github.com/elo80ka/django-dynamic-formset)
+- icons: [bytesize](https://github.com/danklammer/bytesize-icons)

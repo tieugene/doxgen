@@ -1,19 +1,16 @@
 # TODO
 
 ## 1. FixMe:
-- tpl multiline err:
-  - 2 (Форма 21001)
-  - 6 (Реквизиты фирмы)
+- add/del button in multiline
 
 ## 2. ToDo:
-- example: bill (multiline)
+- doc/
 - watermark:
   - [html](https://codepen.io/YuvarajTana/pen/auiqx)
   - [pdf](https://stackabuse.com/working-with-pdfs-in-python-adding-images-and-watermarks/)
 - xfdf (py)
-- doc/
 - std (requirements.txt, setup.py, coverage, *.spec)
-  - Pycharm: Inspect code, Code cleanup, w3c validation
+  - Pycharm: Inspect code, Code cleanup, w3c validation, test => coverage
 - remove django.* from core/convert:
   - httpresponse (<= convert returns header and payload)
   - template loader().render() => [jinga2 etc](https://wiki.python.org/moin/Templating)
@@ -110,6 +107,10 @@
   - [*ByteSize*](https://github.com/danklammer/bytesize-icons) - very slick
   - [Material design](https://github.com/google/material-design-icons) - 24px
 - i18n/l10n += form tip, about
+- example: multiline (#4)
+- tpl multiline err ('too many values to unpack (expected 2)')
+  - 6 (Реквизиты фирмы) (okved)
+  - 2 (Форма 21001) (ssrf, okved)
 
 ### 7. Oops
 - log to [RRDB](https://github.com/commx/python-rrdtool) - digits only

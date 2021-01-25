@@ -19,13 +19,6 @@ Input:
   - *doc[x]/odt*:
     - *unoconv/loffice service*
 
-Uses:
-- JS:
-  - jquery (slim)
-  - jquery.populate - to fill forms w/ sample
-  - jquery.formset - for dynamic form rows add
-- icons: [bytesize](https://github.com/danklammer/bytesize-icons)
-
 ## Converters:
   - html:
     - &check; pdfkit (rpm, pip3)
