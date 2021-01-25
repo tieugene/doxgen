@@ -11,7 +11,7 @@ register_converter(misc.utils.ShortUUIDConverter, 'tuid')
 urlpatterns = [
 	path('user/',			include('django.contrib.auth.urls')),
 	path('admin/',			admin.site.urls),
-	path('about/',			TemplateView.as_view(template_name='about.html'), name='about'),
+	path('about/', 			views.AboutView.as_view(), name='about'),
 	path('', 				TemplateView.as_view(template_name='index.html'), name='index'),
 	path('t/', 				views.TplList.as_view(), name='tpl_list'),
 	path('d/<tuid:uuid>/',	views.doc_a, name='doc_anon'),  # + anon (GET/POST=>print))	TODO: POST>view

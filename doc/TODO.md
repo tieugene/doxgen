@@ -1,7 +1,6 @@
 # TODO
 
 ## 1. FixMe:
-- i18n/l10n += form tip, about
 - tpl multiline err:
   - 2 (Форма 21001)
   - 6 (Реквизиты фирмы)
@@ -102,14 +101,15 @@
 + PSS -> core/
 + plugins => plugin/ ([~~pre~~view.html] ~~list, read,  view~~):
   + zxxx.py
-  + print.*
-  + form.html
+1.   + print.*
+1.   + form.html
 - 'dir'
 - html preview for anon
 - icons:
   - [~~Awesome~~](https://github.com/FortAwesome/Font-Awesome)
   - [*ByteSize*](https://github.com/danklammer/bytesize-icons) - very slick
   - [Material design](https://github.com/google/material-design-icons) - 24px
+- i18n/l10n += form tip, about
 
 ### 7. Oops
 - log to [RRDB](https://github.com/commx/python-rrdtool) - digits only
@@ -150,3 +150,4 @@ ByteSize extra:
 + upload
 - eraser
 - list
+

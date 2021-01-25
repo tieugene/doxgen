@@ -30,9 +30,11 @@ span.helptext {
 {% block body_main %}
 	<h1> {{ name }} </h1>
     <p> {{ comments }} </p>
-	<p> {% blocktranslate %} Будьте внимательны - обязательные поля выделены <b> жирным </b> шрифтом. <br/>
-	    Если затрудняетесь с заполнением - нажмите кнопку Примера. <br/>
-	    Стереть данные можно кнопкой Очистить. {% endblocktranslate %} </p>
+	<p> {% blocktranslate %}
+Be careful - mandatory fields emphased with <b> bold </b> font.<br/>
+In case of difficulties press any of 'Example' buttons.<br/>
+To clean all input fields use 'Reset' button.
+{% endblocktranslate %} </p>
 	<form id="myForm" action="." method="post">
 		{% csrf_token %}
 		<!-- formaction=""-->

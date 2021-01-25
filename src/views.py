@@ -53,6 +53,16 @@ def try_tpl(fn):
 
 
 # ====
+class AboutView(TemplateView):
+    template_name = "about.html"
+
+    def get_template_names(self):
+        # dirty hack but django doc not helpes me
+        if self.request.LANGUAGE_CODE == 'ru':
+            return "about_ru.html"
+        return self.template_name
+
+
 class TplList(TemplateView):
     template_name = "tpl_list.html"
 

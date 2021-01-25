@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-24 22:48+0300\n"
+"POT-Creation-Date: 2021-01-25 18:19+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,13 +58,18 @@ msgstr "Администрирование Django"
 
 #: templates/auto_form.html:33
 msgid ""
-" Будьте внимательны - обязательные поля выделены <b> жирным </b> шрифтом. "
-"<br/>\n"
-"\t    Если затрудняетесь с заполнением - нажмите кнопку Примера. <br/>\n"
-"\t    Стереть данные можно кнопкой Очистить. "
+"\n"
+"Be careful - mandatory fields emphased with <b> bold </b> font.<br/>\n"
+"In case of difficulties press any of 'Example' buttons.<br/>\n"
+"To clean all input fields use 'Reset' button.\n"
 msgstr ""
+"\n"
+"Будьте внимательны - обязательные поля выделены <b> жирным </b> шрифтом.<br/>\n"
+"Если затрудняетесь с заполнением - нажмите кнопку 'Примера'.<br/>\n"
+"Стереть данные можно кнопкой 'Очистка'.\n"
 
-#: templates/auto_form.html:47
+
+#: templates/auto_form.html:49
 msgid "Examples"
 msgstr "Примеры"
 
@@ -72,48 +77,48 @@ msgstr "Примеры"
 msgid "document generator"
 msgstr "генератор документов"
 
-#: templates/base.html:36
-msgid "Main"
-msgstr "Главная"
+#: templates/button/about.html:4
+msgid "About"
+msgstr "О программе"
 
-#: templates/base.html:37
-msgid "Templates"
-msgstr "Шаблоны"
-
-#: templates/base.html:41
-msgid "Logout"
-msgstr "Выход"
-
-#: templates/base.html:43
+#: templates/button/admin.html:4
 msgid "Administration"
 msgstr "Администрирование"
 
-#: templates/base.html:46 templates/registration/login.html:3
+#: templates/button/export.html:3 templates/button/export.html:4
+msgid "Export"
+msgstr "Экспорт"
+
+#: templates/button/home.html:4
+msgid "Main"
+msgstr "Главная"
+
+#: templates/button/import.html:3 templates/button/import.html:4
+msgid "Import"
+msgstr "Импорт"
+
+#: templates/button/login.html:4 templates/registration/login.html:3
 #: templates/registration/login.html:9
 msgid "Login"
 msgstr "Вход"
 
-#: templates/base.html:48
-msgid "About"
-msgstr "О программе"
+#: templates/button/logout.html:4
+msgid "Logout"
+msgstr "Выход"
 
-#: templates/button/export.html:3
-msgid "Export"
-msgstr "Экспорт"
-
-#: templates/button/import.html:3
-msgid "Import"
-msgstr "Импорт"
-
-#: templates/button/print.html:3
+#: templates/button/print.html:3 templates/button/print.html:4
 msgid "Print"
 msgstr "Печать"
 
-#: templates/button/reset.html:3
+#: templates/button/reset.html:3 templates/button/reset.html:4
 msgid "Reset"
 msgstr "Очистка"
 
-#: templates/button/view.html:3
+#: templates/button/tplist.html:4
+msgid "Templates"
+msgstr "Шаблоны"
+
+#: templates/button/view.html:3 templates/button/view.html:4
 msgid "View"
 msgstr "Просмотр"
 

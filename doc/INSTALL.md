@@ -24,6 +24,7 @@ Uses:
   - jquery (slim)
   - jquery.populate - to fill forms w/ sample
   - jquery.formset - for dynamic form rows add
+- icons: [bytesize](https://github.com/danklammer/bytesize-icons)
 
 ## Converters:
   - html:

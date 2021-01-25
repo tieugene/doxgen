@@ -13,8 +13,8 @@ ALLOWED_HOSTS = []
 # MANAGERS = ADMINS
 TIME_ZONE = 'Europe/Moscow'
 USE_TZ = True
-LANGUAGE_CODE = 'ru-RU'
-SITE_ID = 1
+LANGUAGE_CODE = 'ru'
+# SITE_ID = 1
 USE_I18N = True
 USE_L10N = True
 # Make this unique, and don't share it with anybody.
