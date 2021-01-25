@@ -2,7 +2,6 @@
 
 ## 1. FixMe:
 - i18n/l10n += form tip, about
-- admin oops
 - tpl multiline err:
   - 2 (Форма 21001)
   - 6 (Реквизиты фирмы)
@@ -24,9 +23,11 @@
 - select x2pdf engines in settings
 - letsencrypt
 - actions (- download filename = doxgen.ru.uuid.datetime.<ext>):
-  - html2html in separate windows (target="_blank")
-  - pdf-print
+  - html-view-sep (target="_blank")
+  - html-download
+  - pdf-view-ext
   - pdf-download
+  - pdf-print
 - buttons/icons as tags
 - [flat icons](https://www.flaticon.com/) or [Awesome](https://fontawesome.com)
 - html2pdf_itext
@@ -105,35 +106,47 @@
   + form.html
 - 'dir'
 - html preview for anon
-- icons
+- icons:
+  - [~~Awesome~~](https://github.com/FortAwesome/Font-Awesome)
+  - [*ByteSize*](https://github.com/danklammer/bytesize-icons) - very slick
+  - [Material design](https://github.com/google/material-design-icons) - 24px
 
 ### 7. Oops
 - log to [RRDB](https://github.com/commx/python-rrdtool) - digits only
 
 ### 8. Icons
 
-Action | Button.html | File.png | [Awesome](https://github.com/FortAwesome/Font-Awesome)
--------|-------------|----------|---------
-favico | - |  favico | -
-home | - | icon-home | +home
-list | - | icon-list | +list
-login | - | icon-enter | +sign-in-alt
-logout | - | icon-exit | +sign-out-alt
-admin | - | icon-settingsthree-gears | +tools<br/>+cog<br/>+cogs
-info | - | icon-info-sign | +info
-add row |  | *add* (16/32) | +plus-square
-del row |  | *cross* (16/32) | +times<br/>+minus-square
-*close* |  | *dialog-close* | +windows-close
-clean | reset | edit-clear | +eraser
-html-view | view | document-preview | +eye
-*html-view-ext* |  | *text-html* | 
-*html-dl* |  | *download* | 
-pdf-view | print | AdobeReader9<br/>document-print-preview | +print
-*pdf-view-ext* |  | *pdf-mime* | +file-pdf
-pdf-dl |  | *pdf-adobe* | +download<br/>file-download<br/>file-download
-*pdf-print* |  | *document-print* | 
-pdf-email |  | *pdf-email* | +envelop
-export | export | document-export | +file-export
-import | import | document-import | +file-import
-email-send |  | *dialog-ok* | +check-square
-email-refuse |  | *dialog-cancel* | +times<br/>times-square<br/>+windows-close
+Action | Button.html | File
+-------|-------------|------
+favico | - | favico.png
+home | home | home.svg
+list | tplist | *menu.svg*
+login | login | sign-in.svg
+logout | logout | sign-out
+admin | admin | settings
+info | about | info
+clean | reset | *trash.svg*
+html-view | view | eye
+pdf-view | print | print
+export | export | export
+import | import | import
+*add row* |  | plus
+*del row* |  | minus
+*pdf-dl* |  | download
+*pdf-email* |  | send
+*ok* |  | checkmark
+*cancel* |  | close
+~~close~~ |  | 
+~~html-view-ext~~ |  | 
+~~html-dl~~ |  | 
+~~pdf-view-ext~~ |  | 
+~~pdf-print~~ |  | 
+
+ByteSize extra:
++ ban
++ link
++ mail
++ options
++ upload
+- eraser
+- list
