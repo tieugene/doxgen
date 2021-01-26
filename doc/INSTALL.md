@@ -21,6 +21,15 @@
   - libreoffice-headless + python3-uno + [pyoo](https://github.com/mila/pyoo)
 
 ----
+- install:
+  - rpm
+  - or git export + install required
+  - or pip
+- assign permissions (specially plugins/ and udf/)
+- mk local_settings.py (db, media(?))
+- mk db (+= permisions)
+- prepare apache
+
 All:
 * git ...
 * wkhtmltopdf-static
