@@ -3,15 +3,13 @@
 ## 1. FixMe:
 - std for deploy:
   - settings.py
-  - local_settings.py
+  - local_settings.py.sample
   - requirements.txt
   - .coveragerc
-  - .gitattributes
-  - .travis.yml
   + setup.py
   + MANIFEST.in
-  + *.spec (TODO: += options)
-- doc: Install
+  + doxgen.spec (TODO: += optional pkgs)
+- doc: Install.md
 
 ## 2. ToDo:
 - watermark:
@@ -27,6 +25,7 @@
   - Pycharm (Inspect code, Code cleanup, Coverage)
   - w3c validation
   - tests
+- misc github things (.travis.yml)
 
 ## 3. Feature requests:
 - select x2pdf engines in settings
