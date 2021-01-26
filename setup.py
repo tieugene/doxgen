@@ -23,9 +23,11 @@ setup(
         'Natural Language :: English',
         'Operating System :: OS Independent',
     ],
-    packages=('doxgen', 'doxgen.misc'),
+    packages=('doxgen',),
     install_requires=[
         'Django',
     ],
     include_package_data=True,
+    # use_scm_version=True,
+    # setup_requires=['setuptools_scm'],
 )

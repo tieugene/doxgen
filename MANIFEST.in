@@ -1,0 +1,12 @@
+include *.py doxgen.* *.sample LICENSE README.md manage
+include doxgen/plugins/__init__.py
+include doxgen/udf/__init__.py
+recursive-include doc ^[A-Z]*.md
+recursive-include doxgen/core *.py *.jar
+recursive-include doxgen/misc *.py
+recursive-exclude doxgen/plugins [a-z]*.py
+recursive-exclude doxgen/udf [a-z]*.py
+graft doxgen/locale
+graft doxgen/templates
+# prune doxgen/plugins/[0-9]*
+global-exclude *.pyc *.ttf

@@ -2,31 +2,16 @@
 
 ## 1. FixMe:
 - std for deploy:
-  - requirements.txt
-  - [setup.py](https://docs.python.org/3/distutils/setupscript.html):
-    - install: skip *-egg.info
   - settings.py
   - local_settings.py
+  - requirements.txt
   - .coveragerc
   - .gitattributes
   - .travis.yml
-  - MANIFEST.in
-  - setup.py sdist works bad
-  + *.spec
+  + setup.py
+  + MANIFEST.in
+  + *.spec (TODO: += options)
 - doc: Install
-
-Test install (python3 setup.py --root tmp):
-- default: /usr/local/lib/python3.9/site-packages/src
-- prefix: installation prefix (/usr/local)
-- exec-prefix: (Unix only) prefix for platform specific files
-- ~~home~~: (Unix only) home directory to install under
-- install-base: base installation directory (instead of --prefix or --home)
-- install-platbase: base installation directory for platform-specific files (instead of --exec-prefix or --home)
-- install-purelib: installation directory for pure Python module distributions
-- install-platlib: installation directory for non-pure module distributions
-- install-lib: installation directory for all module distributions (overrides --install-purelib and --install-platlib)
-- install-scripts: installation directory for Python scripts
-- install-data: installation directory for data files
 
 ## 2. ToDo:
 - watermark:

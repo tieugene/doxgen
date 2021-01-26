@@ -27,7 +27,7 @@ Output: HTML, PDF.
 
 %install
 %py3_install --install-lib=%{_datadir}
-
+# TODO: rm eggs
 
 %check
 %py3_build check
