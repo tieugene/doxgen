@@ -1,4 +1,4 @@
 #!/bin/sh
-pushd src > /dev/null
+pushd doxgen > /dev/null
 python3 manage.py $@
 popd > /dev/null

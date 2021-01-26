@@ -3,17 +3,37 @@
 ## 1. FixMe:
 - std for deploy:
   - requirements.txt
-  - setup.py
-  - *.spec
+  - [setup.py](https://docs.python.org/3/distutils/setupscript.html):
+    - install: skip *-egg.info
   - settings.py
   - local_settings.py
+  - .coveragerc
+  - .gitattributes
+  - .travis.yml
+  - MANIFEST.in
+  - setup.py sdist works bad
+  + *.spec
 - doc: Install
+
+Test install (python3 setup.py --root tmp):
+- default: /usr/local/lib/python3.9/site-packages/src
+- prefix: installation prefix (/usr/local)
+- exec-prefix: (Unix only) prefix for platform specific files
+- ~~home~~: (Unix only) home directory to install under
+- install-base: base installation directory (instead of --prefix or --home)
+- install-platbase: base installation directory for platform-specific files (instead of --exec-prefix or --home)
+- install-purelib: installation directory for pure Python module distributions
+- install-platlib: installation directory for non-pure module distributions
+- install-lib: installation directory for all module distributions (overrides --install-purelib and --install-platlib)
+- install-scripts: installation directory for Python scripts
+- install-data: installation directory for data files
 
 ## 2. ToDo:
 - watermark:
   - [html](https://codepen.io/YuvarajTana/pen/auiqx)
   - [pdf](https://stackabuse.com/working-with-pdfs-in-python-adding-images-and-watermarks/)
 - xfdf (py)
+- system fonts
 - weasyprint vs pdfkit
 - remove django.* from core/convert:
   - httpresponse (<= convert returns header and payload)
@@ -36,6 +56,7 @@
 - doc_a: split into GET / POST
 - modulelist as class
 - tests (+tox.ini)
+- validate resulting html (tidylib, html5lib, [w3c](https://github.com/srackham/w3c-validator)
 - move to lite frameworks (flask (uvedomlenie), webpy (solo), web2py)
 
 ## 4. Ideas:
@@ -51,6 +72,7 @@
 - pymorphy2
 
 ## 5. Try:
+- [pikepdf](https://pypi.org/project/pikepdf/)
 - [PyPDF4](https://github.com/claird/PyPDF4)
 - pdfminer.six - search [and *maybe* [replace](https://github.com/kanzure/pdfparanoia)] PDF content
 - trml2pdf.textBox == reportlab.platypus.Frame() + Paragraph()

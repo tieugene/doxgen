@@ -2,23 +2,23 @@
 
 ## Converters:
 - html:
-  - &check; pdfkit (rpm, pip3)
-    - wkhtmltopdf (CLI, w/ page break, rpm)
-  - &check; weasyprint (py, rpm, pip3)
-  - [*xhtml2pdf*](https://github.com/xhtml2pdf/xhtml2pdf) (py, ~~rpm~~, pip3)
-    - reportlab (rpm, pip3)
-    - *PyPDF2* (rpm, pip3)
-    - *html5lib* (rpm, pip3)
+  - &check; pdfkit (py, pip, rpm, ~~brew~~)
+    - &rdsh; wkhtmltopdf (CLI, rpm, brew; , ?page break)
+  - &check; weasyprint (py, pip, rpm, ~~brew~~)
+  - [*xhtml2pdf*](https://github.com/xhtml2pdf/xhtml2pdf) (py, pip, ~~rpm, brew~~)
+    - reportlab (pip, rpm, ~~brew~~)
+    - *PyPDF2* (pip, rpm)
+    - *html5lib* (pip, rpm)
   - *iText.PdfWriter* via *.XMLWorker* (java)
-- rml:
-  - &check; trml2pdf (py, reportlab)
-  - [*z3c.rml*](https://github.com/zopefoundation/z3c.rml)
+- rml (&lArr; reportlab):
+  - &check; trml2pdf (py, pip, *rpmable*)
+  - [*z3c.rml*](https://github.com/zopefoundation/z3c.rml) (py, pip, *rpmable*)
 - pdf form:
-  - &check; jpype (py, rpm, pip3)
-    - &check; iText (java)
-  - *PyPDF2/4* (py, pure, rpm, w/ [issue](https://github.com/mstamy2/PyPDF2/issues/355))
+  - &check; jpype (py, pip, rpm)
+    - &rdsh; &check; iTextPdf (java, ~~rpm~~, ~~brew~~)
+  - *PyPDF2/4*? (py, pure, rpm, w/ [issue](https://github.com/mstamy2/PyPDF2/issues/355))
 - *doc[x]/fodt*:
-  - ~~unoconv/python-webodt~~ libreoffice-headless
+  - libreoffice-headless + python3-uno + [pyoo](https://github.com/mila/pyoo)
 
 ----
 All:

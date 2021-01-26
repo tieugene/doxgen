@@ -3,10 +3,8 @@ __pycache__
 *.sqlite3
 *.log
 _*
-# working data
-src/static/ttf/*.ttf
-sql/*.sql
 doc/[a-z]*
-# exclude primers
-src/plugins/*
-src/udf/*
+# working data
+doxgen/static/ttf/*.ttf
+doxgen/plugins/*
+doxgen/udf/*
