@@ -3,7 +3,7 @@ __pycache__
 *.sqlite3
 *.log
 _*
-doc/[a-z]*
+_doc/*
 # working data
 doxgen/static/ttf/*.ttf
 doxgen/plugins/*
