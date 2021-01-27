@@ -2,15 +2,6 @@ p {
 	margin: 0;
 }
 
-a:link {
-    text-decoration: underline ;
-    color: #4444ff ;
-}
-
-a:visited {
-	/*text-decoration: none;*/
-}
-
 a.button {
 	padding: 0 5px;
 	text-decoration: none;

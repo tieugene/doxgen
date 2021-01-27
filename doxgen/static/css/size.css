@@ -1,0 +1,21 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+html, body {
+    height: 100%;
+}
+
+nav > h1 {
+    font-size: 14pt;
+}
+.wide	{ width: 100%; }
+img.px16 {
+    width: 16px;
+    height: 16px;
+}
+img.px32 {
+    width: 32px;
+    height: 32px;
+}

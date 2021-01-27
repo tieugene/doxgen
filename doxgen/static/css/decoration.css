@@ -1,0 +1,9 @@
+dt p	{ font-weight: bold; }
+.bold	{ font-weight: bold; }
+a:link {
+    text-decoration: underline ;
+}
+
+a:visited {
+	/*text-decoration: none;*/
+}

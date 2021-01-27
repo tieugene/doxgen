@@ -1,0 +1,14 @@
+footer {
+    background-color: #F8F8F8;
+}
+#topmenu a:link {
+    color: blue;
+}
+#topmenu a:visited {
+    color: blue;
+}
+.even	{ background-color: white; }
+.odd	{ background-color: #F0F0F0; }
+a:link {
+    color: #4444ff ;
+}

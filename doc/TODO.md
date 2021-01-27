@@ -1,7 +1,6 @@
 # TODO
 
 ## 1. FixMe:
-- add: email, version, (c), ~~GPL~~
 
 ## 2. ToDo:
 - doc: Plugins.md
@@ -28,6 +27,7 @@
   - register
 - system fonts (? or use builtin AcroReader fonts only)
 - Code cleanup:
+  - CSS: color,position,decoration,size
   - Pycharm (Inspect code, Code cleanup)
   - w3c validation
   - tests

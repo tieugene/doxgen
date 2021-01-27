@@ -8,9 +8,12 @@
 	<meta name="description" content="{% block meta-description %}Заполнение бланков{% endblock %}">
 	<meta name="keywords" content="{% block meta-keywords %}бланк, заполнить, скачать, бесплатно, форма, ПД-4, 21001, 26.2-1{% endblock %}">
     <link type="image/png" rel="shortcut icon" href="{% static 'img/favico.png' %}"/>
-	<link type="text/css" rel="stylesheet" href="{% static 'css/base.css' %}">
-	<link type="text/css" rel="stylesheet" href="{% static 'css/colors.css' %}"/>
+	<link type="text/css" rel="stylesheet" href="{% static 'css/position.css' %}"/>
+	<link type="text/css" rel="stylesheet" href="{% static 'css/size.css' %}"/>
+	<link type="text/css" rel="stylesheet" href="{% static 'css/decoration.css' %}"/>
+	<link type="text/css" rel="stylesheet" href="{% static 'css/color.css' %}"/>
 	<link type="text/css" rel="stylesheet" href="{% static 'css/fieldset.css' %}"/>
+	<link type="text/css" rel="stylesheet" href="{% static 'css/base.css' %}">
 	<link type="text/css" rel="stylesheet" href="{% static 'css/std.css' %}"/>
 	<script type="text/javascript" src="{% static 'js/jquery-3.5.1.slim.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/jquery.formset.min.js' %}"></script>
@@ -32,25 +35,32 @@
 	</style>
 </head>
 <body>
-<div id="topmenu">
-	<div id="tm_index" class=""> {% include 'button/home.html' %} </div>
-	<div id="tm_tpl" class=""> {% include 'button/tplist.html' %} </div>
-	<div style="width: 100%"> <b> DoxGen </b> </div>
-	{% if user.is_authenticated %}
-		<div> {{ user.username }} : </div>
-		<div> {% include 'button/logout.html' %} </div>
-		{% if user.is_superuser %}
-			<div id="tm_admin"> {% include 'button/admin.html' %} </div>
-		{% endif %}
-	{% else %}
-		<div id="tm_login"> {% include 'button/login.html' %} </div>
-	{% endif %}
-	<div id="tm_about"> {% include 'button/about.html' %} </div>
-</div>
-	<div>
+    <nav>
+        <div id="tm_index" class=""> {% include 'button/home.html' %} </div>
+        <div id="tm_tpl" class=""> {% include 'button/tplist.html' %} </div>
+        <div style="width: 100%"> <b> DoxGen </b> </div>
+        {% if user.is_authenticated %}
+            <div> {{ user.username }} : </div>
+            <div> {% include 'button/logout.html' %} </div>
+            {% if user.is_superuser %}
+                <div id="tm_admin"> {% include 'button/admin.html' %} </div>
+            {% endif %}
+        {% else %}
+            <div id="tm_login"> {% include 'button/login.html' %} </div>
+        {% endif %}
+        <div id="tm_about"> {% include 'button/about.html' %} </div>
+    </nav>
+	<main>
 	{% block body_main %}
 		<p> Dummy </p>
 	{% endblock %}
-	</div>
+	</main>
+    <footer>
+        {% with support=support_email %}
+            {% if support %}
+                Support: <a href="mailto:{{ support.1 }}"> &#9993; {{ support.0 }} </a>
+            {% endif %}
+        {% endwith %}
+    </footer>
 </body>
 </html>
