@@ -57,11 +57,11 @@ To clean all input fields use 'Reset' button.
 		</table>
 		{% endblock %}
 		{% for k, formset in formlist.items %}
-			<table id="{{ k }}" border="1">
+			<table id="{{ k }}" style="bordered">
 				<caption> {{ k }} </caption>
 				<tbody>
 				{% for form in formset.forms %}
-					<tr> <td> <table border="0">
+					<tr> <td> <table> <!-- border=0 -->
 					{{ form.as_table }}
 					</table> </td> </tr>
 				{% endfor %}
@@ -79,7 +79,7 @@ To clean all input fields use 'Reset' button.
 	</form>
 	{% if example %}
 		<script type="text/javascript">
-			var json = {	{% for e in example %}
+			let json = {	{% for e in example %}
 				'{{e.name}}': { {% for k, v in e.data.items %}
 					'id_{{k}}': '{{v}}',	{% endfor %}
 				}, {% endfor %}

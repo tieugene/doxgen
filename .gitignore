@@ -3,6 +3,7 @@ __pycache__
 *.sqlite3
 *.log
 _*
+doxgen/local_settings.py
 # working data
 doxgen/static/ttf/*.ttf
 doxgen/plugins/*

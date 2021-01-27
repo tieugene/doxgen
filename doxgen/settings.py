@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 # Django settings for doxgen project.
+# Ready for development environment.
+# use 'local_settings.py' to overwrite.
 
 import os
 
@@ -9,15 +11,13 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 ALLOWED_HOSTS = []
-# ADMINS = (('TI_Eugene', 'info@doxgen.ru'),)
 # MANAGERS = ADMINS
 TIME_ZONE = 'Europe/Moscow'
 USE_TZ = True
 LANGUAGE_CODE = 'ru'
-# SITE_ID = 1
 USE_I18N = True
 USE_L10N = True
-# Make this unique, and don't share it with anybody.
+
 SECRET_KEY = 'secretkey'
 
 WSGI_APPLICATION = 'wsgi.application'
@@ -124,12 +124,23 @@ LOGGING = {
         },
         'file': {
             'format': '%(asctime)s %(name)-12s %(levelname)-8s %(message)s'
+        },
+        'standard': {
+            'format': "[doxgen] [%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            'datefmt': "%d/%b/%Y %H:%M:%S"
         }
     },
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
             'formatter': 'console'
+        },
+        'syslog': {
+            'class': 'logging.handlers.SysLogHandler',
+            'formatter': 'standard',
+            'facility': 'user',
+            # uncomment next line if rsyslog works with unix socket only (UDP reception disabled)
+            # 'address': '/dev/log'
         },
         'file': {
             'level': 'DEBUG',
@@ -161,6 +172,10 @@ LOCALE_PATHS = (os.path.join(BASE_DIR, 'locale'),)
 # Project specific vars
 
 try:
+    LOGGERS = None
     from local_settings import *
+    # hack
+    if LOGGERS:
+        LOGGING['loggers'] = LOGGERS
 except ImportError:
     pass

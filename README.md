@@ -13,11 +13,12 @@ Output: HTML, PDF.
 
 ## Content
 
-- doc/ - documentation
-  - [ChangeLog](doc/ChangeLog.md)
-  - [Installation](doc/INSTALL.md)
-  - [ToDo list](doc/TODO.md)
-- src/ - project itself
+- doc/ - documentation:
+  - [HowTo install](doc/INSTALL.md)
+  - [HowTo make plugins](doc/Plugins.md)
+  - [doxgen.conf](doc/doxgen.conf) sample for Apache web-server
+  - [local_setting.py](doc/local_setting.py) sample to overwrite default settings
+- doxgen/ - project itself:
   - locale/ - Django std (i18n)
   - static/ - Django std
   - templates/ - Django std
@@ -36,3 +37,4 @@ Bundled artifacts:
 - [jquery.populate](https://github.com/dtuite/jquery.populate)
 - jquery.formset (source forgotten)
 - [bytesize](https://github.com/danklammer/bytesize-icons) icons
+- [itextpdf](https://github.com/itext/itextpdf) 5.5.13.2

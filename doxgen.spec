@@ -1,5 +1,5 @@
 Name:		doxgen
-Version:	0.1.0
+Version:	0.0.2
 Release:	1%{?dist}
 License:	GPLv3
 Summary:	Document generator
@@ -10,6 +10,18 @@ BuildRequires:	python3-setuptools
 BuildRequires:	pkgconfig(python3)
 # python3-django
 Requires:		python3dist(django)
+# default hardcoded converters to PDF
+# - HTML (python3-weasyprint)
+Recommends:	python3dist(weasyprint)
+# - RML
+Recommends:	python3-tkrml2pdf
+# - PDF form (python3-jpype, java-11-openjdk-headless)
+Recommends:	python3dist(jpype1) jre-headless
+# can be replaced in code
+# - HTML
+Suggests: python3-pdfkit wkhtmltopf
+# - RML
+Suggests: python3-z3c.rml
 
 %description
 DoxGen - an application to fill out and print template documents.

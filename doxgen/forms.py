@@ -54,10 +54,10 @@ field_dict = {
 }
 
 
-def GenForm(fieldlist, named=True):  # FIXME: form name (for formset class name)
+def generate_form(fieldlist: OrderedDict, named=True):  # FIXME: form name (for formset class name)
     """
     Generates Form class
-    :param fieldlist:OrderedDict - fields definitions
+    :param fieldlist: fields definitions
     :param named:
     Return form class
     """
@@ -72,16 +72,15 @@ def GenForm(fieldlist, named=True):  # FIXME: form name (for formset class name)
     return retvalue
 
 
-def GenFormSets(formlist):
+def generate_formset(formlist: OrderedDict) -> OrderedDict:
     """
     Generates OrderedDict of Form sets classes
-    :param formlist: ???
-    :param fieldlist:OrderedDict - fields sets definitions
+    :param formlist: fields sets definitions
     :return OrderedDict { k: formset class }
     """
     retvalue = OrderedDict()
-    for k, v in formlist.items():  # i:str - formset key, j:{ K_T_FIELD_A: {}, K_T_FIELD_T: OrderedDict() } - of fields definitions
-        retvalue[k] = formset_factory(GenForm(v[K_T_FIELD_T], named=False))
+    for k, v in formlist.items():
+        retvalue[k] = formset_factory(generate_form(v[K_T_FIELD_T], named=False))
     return retvalue
 
 

@@ -1,47 +1,40 @@
 # Install
+*(draft)*
 
-## Converters:
-- html:
-  - &check; pdfkit (py, pip, rpm, ~~brew~~)
-    - &rdsh; wkhtmltopdf (CLI, rpm, brew; , ?page break)
-  - &check; weasyprint (py, pip, rpm, ~~brew~~)
-  - [*xhtml2pdf*](https://github.com/xhtml2pdf/xhtml2pdf) (py, pip, ~~rpm, brew~~)
-    - reportlab (pip, rpm, ~~brew~~)
-    - *PyPDF2* (pip, rpm)
-    - *html5lib* (pip, rpm)
-  - *iText.PdfWriter* via *.XMLWorker* (java)
-- rml (&lArr; reportlab):
-  - &check; trml2pdf (py, pip, *rpmable*)
-  - [*z3c.rml*](https://github.com/zopefoundation/z3c.rml) (py, pip, *rpmable*)
-- pdf form:
-  - &check; jpype (py, pip, rpm)
-    - &rdsh; &check; iTextPdf (java, ~~rpm~~, ~~brew~~)
-  - *PyPDF2/4*? (py, pure, rpm, w/ [issue](https://github.com/mstamy2/PyPDF2/issues/355))
-- *doc[x]/fodt*:
-  - libreoffice-headless + python3-uno + [pyoo](https://github.com/mila/pyoo)
+Let's install into DESTDIR=/usr/share/doxgen:
 
-----
-- install:
-  - rpm
-  - or git export + install required
-  - or pip
-- assign permissions (specially plugins/ and udf/)
-- mk local_settings.py (db, media(?))
-- mk db (+= permisions)
-- prepare apache
+1. install (one from):
+   - ~~download and install rpm~~
+   - download source from git, extract it into $DESTDIR + install Django
+1. add requred backends depending on converters you want (see below)
+1. create `$DESTDIR/local_settings.py` and `/etc/httpd/conf.d/doxgen.conf` (or wherever) like doc/* ones
+1. create dir for sqlite DB (`mkdir /var/lib/doxgen`) ~~and MEDIA_ROOT~~
+1. create DB (`cd $DESTDIR && python3 manage.py ...`)
+1. assign owning and permissions:
+   ```bash
+   chown -R apache:apache {/etc/httpd/.../doxgen.conf,$DESTDIR,/var/lib/doxgen}
+   chmod -R ...
+   ```
+1. let's go (`sudo systemctl start httpd`)
 
-All:
-* git ...
-* wkhtmltopdf-static
-* ln
-* mkdir -p /mnt/shares/doxgen && chmod -R a+rwX /mnt/shares/doxgen
-* ./manage.py syncdb
-Production:
-* httpd
-* git ...
-* chmod -R ...
-* ./manage.py syncdb
+After this you can add your own plugins in $DESTDIR/plugins/ ([RTFM](Plugins.md))
 
+## Converters (to PDF from):
+
+- HTML (one from):
+  - [weasyprint](https://github.com/Kozea/WeasyPrint) (py, pip, rpm, ~~brew~~)
+  - [python-pdfkit](https://github.com/JazzCore/python-pdfkit) (py, pip, rpm, ~~brew~~)
+    - &rdsh; [wkhtmltopdf](http://wkhtmltopdf.org/) (CLI, rpm, brew)
+- RML:
+  - [trml2pdf](https://github.com/JazzCore/python-pdfkit) (py, pip, *rpmable*, &lArr; reportlab)
+- PDF form:
+  - [jpype](https://github.com/jpype-project/jpype) (py, pip, rpm)
+    - &rdsh; jre (openjdk8+; rpm, brew)
+- *ODF: not tested yet, but will require libreoffice (core) --headless*
+
+## Notes
+
+Something concerning libreoffice-headless:
 ```bash
 sudo mkdir /usr/share/httpd/.config
 sudo chmod a+rwX /usr/share/httpd/.config

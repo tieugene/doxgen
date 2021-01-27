@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='doxgen',
-    version='0.1.0',
+    version='0.0.2~rc1',
     url='https://github.com/tieugene/doxgen/',
     license='GPLv3',
     author='TI_Eugene',

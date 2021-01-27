@@ -11,42 +11,21 @@ a:visited {
 	/*text-decoration: none;*/
 }
 
-.bold{
-    font-weight: bold;
-}
-
-
 a.button {
-	padding-left: 5px;
-	padding-right: 5px;
-	padding-top: 0px;
-	padding-bottom: 0px;
+	padding: 0 5px;
 	text-decoration: none;
 }
 
 td.button {
-	padding-left: 5px;
-	padding-right: 5px;
-	padding-top: 0px;
-	padding-bottom: 0px;
+	padding: 0 5px;
 	text-decoration: none;
 	text-align: center;
 }
 
 th.button {
-	padding: 0px;
+	padding: 0;
 	text-decoration: none;
 	text-align: center;
-}
-
-.pdable:after {
-	content: "▿";
-}
-
-table.tabbed {
-	border-style: none;
-	border: 0px;			/* border="0" */
-	border-collapse: collapse;	/* cellspacing="0" */
 }
 
 table.tabbed td {
@@ -56,35 +35,6 @@ table.tabbed td {
 }
 
 /* temlists */
-
-table.catitem {
-	/*padding: 0;*/
-	border-spacing: 0;
-}
-
-table.catitem td.catcell {
-	vertical-align: top;
-	border-top: 2px;
-	border-style: solid;
-	margin: 0;
-	padding: 0;
-	border-color: #BBCCFF;		/* FIXME: */
-}
-
-table.catitem td.itemcell {
-	vertical-align: top;
-	border-width: 2px;
-	border-style: solid;
-	padding: 0;
-	margin: 0;
-	border-color: #BBCCFF;		/* FIXME: */
-}
-
-table.itemlist, table.catlist {
-	/*border-style: none;
-	border: 0;*/
-	border-collapse: collapse;	/* cellspacing="0" */
-}
 
 table.itemlist caption, table.catlist caption {
 	text-align: left;
@@ -100,16 +50,6 @@ table.itemlist tbody tr td {
 
 table.itemlist tbody tr a, table.catlist tbody tr a {
 	text-decoration: none;
-}
-
-.pulldown {
-	padding: 0.5em;
-	margin: -2px;
-	background: #F0F0F0;
-	border: 1px solid #D0D0D0;
-	box-shadow: 5px 5px 5px #C0C0C0;
-	-webkit-box-shadow: 5px 5px 5px #C0C0C0;
-	-moz-box-shadow: 5px 5px 5px #C0C0C0;
 }
 
 .pulldown a {

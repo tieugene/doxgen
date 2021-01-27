@@ -1,12 +1,8 @@
-from django import template, VERSION
+from django import template
 from django.template.loader import get_template
+from django.template.base import FilterExpression
 
 register = template.Library()
-
-if VERSION[:3] >= (1, 8, 0):
-    from django.template.base import FilterExpression
-else:
-    from django.template import FilterExpression
 
 
 def _setup_macros_dict(parser):
@@ -34,7 +30,7 @@ class DefineMacroNode(template.Node):
                 name, value = a.split("=")
                 self.kwargs[name] = value
 
-    def render(self, context):
+    def render(self, _):  # _ == context
         # empty string - {% macro %} tag does no output
         return ''
 
@@ -45,8 +41,7 @@ def do_macro(parser, token):
         args = token.split_contents()
         tag_name, macro_name, args = args[0], args[1], args[2:]
     except IndexError:
-        m = ("'%s' tag requires at least one argument (macro name)"
-            % token.contents.split()[0])
+        m = ("'%s' tag requires at least one argument (macro name)" % token.contents.split()[0])
         raise template.TemplateSyntaxError(m)
     # TODO: could do some validations here,
     # for now, "blow your head clean off"
@@ -62,7 +57,7 @@ def do_macro(parser, token):
 
 
 class LoadMacrosNode(template.Node):
-    def render(self, context):
+    def render(self, _):  # _ == context
         # empty string - {% loadmacros %} tag does no output
         return ''
 

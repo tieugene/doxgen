@@ -3,7 +3,7 @@
 # 1. system
 import logging
 from collections import OrderedDict
-from django.utils.translation import gettext as _
+# from django.utils.translation import gettext as _
 # 2. 3rd party
 # 3. django
 from django.conf import settings
@@ -46,7 +46,7 @@ def __log_request(request):
 
 def try_tpl(fn):
     def _wrapped(*args, **kwargs):
-        core.mgr.try_load_plugins(settings.PLUGINS_DIR, forms.GenForm, forms.GenFormSets)
+        core.mgr.try_load_plugins(settings.PLUGINS_DIR, forms.generate_form, forms.generate_formset)
         return fn(*args, **kwargs)
 
     return _wrapped

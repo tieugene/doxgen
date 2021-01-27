@@ -39,6 +39,7 @@ def str2date(data, name):
     """
     data[name] = datetime.datetime.strptime(data[name], '%d.%m.%Y').date() if data[name] else None
 
+
 def chk_inn(s):
     """
     Check INN
@@ -53,19 +54,18 @@ def chk_inn(s):
     k11 = (7, 2, 4, 10, 3, 5, 9, 4, 9, 8)
     k12 = (3, 7, 2, 4, 10, 3, 5, 9, 4, 6, 8)
 
-    def chk_cs(s, k):
+    def chk_cs(inn_str, k):
         """
         Calculates cs
-        @param s:str - inn
+        @param inn_str:str - inn
         @param k:tuple - koefficients
         @return boolean - CS ok
         """
-        sum = 0
-        l = len(k)
-        for i in range(l):
-            sum += int(s[i]) * k[i]
-        # print ((sum%11)%10)%11
-        return ((sum % 11) % 10) % 11 == int(s[l])
+        crc_sum = 0
+        k_len = len(k)
+        for i in range(k_len):
+            crc_sum += int(inn_str[i]) * k[i]
+        return ((crc_sum % 11) % 10) % 11 == int(inn_str[k_len])
 
     if not s.isdigit():
         return 1
