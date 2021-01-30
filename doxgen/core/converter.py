@@ -1,9 +1,8 @@
 """
 Converters module
 Params:
-    * request: request
-    * context_dict: data
     * template:str - path to template (.../*.html/fodf/rml)
+    * context_dict: data
 Returns: HttpResponse object
 
 Input:
@@ -17,10 +16,6 @@ Try:
     * html5 (webkit)
     * pdf forms (pdftk)
 
-FIXME: __...() -> (err, bytes)
-TODO: unlink from django (e.g. mk pure http reponse)
-TODO: split on submodules: bytes:__any2pdf(context: dict, template: str)
-TODO: dispatcher(tpl_type:str) -> func
 TODO: pagebreak, pagenum
 """
 
@@ -29,9 +24,11 @@ import os
 import subprocess
 import tempfile
 # 2. 3rd party
-import pdfkit
-import trml2pdf.doc
-import weasyprint
+# On demand:
+# - pdfkit
+# - weasyprint
+# - trml2pdf
+# - jpype
 # 3. django
 from django.template import loader
 
@@ -57,6 +54,14 @@ def __html2pdf_pdfkit(template: str, context: dict) -> (str, bytes):
     :param template - path of tpl
     # TODO: dpi=300
     """
+    try:
+        import pdfkit
+    except ModuleNotFoundError:
+        return "'pdfkit' not found", None
+    except ImportError as err:
+        return "Error importing 'pdfkit': {}".format(err), None
+    except Exception as err:
+        return "Unknown error importing 'pdfkit': {}".format(err), None
     outfile = tempfile.NamedTemporaryFile(suffix='.pdf', delete=True)  # delete=False to debug
     pdfkit.from_string(__render_template(template, context), outfile.name, options={'quiet': ''})
     return '', outfile.read()
@@ -69,10 +74,26 @@ def __html2pdf_weasy(template: str, context: dict) -> (str, bytes):
     :param template - path of tpl
     # TODO: dpi=300
     """
+    try:
+        import weasyprint
+    except ModuleNotFoundError:
+        return "'weasyprint' not found", None
+    except ImportError as err:
+        return "Error importing 'weasyprint': {}".format(err), None
+    except Exception as err:
+        return "Unknown error importing 'weasyprint': {}".format(err), None
     return '', weasyprint.HTML(string=__render_template(template, context)).write_pdf()
 
 
 def __rml2pdf(template: str, context: dict) -> (str, bytes):
+    try:
+        import trml2pdf
+    except ModuleNotFoundError:
+        return "'trml2pdf' not found", None
+    except ImportError as err:
+        return "Error importing 'trml2pdf': {}".format(err), None
+    except Exception as err:
+        return "Unknown error importing 'trml2pdf': {}".format(err), None
     return '', trml2pdf.parseString(__render_template(template, context))
 
 
@@ -94,11 +115,18 @@ def __xfdf2pdf_cli(template: str, context: dict) -> (str, bytes):
 
 
 def __xfdf2pdf_itext(template: str, context: dict) -> (str, bytes):
+    try:
+        import jpype.imports
+    except ModuleNotFoundError:
+        return "'jpype' not found", None
+    except ImportError as err:
+        return "Error importing 'jpype': {}".format(err), None
+    except Exception as err:
+        return "Unknown error importing 'jpype': {}".format(err), None
     # 1. fill xfdf
     pdf_tpl = template.rsplit('.', 1)[0] + '.pdf'       # must be alongside
     xfdf = __render_template(template, context)
     # 2. gen pdf
-    import jpype.imports
     if isinstance(xfdf, str):
         xfdf = bytes(xfdf, 'UTF-8')
     if not jpype.isJVMStarted():

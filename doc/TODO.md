@@ -1,14 +1,13 @@
 # TODO
 
 ## 1. FixMe:
-- converters: import on demand and return err if backend is not installed
-  - better way - disable on start
++ converters: import on demand and return err if backend is not installed
 - remove django.* from core/convert:
   + httpresponse (<= converter returns header and payload)
-  - template loader().render() => [jinja2 etc](https://wiki.python.org/moin/
+  - template loader().render() => [jinja2 etc](https://wiki.python.org/moin/Templating)
 
 ## 2. ToDo:
-Templating)
+- set coverters in settings
 - converter expansion:
   - xhtml2pdf (html)
   - xfdf.py (pdf form) - PyPDF2/4, pikepdf, pdfminer.six
