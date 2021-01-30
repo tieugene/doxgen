@@ -1,10 +1,12 @@
+%global debug_package %{nil}
+
 Name:		doxgen
 Version:	0.0.2
 Release:	1%{?dist}
 License:	GPLv3
 Summary:	Document generator
 URL:		https://github.com/tieugene/doxgen/
-Source0:	https://github.com/tieugene/doxgen/archive/%{name}-%{version}.tar.bz2
+Source0:	https://github.com/tieugene/doxgen/archive/%{name}-%{version}.tar.gz
 BuildRequires:	python3-setuptools
 # python3-devel
 BuildRequires:	pkgconfig(python3)
@@ -38,11 +40,13 @@ Output: HTML, PDF.
 
 
 %install
-%py3_install --install-lib=%{_datadir}
-# TODO: rm eggs
+%py3_install
+# py_install not undestands `--install-lib %{_datadir}`
+mkdir -p %{buildroot}%{_datadir}
+mv %{buildroot}%{python3_sitelib}/%{name} %{buildroot}%{_datadir}/
 
-%check
-%py3_build check
+#check
+#py3_build test
 
 
 %files

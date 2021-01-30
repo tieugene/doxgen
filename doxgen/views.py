@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 
 # 1. system
+import os
 import logging
 from collections import OrderedDict
-# from django.utils.translation import gettext as _
+from django.utils.translation import gettext as _
 # 2. 3rd party
 # 3. django
 from django.conf import settings
 # from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views.generic.base import TemplateView
 # 4. my
@@ -74,6 +76,44 @@ class TplList(TemplateView):
         return context
 
 
+def __html2html(folder: str, template: str, context: dict, as_attach: bool = False):
+    """
+    EndPint #1: Preview HTML template
+    :param folder: plugin folder
+    :param template: template file name (relative to plugin dir)
+    :param context: data
+    :param as_attach: view or download
+    :return: HttpResponse
+    """
+    # ? +=; charset=UTF-8
+    response = HttpResponse(
+        content=core.converter.html2html(os.path.join(settings.PLUGINS_DIR, folder, template), context),
+        content_type='text/html')
+    if as_attach:
+        response['Content-Disposition'] = 'filename="print.html";'  # download: + ';attachment'
+    return response
+
+
+def __any2pdf(folder: str, template: str, context: dict, as_attach: bool = False):
+    """
+    EndPoint #2: Print
+    :param folder: plugin folder
+    :param template: template file name (relative to plugin dir)
+    :param context: data
+    :param as_attach: view or download
+    :return: HttpResponse
+    """
+    err, data = core.converter.any2pdf(os.path.join(settings.PLUGINS_DIR, folder, template), context)
+    if err:
+        response = HttpResponse(_('We had some errors:<pre>{}</pre>').format(err))
+    else:
+        response = HttpResponse(content=data, content_type='application/pdf')
+        response['Content-Transfer-Encoding'] = 'binary'
+        if as_attach:
+            response['Content-Disposition'] = 'filename="print.pdf";'  # download: + ';attachment'
+    return response
+
+
 @try_tpl
 def doc_a(request, uuid):
     """
@@ -117,10 +157,10 @@ def doc_a(request, uuid):
                 template = tpl[K_V_MODULE].DATA[K_T_T][K_T_T_PRINT]
                 if request.POST.get('_action', None) == 'view':
                     core.mgr.try_to_call(tpl, K_T_F_PRE_VIEW, data)  # Create/Update -> View
-                    return core.converter.html2html(tpl[K_T_DIR], template, context_dict)
+                    return __html2html(tpl[K_T_DIR], template, context_dict)
                 else:  # Anon/Create/Update -> PRINT
                     core.mgr.try_to_call(tpl, K_T_F_PRE_PRINT, data)
-                    return core.converter.any2pdf(tpl[K_T_DIR], template, context_dict)
+                    return __any2pdf(tpl[K_T_DIR], template, context_dict)
             else:  # tmp dummy
                 return redirect('tpl_list')
     else:  # GET

@@ -6,7 +6,7 @@ Output: HTML, PDF.
 
 ## Advantages:
 
-- Simple templates rendering into output document HTML templating
+- Simple templates rendering into output document like HTML templating
 - High-quality final PDF for predictable printing result
 - Extending user defined template set using simple plugins subsystem
 - Support most popular document formats as templates
@@ -15,9 +15,9 @@ Output: HTML, PDF.
 
 - doc/ - documentation:
   - [HowTo install](doc/INSTALL.md)
-  - [HowTo make plugins](doc/Plugins.md)
-  - [doxgen.conf](doc/doxgen.conf) sample for Apache web-server
-  - [local_setting.py](doc/local_setting.py) sample to overwrite default settings
+  - [HowTo plugins](doc/Plugins.md)
+  - [Apache web-server config sample](doc/doxgen.conf)
+  - [Overwriting default settings sample](doc/local_setting.py)
 - doxgen/ - project itself:
   - locale/ - Django std (i18n)
   - static/ - Django std

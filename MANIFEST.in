@@ -1,9 +1,10 @@
-include *.py doxgen.* *.sample LICENSE README.md manage
+include *.py LICENSE README.md doxgen.spec manage doc/*
 include doxgen/plugins/__init__.py
 include doxgen/udf/__init__.py
 recursive-include doc ^[A-Z]*.md
 recursive-include doxgen/core *.py *.jar
 recursive-include doxgen/misc *.py
+exclude doxgen/local_settings.py
 recursive-exclude doxgen/plugins [a-z]*.py
 recursive-exclude doxgen/udf [a-z]*.py
 graft doxgen/locale

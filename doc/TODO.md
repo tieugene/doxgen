@@ -1,15 +1,25 @@
 # TODO
 
 ## 1. FixMe:
+- converters: import on demand and return err if backend is not installed
+  - better way - disable on start
+- remove django.* from core/convert:
+  + httpresponse (<= converter returns header and payload)
+  - template loader().render() => [jinja2 etc](https://wiki.python.org/moin/
 
 ## 2. ToDo:
+Templating)
+- converter expansion:
+  - xhtml2pdf (html)
+  - xfdf.py (pdf form) - PyPDF2/4, pikepdf, pdfminer.six
+  - itext (html, pdf form)
+  - ODF
+- benchmark: weasyprint vs pdfkit vs xhtml2pdf
+- udf/ load list_* from csv
 - doc: Plugins.md
-- setup/MANIFEST: exclude *egg*
 - anti-robot:
   - all urls ar JS "void(){};"
   - JS-based in-place fields check (disable view/print buttons)
-- converters: import on demand and return err if backend is not installed
-  - better way - disable on start
 - watermark:
   - [html](https://codepen.io/YuvarajTana/pen/auiqx)
   - [pdf](https://stackabuse.com/working-with-pdfs-in-python-adding-images-and-watermarks/)
@@ -17,15 +27,10 @@
   - test pagebreak
   - test page number
   - what about wkhtmltopdf-static?
-- xfdf (py) - PyPDF2/4, pikepdf, pdfminer.six
-- benchmark: weasyprint vs pdfkit vs xhtml2pdf
-- remove django.* from core/convert:
-  - httpresponse (<= convert returns header and payload)
-  - template loader().render() => [jinja2 etc](https://wiki.python.org/moin/Templating)
 - Auth:
   - OAuth
   - register
-- system fonts (? or use builtin AcroReader fonts only)
+- system fonts (? or use builtin AcroReader fonts only; see OpenERP)
 - Code cleanup:
   - CSS: color,position,decoration,size
   - Pycharm (Inspect code, Code cleanup)
@@ -33,8 +38,10 @@
   - tests
     - &rdsh; .coveragerc
 - misc github things (.travis.yml)
+- sync with [Odoo](https://github.com/steedos/odoo7/tree/master/openerp/report/render)
 
 ## 3. Feature requests:
+- lxml or sax
 - select x2pdf engines in settings
 - letsencrypt
 - actions (- download filename = doxgen.ru.uuid.datetime.<ext>):
@@ -46,7 +53,7 @@
 - html2pdf_itext
 - doc_a: split into GET / POST
 - modulelist as class
-- tests (+tox.ini)
+- tests (+tox.ini), incl unittest, doctest; pytest?
 - validate resulting html (tidylib, html5lib, [w3c](https://github.com/srackham/w3c-validator)
 - move to lite frameworks (flask (uvedomlenie), webpy (solo), web2py)
 
@@ -58,6 +65,7 @@
 - disable cookie-based sessions
 - smtp: chk domain and user (python-emailahoy) exists: `socket.gethostbyname(domain:str)`
 - rml2svg
+- rml2html
 - html2rml
 - [split settings](https://github.com/sobolevn/django-split-settings)
 - pymorphy2

@@ -33,23 +33,10 @@ import pdfkit
 import trml2pdf.doc
 import weasyprint
 # 3. django
-from django.conf import settings
-from django.http import HttpResponse
 from django.template import loader
-from django.utils.translation import gettext as _
 
 
 # ==== 1. low-level utils (django dependent)
-def __get_template_path(folder: str, template: str) -> str:
-    """
-    Get full template path
-    :param folder: plugin folder
-    :param template: template file name
-    :return: Full template path
-    """
-    return os.path.join(folder, template)
-
-
 def __render_template(template: str, context: dict) -> str:
     """
     Render template with data.
@@ -86,7 +73,7 @@ def __html2pdf_weasy(template: str, context: dict) -> (str, bytes):
 
 
 def __rml2pdf(template: str, context: dict) -> (str, bytes):
-    return '', trml2pdf.doc.parse_string(__render_template(template, context))
+    return '', trml2pdf.parseString(__render_template(template, context))
 
 
 def __xfdf2pdf_cli(template: str, context: dict) -> (str, bytes):
@@ -96,7 +83,7 @@ def __xfdf2pdf_cli(template: str, context: dict) -> (str, bytes):
     1. render xfdf to stdout
     2. merge pdf and stdin to stdout
     """
-    pdf_tpl = template.rsplit('.', 1)[0] + '.pdf'
+    pdf_tpl = template.rsplit('.', 1)[0] + '.pdf'       # must be alongside
     out, err = subprocess.Popen(
         ['xfdftool', '-f', pdf_tpl],
         shell=False,
@@ -108,7 +95,7 @@ def __xfdf2pdf_cli(template: str, context: dict) -> (str, bytes):
 
 def __xfdf2pdf_itext(template: str, context: dict) -> (str, bytes):
     # 1. fill xfdf
-    pdf_tpl = os.path.join(settings.PLUGINS_DIR, template.rsplit('.', 1)[0] + '.pdf')
+    pdf_tpl = template.rsplit('.', 1)[0] + '.pdf'       # must be alongside
     xfdf = __render_template(template, context)
     # 2. gen pdf
     import jpype.imports
@@ -170,40 +157,23 @@ __x2pdf = {
 
 
 # ==== 3. Endpoints for external usage
-def html2html(folder: str, template: str, context: dict, as_attach: bool = False):
+def html2html(template: str, context: dict) -> str:
     """
     EndPint #1: Preview HTML template
-    :param folder: plugin folder
-    :param template: template file name (relative to plugin dir)
+    :param template: full template path
     :param context: data
-    :param as_attach: view or download
     :return: HttpResponse
     """
-    template_path = __get_template_path(folder, template)
     # ? +=; charset=UTF-8
-    response = HttpResponse(content=__render_template(template_path, context), content_type='text/html')
-    if as_attach:
-        response['Content-Disposition'] = 'filename="print.html";'  # download: + ';attachment'
-    return response
+    return __render_template(template, context)
 
 
-def any2pdf(folder: str, template: str, context: dict, as_attach: bool = False):
+def any2pdf(template: str, context: dict):
     """
     EndPoint #2: Print
-    :param folder: plugin folder
-    :param template: template file name (relative to plugin dir)
+    :param template: full template path
     :param context: data
-    :param as_attach: view or download
     :return: HttpResponse
     """
     ext = template.rsplit('.', 1)[1]
-    template_path = __get_template_path(folder, template)
-    err, data = __x2pdf[ext](template_path, context)
-    if err:
-        response = HttpResponse(_('We had some errors:<pre>{}</pre>').format(err))
-    else:
-        response = HttpResponse(content=data, content_type='application/pdf')
-        response['Content-Transfer-Encoding'] = 'binary'
-        if as_attach:
-            response['Content-Disposition'] = 'filename="print.pdf";'  # download: + ';attachment'
-    return response
+    return __x2pdf[ext](template, context)

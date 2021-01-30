@@ -1,8 +1,18 @@
 from setuptools import setup
+import distutils.command.install_egg_info
+import doxgen
+
+class my_egg_info(distutils.command.install_egg_info.install_egg_info):
+    """
+    Disable egg_info installation, seems pointless for a non-library.
+    Copied from virt-manager.
+    """
+    def run(self):
+        pass
 
 setup(
     name='doxgen',
-    version='0.0.2~rc1',
+    version=doxgen.__version__,
     url='https://github.com/tieugene/doxgen/',
     license='GPLv3',
     author='TI_Eugene',
@@ -30,4 +40,7 @@ setup(
     include_package_data=True,
     # use_scm_version=True,
     # setup_requires=['setuptools_scm'],
+    cmdclass={
+    'install_egg_info': my_egg_info,
+    },
 )
