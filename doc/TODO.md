@@ -1,19 +1,14 @@
 # TODO
 
 ## 1. FixMe:
-+ converters: import on demand and return err if backend is not installed
-- remove django.* from core/convert:
-  + httpresponse (<= converter returns header and payload)
-  - template loader().render() => [jinja2 etc](https://wiki.python.org/moin/Templating)
 
 ## 2. ToDo:
-- set coverters in settings
+- benchmark: pdfkit vs weasyprint vs xhtml2pdf
 - converter expansion:
   - xhtml2pdf (html)
   - xfdf.py (pdf form) - PyPDF2/4, pikepdf, pdfminer.six
   - itext (html, pdf form)
   - ODF
-- benchmark: weasyprint vs pdfkit vs xhtml2pdf
 - udf/ load list_* from csv
 - doc: Plugins.md
 - anti-robot:
@@ -40,6 +35,8 @@
 - sync with [Odoo](https://github.com/steedos/odoo7/tree/master/openerp/report/render)
 
 ## 3. Feature requests:
+- set coverters in settings
+- template loader().render() => [jinja2 etc](https://wiki.python.org/moin/Templating)
 - lxml or sax
 - select x2pdf engines in settings
 - letsencrypt

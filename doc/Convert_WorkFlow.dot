@@ -1,0 +1,14 @@
+// http://magjac.com/graphviz-visual-editor/
+// https://dreampuf.github.io/GraphvizOnline/
+
+digraph G {
+
+  { node [shape="rect"] HTMLt, RMLt, XFDFt, PDFf }
+  { node [shape="diamond"] HTML, PDF }
+
+  HTMLt -> jinga2 -> HTML -> {cssselect3,tinycss2,html5lib} -> weasyprint -> {cairosvg} -> PDF;
+  HTML -> pypdfkit -> wkhtml2pdf -> PDF;
+  RMLt -> jinga2 -> trml2pdf -> reportlab -> PDF;
+  XFDFt -> jinga2 -> jpype -> itextpdf;
+  PDFf -> itextpdf -> PDF;
+}
