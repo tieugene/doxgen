@@ -28,6 +28,7 @@ import tempfile
 # - pdfkit
 # - weasyprint
 # - trml2pdf
+# - z3c.rml
 # - jpype
 # 3. django
 from django.template import loader
@@ -49,7 +50,7 @@ def __render_template(template: str, context: dict) -> str:
 # ==== 2. renderers itself (independent)
 def __html2pdf_pdfkit(template: str, context: dict) -> (str, bytes):
     """
-    Render [x]html to pdf
+    Render [x]html to pdf using pdfkit+wkhtmltopdf
     :param context - dictionary of data
     :param template - path of tpl
     # TODO: dpi=300
@@ -69,7 +70,7 @@ def __html2pdf_pdfkit(template: str, context: dict) -> (str, bytes):
 
 def __html2pdf_weasy(template: str, context: dict) -> (str, bytes):
     """
-    Render [x]html to pdf
+    Render [x]html to pdf using weasyprint
     :param context - dictionary of data
     :param template - path of tpl
     # TODO: dpi=300
@@ -85,7 +86,29 @@ def __html2pdf_weasy(template: str, context: dict) -> (str, bytes):
     return '', weasyprint.HTML(string=__render_template(template, context)).write_pdf()
 
 
-def __rml2pdf(template: str, context: dict) -> (str, bytes):
+def __html2pdf_pisa(template: str, context: dict) -> (str, bytes):
+    """
+    Render [x]html to pdf using xhtml2pdf
+    :param context - dictionary of data
+    :param template - path of tpl
+    # FIXME: cyrillic not
+    """
+    try:
+        import xhtml2pdf.pisa
+    except ModuleNotFoundError:
+        return "'xhtml2pdf' not found", None
+    except ImportError as err:
+        return "Error importing 'xhtml2pdf': {}".format(err), None
+    except Exception as err:
+        return "Unknown error importing 'xhtml2pdf': {}".format(err), None
+    pdf = xhtml2pdf.pisa.CreatePDF(__render_template(template, context))
+    if pdf.err:
+        return 'Bad pisa', None
+    pdf.dest.seek(0)
+    return '', pdf.dest.read()
+
+
+def __rml2pdf_trml(template: str, context: dict) -> (str, bytes):
     try:
         import trml2pdf
     except ModuleNotFoundError:
@@ -95,6 +118,19 @@ def __rml2pdf(template: str, context: dict) -> (str, bytes):
     except Exception as err:
         return "Unknown error importing 'trml2pdf': {}".format(err), None
     return '', trml2pdf.parseString(__render_template(template, context))
+
+
+def __rml2pdf_z3c(template: str, context: dict) -> (str, bytes):
+    try:
+        import z3c.rml.rml2pdf
+    except ModuleNotFoundError:
+        return "'z3c.rml' not found", None
+    except ImportError as err:
+        return "Error importing 'z3c.rml': {}".format(err), None
+    except Exception as err:
+        return "Unknown error importing 'z3c.rml': {}".format(err), None
+    # parseString returns BytesIO
+    return '', z3c.rml.rml2pdf.parseString(__render_template(template, context)).read()
 
 
 def __xfdf2pdf_cli(template: str, context: dict) -> (str, bytes):
@@ -176,7 +212,7 @@ __x2pdf = {
     'html': __html2pdf_weasy,
     'xhtm': __html2pdf_weasy,
     'xhtml': __html2pdf_weasy,
-    'rml': __rml2pdf,
+    'rml': __rml2pdf_trml,
     'xfdf': __xfdf2pdf_itext,
     'fodt': __odf2pdf,
     'fods': __odf2pdf,

@@ -1,6 +1,8 @@
-setuptools~=51.1.1
-Django~=3.1
-weasyprint[html]
+setuptools
+Django
 pdfkit[html]
+weasyprint[html]
+xhtml2pdf[html]
 JPype1[fdf]
 # trml2pdf[rml]
+z3c.rml[rml]
