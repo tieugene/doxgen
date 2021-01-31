@@ -5,10 +5,12 @@
 ## 2. ToDo:
 - benchmark: pdfkit vs weasyprint vs xhtml2pdf
 - converter expansion:
+  - z3c.rml (rml)
   - xhtml2pdf (html)
   - xfdf.py (pdf form) - PyPDF2/4, pikepdf, pdfminer.six
   - itext (html, pdf form)
   - ODF
+- doxgen.spec: locale (rename, rm *.mo from src, mk *.mo on build)
 - udf/ load list_* from csv
 - doc: Plugins.md
 - anti-robot:

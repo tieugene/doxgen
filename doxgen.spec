@@ -1,29 +1,30 @@
 %global debug_package %{nil}
 
 Name:		doxgen
-Version:	0.0.2
+Version:	0.1.0
 Release:	1%{?dist}
 License:	GPLv3
 Summary:	Document generator
 URL:		https://github.com/tieugene/doxgen/
 Source0:	https://github.com/tieugene/doxgen/archive/%{name}-%{version}.tar.gz
+BuildArch:	noarch
 BuildRequires:	python3-setuptools
 # python3-devel
 BuildRequires:	pkgconfig(python3)
 # python3-django
-Requires:		python3dist(django)
+Requires:	%{py3_dist django} >= 3.0
 # default hardcoded converters to PDF
 # - HTML (python3-weasyprint)
-Recommends:	python3dist(weasyprint)
+Recommends:	%{py3_dist weasyprint}
 # - RML
-Recommends:	python3-tkrml2pdf
+Recommends:	%{py3_dist tkrml2pdf}
 # - PDF form (python3-jpype, java-11-openjdk-headless)
-Recommends:	python3dist(jpype1) jre-headless
+Recommends:	%{py3_dist JPype1} jre-headless
 # can be replaced in code
 # - HTML
-Suggests: python3-pdfkit wkhtmltopf
+Suggests: %{py3_dist pdfkit} wkhtmltopf
 # - RML
-Suggests: python3-z3c.rml
+Suggests: %{py3_dist z3c.rml}
 
 %description
 DoxGen - an application to fill out and print template documents.
@@ -41,20 +42,22 @@ Output: HTML, PDF.
 
 %install
 %py3_install
-# py_install not undestands `--install-lib %{_datadir}`
+# py_install not undestands `--install-lib #{_datadir}`
 mkdir -p %{buildroot}%{_datadir}
 mv %{buildroot}%{python3_sitelib}/%{name} %{buildroot}%{_datadir}/
+%{find_lang} django
+
 
 #check
 #py3_build test
 
 
-%files
+%files -f django.lang
 %license LICENSE
-%doc README.md doc/INSTALL.md
+%doc README.md doc/{INSTALL.md,Plugins.md,doxgen.conf,local_settings.py}
 %{_datadir}/%{name}/
 
 
 %changelog
-* Wed Jan 20 2021 TI_Eugene <ti.eugene@gmail.com> - 0.1.0-1
+* Sat Jan 30 2021 TI_Eugene <ti.eugene@gmail.com> - 0.1.0-1
 - Initial build
