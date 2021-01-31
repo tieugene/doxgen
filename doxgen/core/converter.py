@@ -63,9 +63,10 @@ def __html2pdf_pdfkit(template: str, context: dict) -> (str, bytes):
         return "Error importing 'pdfkit': {}".format(err), None
     except Exception as err:
         return "Unknown error importing 'pdfkit': {}".format(err), None
-    outfile = tempfile.NamedTemporaryFile(suffix='.pdf', delete=True)  # delete=False to debug
-    pdfkit.from_string(__render_template(template, context), outfile.name, options={'quiet': ''})
-    return '', outfile.read()
+    pdf = pdfkit.from_string(__render_template(template, context), False, options={'quiet': ''})
+    if not pdf:
+        return 'Something worng with pdfkit', None
+    return '', pdf
 
 
 def __html2pdf_weasy(template: str, context: dict) -> (str, bytes):
@@ -208,10 +209,10 @@ def __odf2pdf(template: str, context: dict) -> (bool, bytes):
 
 
 __x2pdf = {
-    'htm': __html2pdf_weasy,
-    'html': __html2pdf_weasy,
-    'xhtm': __html2pdf_weasy,
-    'xhtml': __html2pdf_weasy,
+    'htm': __html2pdf_pdfkit,
+    'html': __html2pdf_pdfkit,
+    'xhtm': __html2pdf_pdfkit,
+    'xhtml': __html2pdf_pdfkit,
     'rml': __rml2pdf_trml,
     'xfdf': __xfdf2pdf_itext,
     'fodt': __odf2pdf,
