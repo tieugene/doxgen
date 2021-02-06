@@ -1,6 +1,7 @@
 # TODO
 
 ## 1. FixMe:
+- logging: 'file' access dinied
 - convert: import on 1st import core.convert
 - convert: fix xhtml2pdf cyr
 

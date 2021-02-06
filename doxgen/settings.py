@@ -147,7 +147,7 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'formatter': 'file',
-            'filename': 'debug.log'
+            'filename': os.path.join(BASE_DIR, 'debug.log'),
         },
         'mail_admins': {
             'level': 'ERROR',
