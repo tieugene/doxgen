@@ -26,7 +26,7 @@ After this you can add your own plugins in $DESTDIR/plugins/ ([RTFM](Plugins.md)
   - [weasyprint](https://github.com/Kozea/WeasyPrint) (py, pip, rpm, ~~brew~~)
   - [python-pdfkit](https://github.com/JazzCore/python-pdfkit) (py, pip, rpm, ~~brew~~)
     - &rdsh; [wkhtmltopdf](http://wkhtmltopdf.org/) (CLI, rpm, brew)
-  - [xhtml2pdf](https://github.com/xhtml2pdf/xhtml2pdf) (py, pip, ~~rpm~~, ~~brew~~; [notes](http://dik123.blogspot.com/2009/02/html-pdf.html) for non-ascii)
+  - [xhtml2pdf](https://github.com/xhtml2pdf/xhtml2pdf) (py, pip, *rpmable*, ~~brew~~; [notes](http://dik123.blogspot.com/2009/02/html-pdf.html) for non-ascii)
 - RML (one from):
   - [trml2pdf](https://github.com/romanlv/trml2pdf) (py, pip, *rpmable*, &lArr; reportlab)
   - [z3c.rml](https://github.com/zopefoundation/z3c.rml) (py, pip, *rpmable*, &lArr; reportlab)

@@ -209,10 +209,10 @@ def __odf2pdf(template: str, context: dict) -> (bool, bytes):
 
 
 __x2pdf = {
-    'htm': __html2pdf_pdfkit,
-    'html': __html2pdf_pdfkit,
-    'xhtm': __html2pdf_pdfkit,
-    'xhtml': __html2pdf_pdfkit,
+    'htm': __html2pdf_weasy,
+    'html': __html2pdf_weasy,
+    'xhtm': __html2pdf_weasy,
+    'xhtml': __html2pdf_weasy,
     'rml': __rml2pdf_trml,
     'xfdf': __xfdf2pdf_itext,
     'fodt': __odf2pdf,

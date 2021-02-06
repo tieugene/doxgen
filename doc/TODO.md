@@ -39,6 +39,7 @@
 - sync with [Odoo](https://github.com/steedos/odoo7/tree/master/openerp/report/render)
 
 ## 3. Feature requests:
+- XPS?
 - set coverters in settings
 - template loader().render() => [jinja2 etc](https://wiki.python.org/moin/Templating)
 - lxml or sax
