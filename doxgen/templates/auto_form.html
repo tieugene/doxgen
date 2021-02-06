@@ -30,11 +30,11 @@ span.helptext {
 {% block body_main %}
 	<h1> {{ name }} </h1>
     <p> {{ comments }} </p>
-	<p> {% blocktranslate %}
+	<p> {% blocktrans %}
 Be careful - mandatory fields emphased with <b> bold </b> font.<br/>
 In case of difficulties press any of 'Example' buttons.<br/>
 To clean all input fields use 'Reset' button.
-{% endblocktranslate %} </p>
+{% endblocktrans %} </p>
 	<form id="myForm" action="." method="post">
 		{% csrf_token %}
 		<!-- formaction=""-->
@@ -46,7 +46,7 @@ To clean all input fields use 'Reset' button.
         {%  endif %}
 		{% include "button/reset.html" %}
 		{% if example %}
-			{% translate 'Examples' %}:
+			{% trans 'Examples' %}:
 			{% for e in example %}
 				<button type="button" onClick="populateForm('myForm', '{{e.name}}')" title="{{e.tip}}"> {{ e.title }} </button>
 			{% endfor %}

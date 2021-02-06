@@ -10,7 +10,13 @@ Let's install into DESTDIR=/usr/share/doxgen:
 1. create `$DESTDIR/local_settings.py` like doc/* one
 1. create `/etc/httpd/conf.d/doxgen.conf` (or wherever) like doc/* one
 1. create dir for sqlite DB (`mkdir /var/lib/doxgen`) ~~and MEDIA_ROOT~~
-1. create DB (`cd $DESTDIR && python3 manage.py ...`)
+1. create DB:
+   ```bash
+   cd $DESTDIR
+   python3 manage.py migrate
+   python3 manage.py createsuperuser --username admin --email admin@exmaple.com --noinput
+   python3 manage.py changepassword admin
+   ```
 1. assign owning and permissions:
    ```bash
    chown -R apache:apache {/etc/httpd/.../doxgen.conf,$DESTDIR/plugins,/var/lib/doxgen}
