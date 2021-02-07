@@ -177,7 +177,7 @@ try:
     from local_settings import *
     # hack
     if LOGGERS:
-        for k, v in LOGGERS:
+        for k, v in LOGGERS.items():
             LOGGING[k] = v
 except ImportError:
     pass
