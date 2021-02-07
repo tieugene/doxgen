@@ -20,10 +20,12 @@ DATABASES = {
 #     }
 # }
 LOGGERS = {     # simple 'LOGGING.uppend(...) not works
-    'django': {
-        'handlers': ['syslog'],
-        'level': 'INFO',
-        'disabled': False,
-        'propagate': True
+    'loggers': {
+        'django': {
+            'handlers': ['syslog'],
+            'level': 'INFO',
+            'disabled': False,
+            'propagate': True
+        }
     }
 }
