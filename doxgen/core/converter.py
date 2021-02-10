@@ -167,7 +167,8 @@ def __xfdf2pdf_itext(template: str, context: dict) -> (str, bytes):
     if isinstance(xfdf, str):
         xfdf = bytes(xfdf, 'UTF-8')
     if not jpype.isJVMStarted():
-        jpype.startJVM(classpath=['core/jars/*'])
+        # jpype.startJVM(classpath=['core/jars/*'])
+        jpype.startJVM(classpath=[os.path.join(os.path.dirname(os.path.abspath(__file__)), 'jars', 'itextpdf.jar')])
     from com.itextpdf.text.pdf import PdfReader, PdfStamper, XfdfReader
     from java.io import ByteArrayInputStream, ByteArrayOutputStream
     pdf_reader = PdfReader(pdf_tpl)  # (filename:str|byte[]|InputStream)

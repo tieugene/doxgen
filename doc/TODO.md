@@ -1,14 +1,12 @@
 # TODO
 
 ## 1. FixMe:
-- logging: 'file' access dinied
-- convert: import on 1st import core.convert
-- convert: fix xhtml2pdf cyr
+- convert:
+  - itext import error in prod
+  - import on 1st import core.convert
+  - fix xhtml2pdf cyr
 
 ## 2. ToDo:
-- benchmark:
-  - pdfkit vs weasyprint vs xhtml2pdf
-  - trml2pdf vs z3c.rml
 - converter expansion:
   - xfdf.py (pdf form) - PyPDF2/4, pikepdf, pdfminer.six
   - itext (html, pdf form)

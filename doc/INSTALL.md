@@ -5,7 +5,7 @@ Let's install into DESTDIR=/usr/share/doxgen:
 
 1. install (one from):
    - ~~download and install rpm~~
-   - download source from git, extract it into $DESTDIR + install Django
+   - download source from git, extract it into $DESTDIR + install python3-django, python3-mod_wsgi
 1. add requred backends depending on converters you want (see below)
 1. create `$DESTDIR/local_settings.py` like doc/* one
 1. create `/etc/httpd/conf.d/doxgen.conf` (or wherever) like doc/* one
