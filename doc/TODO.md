@@ -2,38 +2,41 @@
 
 
 ## Issues:
-- PDF form: iText+XFDF => python+TOML
-- `converter.py`: exceptions
-- pathilb everywhere
-- Plugins: main.py > json/toml/yaml (|pydantic) + README.md
+- rm html preview (?)
 - unify: 'html/xhtml' - the same
 - Select engine in plugin; show/log engines loaded; preload engines
-- Preview PDF in browser
-- rm html preview (?)
-- idea: converters (engines) as plugins (RTFM import.import_module)
-- use jinja2 (for compatibility)
+- PDF form: rm print.toml (use form field short names as HTML form names)
+- `converter.py`: exceptions
+- Plugins: main.py > json/toml/yaml (+pydantic) + README.md
+- Refs as json (+pydantic)
+- pathilb everywhere
+- Deploy:
+- + koji build chain
+  + build for epel9 (py39) / epel10 (py..) / eln:
+    * svglib (no reportlab)
+    * rlPyCairo
+    * .spec
+  + copr for EPEL/ELN
+- run LO headless constantly (use libreoffice-pyuno; RTFM unoconv)
+- idea: engines as plugins (RTFM import.import_module)
+- jinja2 (for compatibility)
+- cache templates
 - tests (speed too)
 - rst doc
-- async + wait
+- async + await (?)
 - nginx/unicorn etc
-- aiohttp/Flask/FastAPI
-- cache templates
-- rm print.toml for PDF (use form field short names as HTML form names)
-- pandoc:
-   + Markdown
-   + LaTeX
-   + RTF
+- Flask/aiohttp/FastAPI
 
 ## TODO
-- no java (pure python)
-- build for epel9 (python 3.9):
-  + svglib (no reportlab)
-  + rlPyCairo
-- koji build chain
-- FIXME: run LO headless constantly (use libreoffice-pyuno; RTFM unoconv)
 - exctract core into repo (templates/static/core); webserver/python web engine independent)
-- try pandoc (html/odt/docx/md)
-- copr repo for epel9
+- pandoc:
+  + html
+  + odt
+  + docx
+  + Markdown
+  + *LaTeX*
+  + *RTF*
+  + RML plugin
 
 ## Depricated:
 - html:

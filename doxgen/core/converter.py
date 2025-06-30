@@ -17,8 +17,6 @@ Try:
     * pdf forms (pdftk)
 
 TODO: pagebreak, pagenum
-TODO: pathlib
-TODO: use exceptions
 """
 
 # 2. system
