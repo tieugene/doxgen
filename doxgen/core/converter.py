@@ -35,12 +35,6 @@ import django.conf
 from django.template import loader
 # 3. 3rd party
 # TODO: preload all possible
-# On demand:
-# - weasyprint
-# - pdfkit
-# - trml2pdf
-# - z3c.rml
-# - jpype
 
 # TTF_DIR = pathlib.Path(os.path.dirname(os.path.abspath(__file__))).parent / 'static' / 'ttf'
 TTF_DIR = pathlib.Path(__file__).parent.parent  / 'static' / 'ttf'
