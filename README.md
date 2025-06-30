@@ -45,7 +45,6 @@ Output: HTML, PDF.
 - [jquery.populate](https://github.com/dtuite/jquery.populate)
 - [jquery.formset](https://gist.github.com/vandorjw/f884f0d51db3e7caaecd)
 - [bytesize](https://github.com/danklammer/bytesize-icons) icons
-- [itextpdf](https://github.com/itext/itextpdf) 5.5.13.2
 
 ## Requirements:
 
@@ -61,7 +60,6 @@ Output: HTML, PDF.
 - HTML:
   + weasyprint
   + pdfkit (| wkhtmltopdf binary)
-  + pandoc *TODO*
 - RML:
   + trml2pdf
   + zope-z3c.rml
