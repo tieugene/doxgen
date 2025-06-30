@@ -1,9 +1,7 @@
 setuptools
 Django
-pdfkit[html]
 weasyprint[html]
-# xhtml2pdf[html]
-# JPype1[fdf]
+pdfkit[html]
 trml2pdf[rml]
 z3c.rml[rml]
 PyPDFForm[pdf]

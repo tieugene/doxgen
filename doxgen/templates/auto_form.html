@@ -38,12 +38,11 @@ To clean all input fields use 'Reset' button.
 	<form id="myForm" action="." method="post" target="_blank">
 		{% csrf_token %}
 		<!-- formaction=""-->
-        {% include "button/view.html" %}
 		{% include "button/print.html" %}
-        {% if user.is_authenticated %}
-		    {% include "button/import.html" %}
-		    {% include "button/export.html" %}
-        {%  endif %}
+		{% if user.is_authenticated %}
+			{% include "button/import.html" %}
+			{% include "button/export.html" %}
+		{%  endif %}
 		{% include "button/reset.html" %}
 		{% if example %}
 			{% trans 'Examples' %}:

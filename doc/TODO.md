@@ -2,32 +2,36 @@
 
 
 ## Issues:
-- rm html preview (?)
-- unify: 'html/xhtml' - the same
-- Select engine in plugin; show/log engines loaded; preload engines
-- PDF form: rm print.toml (use form field short names as HTML form names)
+- Select engine in plugin:
+  + preload engines
+  + show/log engines loaded
+  + disable plugins w/o engines
+  + K_T_T_PRINT: <engine> (and engine load wanted file[s])
 - `converter.py`: exceptions
-- Plugins: main.py > json/toml/yaml (+pydantic) + README.md
-- Refs as json (+pydantic)
-- pathilb everywhere
+- Plugins: main.py > [main.py +] json/toml/yaml (+pydantic) + JSON schema + README.md 
+- Refs (udf/*) as json (+pydantic)
+- pathlib everywhere
+- Django templates => jinja2
+- run LO headless constantly (use libreoffice-pyuno; RTFM unoconv)
 - Deploy:
-- + koji build chain
+  + pylint, reformat
+  + pyproject .toml
+  + .spec
+  + koji build chain
   + build for epel9 (py39) / epel10 (py..) / eln:
     * svglib (no reportlab)
     * rlPyCairo
-    * .spec
   + copr for EPEL/ELN
-- run LO headless constantly (use libreoffice-pyuno; RTFM unoconv)
-- idea: engines as plugins (RTFM import.import_module)
-- jinja2 (for compatibility)
+  + rst doc
+  + tests (speed too)
+- Multiplatform:
+  + engines as plugins (RTFM import.import_module)
+  + Flask/aiohttp/FastAPI/cherrypy
+  + nginx/unicorn etc
 - cache templates
-- tests (speed too)
-- rst doc
-- async + await (?)
-- nginx/unicorn etc
-- Flask/aiohttp/FastAPI
 
 ## TODO
+- move to CentOs Steam 10
 - exctract core into repo (templates/static/core); webserver/python web engine independent)
 - pandoc:
   + html

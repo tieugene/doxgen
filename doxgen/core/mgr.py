@@ -24,7 +24,6 @@ def try_to_call(t, f, v):
     if f in t[K_V_MODULE].__dict__:
         return t[K_V_MODULE].__dict__[f](v)
 
-
 def __load_modules(path: str) -> list:
     """
     Load all Python modules from a directory into a dict.

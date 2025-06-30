@@ -1,7 +1,5 @@
-%global debug_package %{nil}
-
 Name:		doxgen
-Version:	0.1.0
+Version:	0.2.0
 Release:	1%{?dist}
 License:	GPLv3
 Summary:	Document generator
@@ -16,15 +14,12 @@ Requires:	%{py3_dist django} >= 3.0
 # default hardcoded converters to PDF
 # - HTML (python3-weasyprint)
 Recommends:	%{py3_dist weasyprint}
-# - RML
-Recommends:	%{py3_dist tkrml2pdf}
-# - PDF form (python3-jpype, java-11-openjdk-headless)
-Recommends:	%{py3_dist JPype1} jre-headless
-# can be replaced in code
-# - HTML
 Suggests: %{py3_dist pdfkit} wkhtmltopf
 # - RML
+Recommends:	%{py3_dist tkrml2pdf}
 Suggests: %{py3_dist z3c.rml}
+# - PDF form
+Recommends:	%{py3_dist PyPDFForm}
 
 %description
 DoxGen - an application to fill out and print template documents.
@@ -59,5 +54,9 @@ mv %{buildroot}%{python3_sitelib}/%{name} %{buildroot}%{_datadir}/
 
 
 %changelog
+* Mon Jun 30 2025 TI_Eugene <ti.eugene@gmail.com> - 0.2.0-1
+- iText => PyPDFForm
+- HTML preview removed
+
 * Sat Jan 30 2021 TI_Eugene <ti.eugene@gmail.com> - 0.1.0-1
 - Initial build
