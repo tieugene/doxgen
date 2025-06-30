@@ -84,7 +84,10 @@ def __any2pdf(folder: str, template: str, context: dict, as_attach: bool = False
     :param as_attach: view or download
     :return: HttpResponse
     """
-    err, data = core.converter.any2pdf(os.path.join(settings.PLUGINS_DIR, folder, template), context)
+    __template = os.path.join(settings.PLUGINS_DIR, folder, template)
+    ext = __template.rsplit('.', 1)[1]
+    err, data = core.converter.x2pdf[ext](__template, context)
+
     if err:
         response = HttpResponse(_('We had some errors:<pre>{}</pre>').format(err))
     else:

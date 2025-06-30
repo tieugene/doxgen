@@ -6,20 +6,44 @@ Params:
 Returns: HttpResponse object
 
 TODO: pagebreak, pagenum
+TODO: framework-independent
 """
-
-# 2. system
+# 1. system
 import os
 import pathlib
 import shutil
 import subprocess
 import tempfile
+import tomllib
+import logging
 from typing import Iterable, Dict, Any, Tuple, Optional
 # 2. django
 from django.template import loader
 # 3. 3rd party
+try:
+    import pdfkit
+except (ModuleNotFoundError, ImportError) as e:
+    logging.error("%s: %s", __name__, e)  # ModuleNotFoundError: No module named 'something'
+try:
+    import weasyprint
+except (ModuleNotFoundError, ImportError) as e:
+    logging.error("%s: %s", __name__, e)  # ModuleNotFoundError: No module named 'something'
+try:
+    import trml2pdf
+except (ModuleNotFoundError, ImportError) as e:
+    logging.error("%s: %s", __name__, e)  # ModuleNotFoundError: No module named 'something'
+try:
+    import z3c.rml.rml2pdf
+except (ModuleNotFoundError, ImportError) as e:
+    logging.error("%s: %s", __name__, e)  # ModuleNotFoundError: No module named 'something'
+try:
+    import PyPDFForm
+    TTF_DIR = pathlib.Path(__file__).parent.parent / 'static' / 'ttf'
+    PyPDFForm.PdfWrapper.register_font('Arial', str(TTF_DIR / 'arial.ttf'))
+except (ModuleNotFoundError, ImportError) as e:
+    logging.error("%s: %s", __name__, e)  # ModuleNotFoundError: No module named 'something'
 
-TTF_DIR = pathlib.Path(__file__).parent.parent  / 'static' / 'ttf'
+x2pdf = {}
 
 # ==== 1. low-level utils (django dependent)
 def __render_template(template: str, context: dict) -> str:
@@ -41,15 +65,9 @@ def __html2pdf_pdfkit(template: str, context: dict) -> Tuple[str, Optional[bytes
     :param template - path of tpl
     # TODO: dpi=300/600
     """
-    try:
-        import pdfkit
-    except ModuleNotFoundError:
-        return "'pdfkit' not found", None
-    except ImportError as err:
-        return "Error importing 'pdfkit': {}".format(err), None
     pdf = pdfkit.from_string(__render_template(template, context), False, options={'quiet': ''})
     if not pdf:
-        return 'Something worng with pdfkit', None
+        return 'Something worng with pdfkit', None  # TODO: exception
     return '', pdf
 
 def __html2pdf_weasy(template: str, context: dict) -> Tuple[str, Optional[bytes]]:
@@ -59,32 +77,14 @@ def __html2pdf_weasy(template: str, context: dict) -> Tuple[str, Optional[bytes]
     :param template - path of tpl
     # TODO: dpi=300
     """
-    try:
-        import weasyprint
-    except ModuleNotFoundError:
-        return "'weasyprint' not found", None
-    except ImportError as err:
-        return "Error importing 'weasyprint': {}".format(err), None
     return '', weasyprint.HTML(string=__render_template(template, context)).write_pdf()
 
 def __rml2pdf_trml(template: str, context: dict) -> Tuple[str, Optional[bytes]]:
     """Convert RML to PDF using trml2pdf."""
-    try:
-        import trml2pdf
-    except ModuleNotFoundError:
-        return "'trml2pdf' not found", None
-    except ImportError as err:
-        return "Error importing 'trml2pdf': {}".format(err), None
     return '', trml2pdf.parseString(__render_template(template, context))
 
 def __rml2pdf_z3c(template: str, context: dict) -> Tuple[str, Optional[bytes]]:
     """Convert RML to PDF using zope-z3c.rml2pdf."""
-    try:
-        import z3c.rml.rml2pdf
-    except ModuleNotFoundError:
-        return "'z3c.rml' not found", None
-    except ImportError as err:
-        return "Error importing 'z3c.rml': {}".format(err), None
     # parseString returns BytesIO
     return '', z3c.rml.rml2pdf.parseString(__render_template(template, context)).read()
 
@@ -111,23 +111,14 @@ def __pdf2pdf_pypdfforms(template: str, context: dict) -> Tuple[str, Optional[by
     def __x_code(__data: Dict, __x: Dict[str, str]) -> Dict[str, Any]:
         return {__src_k: __v for __k, __v in __data.items() if (__src_k := __x.get(__k))}
 
-    try:
-        from PyPDFForm import PdfWrapper
-        import tomllib
-    except ModuleNotFoundError:
-        return "'PyPDFForm' not found", None
-    except ImportError as err:
-        return "Error importing 'PyPDFForm': {}".format(err), None
     # 1. fill toml
-    PdfWrapper.register_font('Arial', str(TTF_DIR / 'arial.ttf'))
     toml = __render_template(template, context)
     data = tomllib.loads(toml)
     # 2. convert keys
     form_file = template.rsplit('.', 1)[0] + '.pdf'       # must be alongside
     # 1.1. prepare real data
-    form = PdfWrapper(form_file, global_font='Arial')
+    form = PyPDFForm.PdfWrapper(form_file, global_font='Arial')
     fields = form.schema['properties']
-    # __reg_fonts(reader)
     __x = __x_keys(fields.keys())
     data = __x_code(data, __x)
     # pprint.pprint(data)
@@ -144,8 +135,6 @@ def __odt2pdf(template: str, context: dict) -> Tuple[str, Optional[bytes]]:
     sudo chmod g+w /usr/share/httpd
     sudo -u apache libreoffice --headless --convert-to pdf --outdir /tmp /tmp/test.fodt
     """
-    if not shutil.which('libreoffice-writer'):
-        return 'LibreOffice  Writer not found', None
     # 1. prepare
     tmp = tempfile.NamedTemporaryFile(suffix='.fodt', delete=True)  # delete=False to debug
     tmp.write(__render_template(template, context))
@@ -163,20 +152,22 @@ def __odt2pdf(template: str, context: dict) -> Tuple[str, Optional[bytes]]:
         os.remove(out_file)
     return err, data
 
-__x2pdf = {  # extensions tuple, driver tupple
-    'html': __html2pdf_weasy,
-    'rml': __rml2pdf_trml,
-    'toml': __pdf2pdf_pypdfforms,
-    'fodt': __odt2pdf,
-}
+def __preload():
+    globs = globals()
+    if 'pdfkit' in globs:
+        x2pdf['html'] = __html2pdf_pdfkit
+    if 'weasyprint' in globs:
+        x2pdf['html'] = __html2pdf_weasy
+    if 'trml2pdf' in globs:
+        x2pdf['rml'] = __rml2pdf_trml
+    if 'z3c.rml.rml2pdf' in globs:
+        x2pdf['rml'] = __rml2pdf_z3c
+    if 'PyPDFForm' in globs:
+        x2pdf['toml'] = __pdf2pdf_pypdfforms
+    # odt
+    if not shutil.which('oowriter'):
+        logging.warning( 'LibreOffice  Writer not found')
+    else:
+        x2pdf['fodt'] = __odt2pdf
 
-# ==== 3. Endpoints for external usage
-def any2pdf(template: str, context: dict) -> Tuple[str, Optional[bytes]]:
-    """
-    EndPoint #2: Print
-    :param template: full template path
-    :param context: data
-    :return: HttpResponse
-    """
-    ext = template.rsplit('.', 1)[1]
-    return __x2pdf[ext](template, context)
+__preload()

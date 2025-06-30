@@ -8,8 +8,9 @@
   + disable plugins w/o engines
   + K_T_T_PRINT: <engine> (and engine load wanted file[s])
 - `converter.py`: exceptions
-- Plugins: main.py > [main.py +] json/toml/yaml (+pydantic) + JSON schema + README.md 
-- Refs (udf/*) as json (+pydantic)
+- JSONify:
+  + Plugins: main.py > [main.py +] json/toml/yaml (+pydantic) + JSON schema + README.md 
+  + udf/* as json (+pydantic)
 - pathlib everywhere
 - Django templates => jinja2
 - run LO headless constantly (use libreoffice-pyuno; RTFM unoconv)
@@ -28,9 +29,8 @@
   + engines as plugins (RTFM import.import_module)
   + Flask/aiohttp/FastAPI/cherrypy
   + nginx/unicorn etc
-- cache templates
 
-## TODO
+## Ideas
 - move to CentOs Steam 10
 - exctract core into repo (templates/static/core); webserver/python web engine independent)
 - pandoc:
@@ -41,6 +41,10 @@
   + *LaTeX*
   + *RTF*
   + RML plugin
+- HTML5:
+  + input limits (size, maxlength, ...)
+  + input types (tel, date, email, ...)
+- cache plugin templates
 
 ## Depricated:
 - html:
