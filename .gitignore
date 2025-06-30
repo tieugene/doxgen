@@ -9,3 +9,4 @@ doxgen/local_settings.py
 doxgen/static/ttf/*.ttf
 doxgen/plugins/*
 doxgen/udf/*
+tmp/

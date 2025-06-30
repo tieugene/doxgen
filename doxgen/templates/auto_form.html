@@ -35,7 +35,7 @@ Be careful - mandatory fields emphased with <b> bold </b> font.<br/>
 In case of difficulties press any of 'Example' buttons.<br/>
 To clean all input fields use 'Reset' button.
 {% endblocktrans %} </p>
-	<form id="myForm" action="." method="post">
+	<form id="myForm" action="." method="post" target="_blank">
 		{% csrf_token %}
 		<!-- formaction=""-->
         {% include "button/view.html" %}
