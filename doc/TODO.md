@@ -4,10 +4,11 @@
 ## Issues:
 - Select engine in plugin:
   + preload engines
+  + K_T_T_PRINT: <engine> (and engine load wanted file[s])
+  + Menu: Home|List => List('Home')|About
   + show/log engines loaded
   + disable plugins w/o engines
-  + K_T_T_PRINT: <engine> (and engine load wanted file[s])
-- `converter.py`: exceptions
+  + `converter.py`: exceptions
 - JSONify:
   + Plugins: main.py > [main.py +] json/toml/yaml (+pydantic) + JSON schema + README.md 
   + udf/* as json (+pydantic)

@@ -75,18 +75,16 @@ class TplList(TemplateView):
         context['data'] = core.mgr.moduledict
         return context
 
-def __any2pdf(folder: str, template: str, context: dict, as_attach: bool = False):
+def __any2pdf(folder: str, engine: str, context: dict, as_attach: bool = False):
     """
     EndPoint #2: Print
     :param folder: plugin folder
-    :param template: template file name (relative to plugin dir)
+    :param engine: template engine name
     :param context: data
     :param as_attach: view or download
     :return: HttpResponse
     """
-    __template = os.path.join(settings.PLUGINS_DIR, folder, template)
-    ext = __template.rsplit('.', 1)[1]
-    err, data = core.converter.x2pdf[ext](__template, context)
+    err, data = core.converter.x2pdf[engine](os.path.join(settings.PLUGINS_DIR, folder), context)
 
     if err:
         response = HttpResponse(_('We had some errors:<pre>{}</pre>').format(err))
@@ -135,11 +133,11 @@ def doc_a(request, uuid):
             core.mgr.try_to_call(tpl, K_T_F_POST_FORM, data)
             # split
             # if mode == 0:  # ANON > PRINT, C/U -> P
-            if (K_T_T in tpl[K_V_MODULE].DATA) and (K_T_T_PRINT in tpl[K_V_MODULE].DATA[K_T_T]):
+            if (K_T_T in tpl[K_V_MODULE].DATA) and (K_T_T_ENGINE in tpl[K_V_MODULE].DATA[K_T_T]):
                 context_dict = {'data': data}
-                template = tpl[K_V_MODULE].DATA[K_T_T][K_T_T_PRINT]
+                engine = tpl[K_V_MODULE].DATA[K_T_T][K_T_T_ENGINE]
                 core.mgr.try_to_call(tpl, K_T_F_PRE_PRINT, data)
-                return __any2pdf(tpl[K_T_DIR], template, context_dict)
+                return __any2pdf(tpl[K_T_DIR], engine, context_dict)
             else:  # tmp dummy
                 return redirect('tpl_list')
     else:  # GET

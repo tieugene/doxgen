@@ -4,6 +4,7 @@ DoxGen Constants.
 Naming:
  * K_ - key for dict:
   * K_T_ - key of template
+  TODO: enum
 """
 
 # Template keys
@@ -31,7 +32,7 @@ K_T_T = 't'  # inside K_T_DATA - templates
 K_T_T_LIST = 'l'  # inside K_T_T
 K_T_T_FORM = 'f'  # inside K_T_T
 K_T_T_READ = 'r'  # inside K_T_T
-K_T_T_PRINT = 'p'  # inside K_T_T
+K_T_T_ENGINE = 'e'  # inside K_T_T
 # forms and formsets
 K_T_FORM = 'FORM'  # in modulelidct too
 K_T_FORMSETS = 'FORMSETS'  # in modulelidct too
