@@ -34,6 +34,7 @@ def __log_request(request):
     for k in meta.keys():
         if k.islower():
             del (meta[k])
+    :todo: rm
     """
     # if not settings.DEBUG:
     logger.info(
@@ -44,15 +45,6 @@ def __log_request(request):
             request.META.get('HTTP_USER_AGENT', 'noname')[:254]
         )
     )
-
-
-def try_tpl(fn):
-    def _wrapped(*args, **kwargs):
-        core.mgr.try_load_plugins(settings.PLUGINS_DIR, forms.generate_form, forms.generate_formset)
-        return fn(*args, **kwargs)
-
-    return _wrapped
-
 
 # ====
 class AboutView(TemplateView):
@@ -73,7 +65,6 @@ class AboutView(TemplateView):
 class TplList(TemplateView):
     template_name = "tpl_list.html"
 
-    @try_tpl
     def get_context_data(self, **kwargs):
         # __log_request(request)
         context = super().get_context_data(**kwargs)
@@ -97,7 +88,6 @@ def __any2pdf(context: dict, folder: str, engine: str) -> HttpResponse:
         response['Content-Transfer-Encoding'] = 'binary'
         return response
 
-@try_tpl
 def doc_a(request, uuid):
     """
     Anon/Create/Update
@@ -105,7 +95,7 @@ def doc_a(request, uuid):
     :param uuid:str - uuid (anon/create) or doc id (update)
     :return request, html_tpl_name, context:dict
     """
-    __log_request(request)
+    # __log_request(request)
     tpl = core.mgr.plugins_dict[uuid]
     # 1. check <pkg>.ANON/CREATE/UPDATE
     self_func = [K_T_F_ANON, K_T_F_ADD, K_T_F_EDIT][0]  # mode=0 (anon) => PRINT
