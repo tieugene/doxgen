@@ -6,7 +6,7 @@
   + [x] autostart:
     * load engines
     * load plugins
-  + rm `udf/`
+  + [x] rm `udf/`
   + Plugins: main.py > main.py + json/toml/yaml (+pydantic) + README.md
   + consts.py: enums
 - Django templates => jinja2/mako

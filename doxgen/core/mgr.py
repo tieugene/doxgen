@@ -8,12 +8,16 @@ import importlib
 import logging
 # import pprint
 from collections import OrderedDict
-from .consts import *
-from .converter import x2pdf
 # 2. 3rd parties
+from pydantic import BaseModel
 # 3. django
 # from django.utils.translation import gettext as _
+# 4. local
+from .consts import *
+from .converter import x2pdf
 
+class Plugin( BaseModel):
+    """Plugin representation"""
 
 plugins_dict = dict()  # uuid => data
 
