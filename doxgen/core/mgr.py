@@ -3,8 +3,7 @@
 core.mgr - plugins managenebt
 """
 # 1. system
-import os
-import sys
+import pathlib
 import importlib
 import logging
 from collections import OrderedDict
@@ -12,7 +11,7 @@ from .consts import *
 from .converter import x2pdf
 # 2. 3rd parties
 # 3. django
-from django.utils.translation import gettext as _
+# from django.utils.translation import gettext as _
 
 
 plugins_dict = dict()
@@ -26,29 +25,32 @@ def try_to_call(t, f, v):
         logging.info("try_to_call", type(t[K_V_MODULE].__dict__[f](v)))
         return t[K_V_MODULE].__dict__[f](v)
 
-def __load_plugin(path: str) -> list:
+def __load_plugin(plugins_dir: pathlib.Path) -> list:
     """
     Load all Python plugin from a directory into a dict.
 
-    :param path: the full path to the living place of the modules to load.
-    :type path: :class:`str`
+    :param plugins_dir: the full path to the living place of the plugins to load.
+    :type plugins_dir: :class:`str`
     :returns: map between loaded modules name and their content.
     :rtype: :class:`dict`
     """
-    mods = list()   # [(plugindir, module),]
-    for dir_name in os.listdir(path):
-        dir_path = os.path.join(path, dir_name)
-        if os.path.isdir(dir_path):
-            file_path = os.path.join(dir_path, 'main.py')
-            if os.path.isfile(file_path):
+    mods = list()   # [(plugindir:str, module:str),]
+    for dir_name in plugins_dir.iterdir():
+        # logging.info("dir_name:", dir_name)
+        dir_path = plugins_dir / dir_name
+        if dir_path.is_dir():
+            file_path = dir_path / 'main.py'
+            if file_path.is_file():
+                mod_name = f'plugins.{dir_name.name}.main'
+                # logging.info("mod_name: %s", mod_name)
                 try:
-                    mods.append((dir_name, importlib.import_module('plugins.{}.main'.format(dir_name))))
-                except Exception as ex:
-                    print(_("Unable load plugin from plugins/'{}': {}").format(dir_name, ex), file=sys.stderr)
+                    mods.append((str(dir_name), importlib.import_module(mod_name)))
+                except ModuleNotFoundError as e:
+                    logging.error("%s (%s): %s", __file__, mod_name, e)
     return mods
 
 
-def try_load_plugins(plugins_path: str, formgen, formsetgen) -> None:
+def try_load_plugins(plugins_path: pathlib.Path, formgen, formsetgen) -> None:
     """
     Fill moduledict if it is not loaded
     :param plugins_path: path where plugins are

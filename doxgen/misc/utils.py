@@ -5,22 +5,19 @@ Utility module
 
 # 1. system
 import datetime
-import sys
 # 2. 3rd party
 # 3. django
-
-
-def eprint(s: str):
-    print(s, file=sys.stderr)
 
 
 class ShortUUIDConverter:
     regex = '[0-9A-Z]{32}'
 
-    def to_python(self, value):
+    @staticmethod
+    def to_python(value):
         return str(value)
 
-    def to_url(self, value):
+    @staticmethod
+    def to_url(value):
         return '%s' % value
 
 

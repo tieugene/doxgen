@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 # 1. system
-import os
 import logging
 from collections import OrderedDict
 from django.utils.translation import gettext as _
@@ -90,7 +89,7 @@ def __any2pdf(context: dict, folder: str, engine: str) -> HttpResponse:
     :return: HttpResponse
     """
     try:
-        data = core.converter.x2pdf[engine](context, os.path.join(settings.PLUGINS_DIR, folder))
+        data = core.converter.x2pdf[engine](context, settings.PLUGINS_DIR / folder)
     except DGRenderExc as e:
         return HttpResponse(_('We had some errors:<pre>{}</pre>').format(e))
     else:

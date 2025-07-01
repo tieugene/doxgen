@@ -10,7 +10,6 @@ TODO: framework-independent
 TODO: In: context, plugin_dir[, ext]
 """
 # 1. system
-import os
 import pathlib
 import shutil
 import subprocess
@@ -50,7 +49,7 @@ except (ModuleNotFoundError, ImportError) as e:
 x2pdf = {}
 
 # ==== 1. low-level utils (django dependent)
-def __render_template(template: str, context: dict) -> str:
+def __render_template(template: pathlib.Path, context: dict) -> str:
     """
     Render template with data.
     :param template: template full path
@@ -59,45 +58,40 @@ def __render_template(template: str, context: dict) -> str:
     Note: for fodt add context_type='text/xml'
     FIXME: loader.from_string()
     """
-    return loader.get_template(template).render(context=context)
+    return loader.get_template(str(template)).render(context=context)
 
 # ==== 2. renderers itself (independent)
-def __html2pdf_pdfkit(context: dict, plugin_dir: str) -> bytes:
+def __html2pdf_pdfkit(context: dict, plugin_dir: pathlib.Path) -> bytes:
     """
     Render HTML to PDF using pdfkit+wkhtmltopdf
     :param context - dictionary of data
     :param plugin_dir: plugin full path
     # TODO: dpi=300/600
     """
-    template = os.path.join(plugin_dir, 'print.html')
-    pdf = pdfkit.from_string(__render_template(template, context), False, options={'quiet': ''})
-    if pdf:
+    if pdf := pdfkit.from_string(__render_template(plugin_dir / 'print.html', context), False,
+                                 options={'quiet': ''}):
         return pdf
     else:
         raise DGRenderExc('Something worng with pdfkit')
 
-def __html2pdf_weasy(context: dict, plugin_dir: str) -> bytes:
+def __html2pdf_weasy(context: dict, plugin_dir: pathlib.Path) -> bytes:
     """
     Render HTML to PDF using weasyprint
     :param context - dictionary of data
     :param plugin_dir: plugin full path
     # TODO: dpi=300
     """
-    template = os.path.join(plugin_dir, 'print.html')
-    return weasyprint.HTML(string=__render_template(template, context)).write_pdf()
+    return weasyprint.HTML(string=__render_template(plugin_dir / 'print.html', context)).write_pdf()
 
-def __rml2pdf_trml(context: dict, plugin_dir: str) -> bytes:
+def __rml2pdf_trml(context: dict, plugin_dir: pathlib.Path) -> bytes:
     """Convert RML to PDF using trml2pdf."""
-    template = os.path.join(plugin_dir, 'print.rml')
-    return trml2pdf.parseString(__render_template(template, context))
+    return trml2pdf.parseString(__render_template(plugin_dir / 'print.rml', context))
 
-def __rml2pdf_z3c(context: dict, plugin_dir: str) -> bytes:
+def __rml2pdf_z3c(context: dict, plugin_dir: pathlib.Path) -> bytes:
     """Convert RML to PDF using zope-z3c.rml2pdf."""
-    # parseString returns BytesIO
-    template = os.path.join(plugin_dir, 'print.html')
-    return z3c.rml.rml2pdf.parseString(__render_template(template, context)).read()
+    return z3c.rml.rml2pdf.parseString(__render_template(plugin_dir / 'print.rml', context)).read()
 
-def __pdf2pdf_pypdfforms(context: dict, plugin_dir: str) -> bytes:
+def __pdf2pdf_pypdfforms(context: dict, plugin_dir: pathlib.Path) -> bytes:
     """
     Fill PDF form substituing data from rendered TOML template.
     :param context: [pdf form]
@@ -121,21 +115,17 @@ def __pdf2pdf_pypdfforms(context: dict, plugin_dir: str) -> bytes:
         return {__src_k: __v for __k, __v in __data.items() if (__src_k := __x.get(__k))}
 
     # 1. fill toml
-    template = os.path.join(plugin_dir, 'print.toml')
-    toml = __render_template(template, context)
+    toml = __render_template(plugin_dir / 'print.toml', context)
     data = tomllib.loads(toml)
     # 2. convert keys
-    form_file = os.path.join(plugin_dir, 'print.pdf')
     # 1.1. prepare real data
-    form = PyPDFForm.PdfWrapper(form_file, global_font='Arial')
+    form = PyPDFForm.PdfWrapper(str(plugin_dir / 'print.pdf'), global_font='Arial')
     fields = form.schema['properties']
     __x = __x_keys(fields.keys())
     data = __x_code(data, __x)
-    # pprint.pprint(data)
-    b = form.fill(data).read()
-    return b
+    return form.fill(data).read()
 
-def __odt2pdf(context: dict, plugin_dir: str) -> bytes:
+def __odt2pdf(context: dict, plugin_dir: pathlib.Path) -> bytes:
     """
     Convert ODT to PDF using libreoffice-writer as server.
     :param plugin_dir: plugin full path
@@ -147,21 +137,21 @@ def __odt2pdf(context: dict, plugin_dir: str) -> bytes:
     sudo -u apache libreoffice --headless --convert-to pdf --outdir /tmp /tmp/test.fodt
     """
     # 1. prepare
-    template = os.path.join(plugin_dir, 'print.fodt')
     tmp = tempfile.NamedTemporaryFile(suffix='.fodt', delete=True)  # delete=False to debug
-    tmp.write(__render_template(template, context))
+    tmp.write(__render_template(plugin_dir / 'print.fodt', context))
     tmp.flush()
+    tmp_file = pathlib.Path(tmp.name)
     # 2. render
-    tmp_dir = os.path.dirname(tmp.name)
-    out_file = os.path.splitext(tmp.name)[0] + '.pdf'
-    out, err = subprocess.Popen(['libreoffice', '--headless', '--convert-to', 'pdf', '--outdir', tmp_dir, tmp.name],
+    tmp_dir = tmp_file.parent
+    out_file = tmp_file.with_suffix('.pdf')
+    out, err = subprocess.Popen(['libreoffice', '--headless', '--convert-to', 'pdf', '--outdir', tmp_dir, tmp_file],
                                 shell=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True).communicate()
     # out, err = subprocess.Popen(['unoconv', '-f', 'pdf', '--stdout', tmp.name],...
     if err:
         raise DGRenderExc('Something worng with odt')
     else:
-        data = open(out_file, 'rb').read()
-        os.remove(out_file)
+        data = out_file.open('rb').read()
+        out_file.unlink()
         return data
 
 def __preload():

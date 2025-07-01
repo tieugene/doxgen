@@ -2,7 +2,6 @@
 
 
 ## Issues:
-- pathlib everywhere
 - JSONify:
   + Plugins: main.py > [main.py +] json/toml/yaml (+pydantic) + JSON schema + README.md 
   + udf/* as json (+pydantic)

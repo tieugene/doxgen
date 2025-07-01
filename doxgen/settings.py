@@ -5,6 +5,7 @@
 # use 'local_settings.py' to overwrite.
 
 import os
+import pathlib
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -51,7 +52,7 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
 
-PLUGINS_DIR = os.path.join(BASE_DIR, 'plugins')
+PLUGINS_DIR: pathlib.Path = pathlib.Path(BASE_DIR) / 'plugins'
 
 TEMPLATES = [
     {
