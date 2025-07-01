@@ -3,20 +3,24 @@
 
 ## Issues:
 - JSONify:
-  + autostart:
+  + [x] autostart:
     * load engines
-    * load refs
     * load plugins
-  + Plugins: main.py > [main.py +] json/toml/yaml (+pydantic) + JSON schema + README.md 
-  + udf/* as json (+pydantic)
+  + rm `udf/`
+  + Plugins: main.py > main.py + json/toml/yaml (+pydantic) + README.md
   + consts.py: enums
 - Django templates => jinja2/mako
-- run LO headless constantly (use libreoffice-pyuno; RTFM unoconv)
+- run LO headless permanent (use libreoffice-pyuno; RTFM unoconv)
 - FIXME: pdfkit
 - Deploy:
-  + pylint, reformat
+  + do good code:
+    * anntotations
+    * docstrings
+    * flake8
+    * reformat
+    * pylint
   + pyproject.toml
-  + .spec
+  + doxgen.spec
   + koji build chain
   + build for epel9 (py39) / epel10 (py..) / eln:
     * svglib (no reportlab)
@@ -25,7 +29,6 @@
   + rst doc
   + tests (speed too)
 - Multiplatform:
-  + engines as plugins (RTFM import.import_module)
   + Flask/aiohttp/FastAPI/cherrypy
   + nginx/unicorn etc
 

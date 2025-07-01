@@ -6,7 +6,7 @@ core.mgr - plugins managenebt
 import pathlib
 import importlib
 import logging
-import pprint
+# import pprint
 from collections import OrderedDict
 from .consts import *
 from .converter import x2pdf
