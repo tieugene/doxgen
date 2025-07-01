@@ -15,6 +15,7 @@ from django.views.generic.base import TemplateView
 # 4. my
 # from misc.utils import eprint
 from core.consts import *
+from core.exc import *
 import core.converter
 import core.mgr
 import forms
@@ -80,25 +81,22 @@ class TplList(TemplateView):
         context['data'] = core.mgr.plugins_dict
         return context
 
-def __any2pdf(context: dict, folder: str, engine: str, as_attach: bool = False):
+def __any2pdf(context: dict, folder: str, engine: str) -> HttpResponse:
     """
     EndPoint #2: Print
     :param context: data
     :param folder: plugin folder
     :param engine: template engine name
-    :param as_attach: view or download
     :return: HttpResponse
     """
-    err, data = core.converter.x2pdf[engine](context, os.path.join(settings.PLUGINS_DIR, folder))
-
-    if err:
-        response = HttpResponse(_('We had some errors:<pre>{}</pre>').format(err))
+    try:
+        data = core.converter.x2pdf[engine](context, os.path.join(settings.PLUGINS_DIR, folder))
+    except DGRenderExc as e:
+        return HttpResponse(_('We had some errors:<pre>{}</pre>').format(e))
     else:
         response = HttpResponse(content=data, content_type='application/pdf')
         response['Content-Transfer-Encoding'] = 'binary'
-        if as_attach:
-            response['Content-Disposition'] = 'filename="print.pdf";'  # download: + ';attachment'
-    return response
+        return response
 
 @try_tpl
 def doc_a(request, uuid):

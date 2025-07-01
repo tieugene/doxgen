@@ -2,13 +2,6 @@
 
 
 ## Issues:
-- Select engine in plugin:
-  + preload engines
-  + K_T_T_PRINT: <engine> (and engine load wanted file[s])
-  + Menu: Home|List => List('Home')|About
-  + show/log engines loaded
-  + disable plugins w/o engines
-  + `converter.py`: exceptions
 - pathlib everywhere
 - JSONify:
   + Plugins: main.py > [main.py +] json/toml/yaml (+pydantic) + JSON schema + README.md 
@@ -16,6 +9,7 @@
   + consts.py: enums
 - Django templates => jinja2
 - run LO headless constantly (use libreoffice-pyuno; RTFM unoconv)
+- FIXME: pdfkit
 - Deploy:
   + pylint, reformat
   + pyproject .toml

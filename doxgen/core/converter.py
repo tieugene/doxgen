@@ -17,12 +17,15 @@ import subprocess
 import tempfile
 import tomllib
 import logging
-from typing import Iterable, Dict, Any, Tuple, Optional
+from typing import Iterable, Dict, Any
 # 2. django
 from django.template import loader
 # 3. 3rd party
+# 4. self
+from .exc import DGRenderExc
+
 try:
-    import pdfkit
+    import pdfkit  # Note: install wkhtmltopdf
 except (ModuleNotFoundError, ImportError) as e:
     logging.error("%s: %s", __name__, e)  # ModuleNotFoundError: No module named 'something'
 try:
@@ -59,7 +62,7 @@ def __render_template(template: str, context: dict) -> str:
     return loader.get_template(template).render(context=context)
 
 # ==== 2. renderers itself (independent)
-def __html2pdf_pdfkit(context: dict, plugin_dir: str) -> Tuple[str, Optional[bytes]]:
+def __html2pdf_pdfkit(context: dict, plugin_dir: str) -> bytes:
     """
     Render HTML to PDF using pdfkit+wkhtmltopdf
     :param context - dictionary of data
@@ -68,11 +71,12 @@ def __html2pdf_pdfkit(context: dict, plugin_dir: str) -> Tuple[str, Optional[byt
     """
     template = os.path.join(plugin_dir, 'print.html')
     pdf = pdfkit.from_string(__render_template(template, context), False, options={'quiet': ''})
-    if not pdf:
-        return 'Something worng with pdfkit', None  # TODO: exception
-    return '', pdf
+    if pdf:
+        return pdf
+    else:
+        raise DGRenderExc('Something worng with pdfkit')
 
-def __html2pdf_weasy(context: dict, plugin_dir: str) -> Tuple[str, Optional[bytes]]:
+def __html2pdf_weasy(context: dict, plugin_dir: str) -> bytes:
     """
     Render HTML to PDF using weasyprint
     :param context - dictionary of data
@@ -80,20 +84,20 @@ def __html2pdf_weasy(context: dict, plugin_dir: str) -> Tuple[str, Optional[byte
     # TODO: dpi=300
     """
     template = os.path.join(plugin_dir, 'print.html')
-    return '', weasyprint.HTML(string=__render_template(template, context)).write_pdf()
+    return weasyprint.HTML(string=__render_template(template, context)).write_pdf()
 
-def __rml2pdf_trml(context: dict, plugin_dir: str) -> Tuple[str, Optional[bytes]]:
+def __rml2pdf_trml(context: dict, plugin_dir: str) -> bytes:
     """Convert RML to PDF using trml2pdf."""
     template = os.path.join(plugin_dir, 'print.rml')
-    return '', trml2pdf.parseString(__render_template(template, context))
+    return trml2pdf.parseString(__render_template(template, context))
 
-def __rml2pdf_z3c(context: dict, plugin_dir: str) -> Tuple[str, Optional[bytes]]:
+def __rml2pdf_z3c(context: dict, plugin_dir: str) -> bytes:
     """Convert RML to PDF using zope-z3c.rml2pdf."""
     # parseString returns BytesIO
     template = os.path.join(plugin_dir, 'print.html')
-    return '', z3c.rml.rml2pdf.parseString(__render_template(template, context)).read()
+    return z3c.rml.rml2pdf.parseString(__render_template(template, context)).read()
 
-def __pdf2pdf_pypdfforms(context: dict, plugin_dir: str) -> Tuple[str, Optional[bytes]]:
+def __pdf2pdf_pypdfforms(context: dict, plugin_dir: str) -> bytes:
     """
     Fill PDF form substituing data from rendered TOML template.
     :param context: [pdf form]
@@ -129,9 +133,9 @@ def __pdf2pdf_pypdfforms(context: dict, plugin_dir: str) -> Tuple[str, Optional[
     data = __x_code(data, __x)
     # pprint.pprint(data)
     b = form.fill(data).read()
-    return '', b
+    return b
 
-def __odt2pdf(context: dict, plugin_dir: str) -> Tuple[str, Optional[bytes]]:
+def __odt2pdf(context: dict, plugin_dir: str) -> bytes:
     """
     Convert ODT to PDF using libreoffice-writer as server.
     :param plugin_dir: plugin full path
@@ -154,11 +158,11 @@ def __odt2pdf(context: dict, plugin_dir: str) -> Tuple[str, Optional[bytes]]:
                                 shell=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True).communicate()
     # out, err = subprocess.Popen(['unoconv', '-f', 'pdf', '--stdout', tmp.name],...
     if err:
-        data = None
+        raise DGRenderExc('Something worng with odt')
     else:
         data = open(out_file, 'rb').read()
         os.remove(out_file)
-    return err, data
+        return data
 
 def __preload():
     globs = globals()

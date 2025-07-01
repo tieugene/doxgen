@@ -2,11 +2,11 @@
 """
 core.mgr - plugins managenebt
 """
-import logging
 # 1. system
 import os
 import sys
 import importlib
+import logging
 from collections import OrderedDict
 from .consts import *
 from .converter import x2pdf
@@ -23,7 +23,7 @@ def try_to_call(t, f, v):
     Try to call function f of module t[] with value v
     """
     if f in t[K_V_MODULE].__dict__:
-        print(type(t[K_V_MODULE].__dict__[f](v)))
+        logging.info("try_to_call", type(t[K_V_MODULE].__dict__[f](v)))
         return t[K_V_MODULE].__dict__[f](v)
 
 def __load_plugin(path: str) -> list:
