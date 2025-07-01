@@ -64,6 +64,11 @@ class AboutView(TemplateView):
             return "about_ru.html"
         return self.template_name
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['engines'] = sorted(core.converter.x2pdf.keys())
+        return context
+
 
 class TplList(TemplateView):
     template_name = "tpl_list.html"

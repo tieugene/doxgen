@@ -36,8 +36,9 @@
 </head>
 <body>
     <nav>
-        <div id="tm_index" class=""> {% include 'button/home.html' %} </div>
         <div id="tm_tpl" class=""> {% include 'button/tplist.html' %} </div>
+        <div id="tm_about"> {% include 'button/about.html' %} </div>
+        <!-- div id="tm_index" class=""> {% include 'button/home.html' %} </div-->
         <div style="width: 100%"> <b> DoxGen </b> </div>
         {% if user.is_authenticated %}
             <div> {{ user.username }} : </div>
@@ -48,7 +49,6 @@
         {% else %}
             <div id="tm_login"> {% include 'button/login.html' %} </div>
         {% endif %}
-        <div id="tm_about"> {% include 'button/about.html' %} </div>
     </nav>
 	<main>
 	{% block body_main %}

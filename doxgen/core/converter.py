@@ -171,7 +171,7 @@ def __preload():
     if 'trml2pdf' in globs:
         x2pdf['trml2pdf'] = __rml2pdf_trml
         logging.info("'trml2pdf' plugin loaded.")
-    if 'z3c.rml.rml2pdf' in globs:
+    if 'z3c' in globs:
         x2pdf['z3c.rml'] = __rml2pdf_z3c
         logging.info("'z3c.rml' plugin loaded.")
     if 'PyPDFForm' in globs:
