@@ -50,7 +50,7 @@ x2pdf = {}
 def __render_template(template: str, context: dict) -> str:
     """
     Render template with data.
-    :param temlate: template full path
+    :param template: template full path
     :param context: data
     :return: rendered
     Note: for fodt add context_type='text/xml'
@@ -59,7 +59,7 @@ def __render_template(template: str, context: dict) -> str:
     return loader.get_template(template).render(context=context)
 
 # ==== 2. renderers itself (independent)
-def __html2pdf_pdfkit(plugin_dir: str, context: dict) -> Tuple[str, Optional[bytes]]:
+def __html2pdf_pdfkit(context: dict, plugin_dir: str) -> Tuple[str, Optional[bytes]]:
     """
     Render HTML to PDF using pdfkit+wkhtmltopdf
     :param context - dictionary of data
@@ -72,7 +72,7 @@ def __html2pdf_pdfkit(plugin_dir: str, context: dict) -> Tuple[str, Optional[byt
         return 'Something worng with pdfkit', None  # TODO: exception
     return '', pdf
 
-def __html2pdf_weasy(plugin_dir: str, context: dict) -> Tuple[str, Optional[bytes]]:
+def __html2pdf_weasy(context: dict, plugin_dir: str) -> Tuple[str, Optional[bytes]]:
     """
     Render HTML to PDF using weasyprint
     :param context - dictionary of data
@@ -82,22 +82,22 @@ def __html2pdf_weasy(plugin_dir: str, context: dict) -> Tuple[str, Optional[byte
     template = os.path.join(plugin_dir, 'print.html')
     return '', weasyprint.HTML(string=__render_template(template, context)).write_pdf()
 
-def __rml2pdf_trml(plugin_dir: str, context: dict) -> Tuple[str, Optional[bytes]]:
+def __rml2pdf_trml(context: dict, plugin_dir: str) -> Tuple[str, Optional[bytes]]:
     """Convert RML to PDF using trml2pdf."""
     template = os.path.join(plugin_dir, 'print.rml')
     return '', trml2pdf.parseString(__render_template(template, context))
 
-def __rml2pdf_z3c(plugin_dir: str, context: dict) -> Tuple[str, Optional[bytes]]:
+def __rml2pdf_z3c(context: dict, plugin_dir: str) -> Tuple[str, Optional[bytes]]:
     """Convert RML to PDF using zope-z3c.rml2pdf."""
     # parseString returns BytesIO
     template = os.path.join(plugin_dir, 'print.html')
     return '', z3c.rml.rml2pdf.parseString(__render_template(template, context)).read()
 
-def __pdf2pdf_pypdfforms(plugin_dir: str, context: dict) -> Tuple[str, Optional[bytes]]:
+def __pdf2pdf_pypdfforms(context: dict, plugin_dir: str) -> Tuple[str, Optional[bytes]]:
     """
     Fill PDF form substituing data from rendered TOML template.
+    :param context: [pdf form]
     :param plugin_dir: plugin full path
-    @param context: [pdf form]
     """
 
     def __x_keys(__l: Iterable[str]) -> Dict[str, str]:
@@ -131,7 +131,7 @@ def __pdf2pdf_pypdfforms(plugin_dir: str, context: dict) -> Tuple[str, Optional[
     b = form.fill(data).read()
     return '', b
 
-def __odt2pdf(plugin_dir: str, context: dict) -> Tuple[str, Optional[bytes]]:
+def __odt2pdf(context: dict, plugin_dir: str) -> Tuple[str, Optional[bytes]]:
     """
     Convert ODT to PDF using libreoffice-writer as server.
     :param plugin_dir: plugin full path
