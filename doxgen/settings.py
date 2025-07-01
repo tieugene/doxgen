@@ -95,6 +95,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # 'pymorphy',
+    'apps.DoxGenConfig'
 )
 
 # URL prefix for admin static files -- CSS, JavaScript and images.

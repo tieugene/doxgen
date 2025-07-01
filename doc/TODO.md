@@ -3,15 +3,19 @@
 
 ## Issues:
 - JSONify:
+  + autostart:
+    * load engines
+    * load refs
+    * load plugins
   + Plugins: main.py > [main.py +] json/toml/yaml (+pydantic) + JSON schema + README.md 
   + udf/* as json (+pydantic)
   + consts.py: enums
-- Django templates => jinja2
+- Django templates => jinja2/mako
 - run LO headless constantly (use libreoffice-pyuno; RTFM unoconv)
 - FIXME: pdfkit
 - Deploy:
   + pylint, reformat
-  + pyproject .toml
+  + pyproject.toml
   + .spec
   + koji build chain
   + build for epel9 (py39) / epel10 (py..) / eln:

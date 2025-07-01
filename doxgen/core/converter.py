@@ -154,7 +154,7 @@ def __odt2pdf(context: dict, plugin_dir: pathlib.Path) -> bytes:
         out_file.unlink()
         return data
 
-def __preload():
+def autostart():
     globs = globals()
     if 'pdfkit' in globs:
         x2pdf['pdfkit'] = __html2pdf_pdfkit
@@ -177,5 +177,3 @@ def __preload():
     else:
         x2pdf['odt'] = __odt2pdf
         logging.info("'odt' plugin loaded.")
-
-__preload()
