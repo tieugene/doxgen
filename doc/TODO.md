@@ -9,10 +9,11 @@
   + show/log engines loaded
   + disable plugins w/o engines
   + `converter.py`: exceptions
+- pathlib everywhere
 - JSONify:
   + Plugins: main.py > [main.py +] json/toml/yaml (+pydantic) + JSON schema + README.md 
   + udf/* as json (+pydantic)
-- pathlib everywhere
+  + consts.py: enums
 - Django templates => jinja2
 - run LO headless constantly (use libreoffice-pyuno; RTFM unoconv)
 - Deploy:

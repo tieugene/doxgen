@@ -77,7 +77,7 @@ class TplList(TemplateView):
     def get_context_data(self, **kwargs):
         # __log_request(request)
         context = super().get_context_data(**kwargs)
-        context['data'] = core.mgr.moduledict
+        context['data'] = core.mgr.plugins_dict
         return context
 
 def __any2pdf(context: dict, folder: str, engine: str, as_attach: bool = False):
@@ -109,7 +109,7 @@ def doc_a(request, uuid):
     :return request, html_tpl_name, context:dict
     """
     __log_request(request)
-    tpl = core.mgr.moduledict[uuid]
+    tpl = core.mgr.plugins_dict[uuid]
     # 1. check <pkg>.ANON/CREATE/UPDATE
     self_func = [K_T_F_ANON, K_T_F_ADD, K_T_F_EDIT][0]  # mode=0 (anon) => PRINT
     if self_func in tpl[K_V_MODULE].__dict__:

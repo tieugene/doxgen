@@ -2,19 +2,20 @@
 """
 core.mgr - plugins managenebt
 """
-
+import logging
 # 1. system
 import os
 import sys
 import importlib
 from collections import OrderedDict
 from .consts import *
+from .converter import x2pdf
 # 2. 3rd parties
 # 3. django
 from django.utils.translation import gettext as _
 
 
-moduledict = dict()
+plugins_dict = dict()
 
 
 def try_to_call(t, f, v):
@@ -22,11 +23,12 @@ def try_to_call(t, f, v):
     Try to call function f of module t[] with value v
     """
     if f in t[K_V_MODULE].__dict__:
+        print(type(t[K_V_MODULE].__dict__[f](v)))
         return t[K_V_MODULE].__dict__[f](v)
 
-def __load_modules(path: str) -> list:
+def __load_plugin(path: str) -> list:
     """
-    Load all Python modules from a directory into a dict.
+    Load all Python plugin from a directory into a dict.
 
     :param path: the full path to the living place of the modules to load.
     :type path: :class:`str`
@@ -42,7 +44,7 @@ def __load_modules(path: str) -> list:
                 try:
                     mods.append((dir_name, importlib.import_module('plugins.{}.main'.format(dir_name))))
                 except Exception as ex:
-                    print(_("Unable load module from plugins/'{}': {}").format(dir_name, ex), file=sys.stderr)
+                    print(_("Unable load plugin from plugins/'{}': {}").format(dir_name, ex), file=sys.stderr)
     return mods
 
 
@@ -54,29 +56,32 @@ def try_load_plugins(plugins_path: str, formgen, formsetgen) -> None:
     :param formsetgen: formset (multiline part) generator (callback)
     :return: None
     """
-    if not moduledict:
+    if not plugins_dict:
         # 1. load modules into list of modulename=>module
         # 2. repack
-        for dir_name, module in __load_modules(plugins_path):  # repack module objects
+        for dir_name, module in __load_plugin(plugins_path):  # repack module objects
             # s = set(dir(module))
             data = module.DATA
+            if data[K_T_T] and data[K_T_T].get(K_T_T_ENGINE) not in x2pdf:
+                logging.warning("Plugin '%s' skipped due not engine.", data[K_T_NAME])
+                continue
             uuid = data[K_T_UUID]
             __tryget = module.__dict__.get
             # 2. dict
-            moduledict[uuid] = {K_V_MODULE: module, K_T_DIR: dir_name}
+            plugins_dict[uuid] = {K_V_MODULE: module, K_T_DIR: dir_name}
             # 3. add dates fields
             datefields = list()
             for i, j in data[K_T_FIELD].items():  # each field definition:
                 if j[K_T_FIELD_T] == K_DATE_FIELD:
                     datefields.append(i)
             if datefields:
-                moduledict[uuid][K_V_DATES] = set(datefields)
+                plugins_dict[uuid][K_V_DATES] = set(datefields)
             # 4. form
             if K_T_FORM in module.__dict__:  # create DynaForm
                 form = module[K_T_FORM]
             else:
                 form = formgen(fieldlist=data[K_T_FIELD])
-            moduledict[uuid][K_T_FORM] = form
+            plugins_dict[uuid][K_T_FORM] = form
             # 5. formsets
             if K_T_FORMSETS in module.__dict__:  # create DynaForm
                 formsets = module[K_T_FORMSETS]
@@ -85,4 +90,4 @@ def try_load_plugins(plugins_path: str, formgen, formsetgen) -> None:
                     formsets = formsetgen(formlist=data[K_T_S])
                 else:
                     formsets = OrderedDict()
-            moduledict[uuid][K_T_FORMSETS] = formsets
+            plugins_dict[uuid][K_T_FORMSETS] = formsets
