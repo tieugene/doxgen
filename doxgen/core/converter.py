@@ -164,18 +164,24 @@ def __preload():
     globs = globals()
     if 'pdfkit' in globs:
         x2pdf['pdfkit'] = __html2pdf_pdfkit
+        logging.info("'pdfkit' plugin loaded.")
     if 'weasyprint' in globs:
         x2pdf['weasy'] = __html2pdf_weasy
+        logging.info("'weasy' plugin loaded.")
     if 'trml2pdf' in globs:
         x2pdf['trml2pdf'] = __rml2pdf_trml
+        logging.info("'trml2pdf' plugin loaded.")
     if 'z3c.rml.rml2pdf' in globs:
         x2pdf['z3c.rml'] = __rml2pdf_z3c
+        logging.info("'z3c.rml' plugin loaded.")
     if 'PyPDFForm' in globs:
         x2pdf['pypdfform'] = __pdf2pdf_pypdfforms
+        logging.info("'pypdfform' plugin loaded.")
     # odt
     if not shutil.which('oowriter'):
         logging.warning( 'LibreOffice  Writer not found')
     else:
         x2pdf['odt'] = __odt2pdf
+        logging.info("'odt' plugin loaded.")
 
 __preload()
