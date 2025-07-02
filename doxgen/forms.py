@@ -53,7 +53,6 @@ field_dict = {
     K_OGRN_FIELD: OGRNField,
 }
 
-
 def generate_form(fieldlist: OrderedDict, named=True):  # FIXME: form name (for formset class name)
     """
     Generates Form class
@@ -71,7 +70,6 @@ def generate_form(fieldlist: OrderedDict, named=True):  # FIXME: form name (for 
     retvalue.error_css_class = 'error'
     return retvalue
 
-
 def generate_formset(formlist: OrderedDict) -> OrderedDict:
     """
     Generates OrderedDict of Form sets classes
@@ -82,7 +80,6 @@ def generate_formset(formlist: OrderedDict) -> OrderedDict:
     for k, v in formlist.items():
         retvalue[k] = formset_factory(generate_form(v[K_T_FIELD_T], named=False))
     return retvalue
-
 
 try:
     from local_forms import *

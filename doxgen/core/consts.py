@@ -47,12 +47,12 @@ K_T_F_EDIT = 'UPDATE'
 # K_T_F_READ = 'READ'
 # K_T_F_PRINT = 'PRINT'
 # K_T_F_DEL	= 'DELETE'
-K_T_F_PRE_FORM = 'PRE_FORM'
-K_T_F_PRE_SAVE = 'PRE_SAVE'
-K_T_F_PRE_READ = 'PRE_READ'
-K_T_F_PRE_PRINT = 'PRE_PRINT'
-K_T_F_POST_LOAD = 'POST_LOAD'
-K_T_F_POST_FORM = 'POST_FORM'
+# K_T_F_PRE_FORM = 'PRE_FORM'
+# K_T_F_PRE_SAVE = 'PRE_SAVE'
+# K_T_F_PRE_READ = 'PRE_READ'
+K_T_F_PRE_PRINT = 'PRE_PRINT'  # used in views.doc_a
+K_T_F_POST_LOAD = 'POST_LOAD'  # not used
+K_T_F_POST_FORM = 'POST_FORM'  # used in views.doc_a
 
 # main views.py moduledict keys
 # These keys are dynamically loaded - so, you can put here what you want. BUT - keep them uniq!
