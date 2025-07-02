@@ -151,5 +151,5 @@ def doc_a(request, uuid):
             'uuid': tpl[K_V_MODULE].DATA[K_T_UUID],
             'form': form,
             'formlist': formlist,
-            'example': tpl[K_V_MODULE].DATA.get('example', None),
+            'sample': tpl[K_V_MODULE].DATA.get('sample', None),
         })

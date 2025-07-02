@@ -23,3 +23,11 @@ Making your own plugins.
   v=`uuidgen -x`; echo ${v^^} | sed 's/-//g'
   uuidgen -x | sed 's/-//g' | tr a-z A-Z
   ```
+
+## Files:
+- `main.py`: mandatory(?)
+- `data.json`: mandatory
+- `print.(html/pdf/rml/odt`: mandatory
+- `form.html`: optional
+- ~~`list.html`: ?~~
+- ~~`read.html`: ?~~

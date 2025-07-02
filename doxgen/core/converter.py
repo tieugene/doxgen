@@ -10,6 +10,7 @@ TODO: framework-independent
 TODO: In: context, plugin_dir[, ext]
 """
 # 1. system
+import enum
 import pathlib
 import shutil
 import subprocess
@@ -22,6 +23,14 @@ from django.template import loader
 # 3. 3rd party
 # 4. self
 from .exc import DGRenderExc
+
+class Engine(enum.StrEnum):
+    PDFKIT = 'pdfkit'
+    WEASY = 'weasy'
+    TRML2PDF = 'trlm2pdf'
+    Z3C_RML = 'z3c.rml'
+    PYPDFFORM = 'pypdfform'
+    ODT = 'odt'
 
 try:
     import pdfkit  # Note: install wkhtmltopdf

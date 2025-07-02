@@ -44,9 +44,9 @@ To clean all input fields use 'Reset' button.
 			{% include "button/export.html" %}
 		{%  endif %}
 		{% include "button/reset.html" %}
-		{% if example %}
+		{% if sample %}
 			{% trans 'Examples' %}:
-			{% for e in example %}
+			{% for e in sample %}
 				<button type="button" onClick="populateForm('myForm', '{{e.name}}')" title="{{e.tip}}"> {{ e.title }} </button>
 			{% endfor %}
 		{% endif %}
@@ -76,9 +76,9 @@ To clean all input fields use 'Reset' button.
 			</script>
 		{% endfor %}
 	</form>
-	{% if example %}
+	{% if sample %}
 		<script type="text/javascript">
-			let json = {	{% for e in example %}
+			let json = {	{% for e in sample %}
 				'{{e.name}}': { {% for k, v in e.data.items %}
 					'id_{{k}}': '{{v}}',	{% endfor %}
 				}, {% endfor %}

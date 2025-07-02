@@ -7,6 +7,7 @@ Naming:
   TODO: enum
 """
 
+# Note: be patient; see auto_*.html
 # Template keys
 K_T_DATA = 'DATA'
 K_T_DIR = 'dir'
@@ -27,22 +28,24 @@ K_INN_FIELD = 'inn'
 K_OGRN_FIELD = 'ogrn'
 K_T_FIELD_A = 'a'  # inside K_T_FIELD; hardcoded in auto_view, auto_form, printforms
 K_T_F_NAME = 'name'  # extra field
-K_T_S = 's'  # inside K_T_DATA - fieldsets
 K_T_T = 't'  # inside K_T_DATA - templates
-K_T_T_LIST = 'l'  # inside K_T_T
-K_T_T_FORM = 'f'  # inside K_T_T
-K_T_T_READ = 'r'  # inside K_T_T
 K_T_T_ENGINE = 'e'  # inside K_T_T
+K_T_T_FORM = 'f'  # inside K_T_T
+# K_T_T_LIST = 'l'  # inside K_T_T
+# K_T_T_READ = 'r'  # inside K_T_T
+K_T_S = 's'  # inside K_T_DATA - fieldsets
+
 # forms and formsets
 K_T_FORM = 'FORM'  # in modulelidct too
 K_T_FORMSETS = 'FORMSETS'  # in modulelidct too
+
 # triggers
-K_T_F_LIST = 'LIST'
+# K_T_F_LIST = 'LIST'
 K_T_F_ANON = 'ANON'
 K_T_F_ADD = 'CREATE'
 K_T_F_EDIT = 'UPDATE'
-K_T_F_READ = 'READ'
-K_T_F_PRINT = 'PRINT'
+# K_T_F_READ = 'READ'
+# K_T_F_PRINT = 'PRINT'
 # K_T_F_DEL	= 'DELETE'
 K_T_F_PRE_FORM = 'PRE_FORM'
 K_T_F_PRE_SAVE = 'PRE_SAVE'
